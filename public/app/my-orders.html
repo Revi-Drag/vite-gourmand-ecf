@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Mes commandes</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="container">
+            <h1>Vite & Gourmand</h1>
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./my-orders.html" aria-current="page">Mes commandes</a>
+                <a href="./login.html">Connexion</a>
+                <a href="./contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Mes commandes</h2>
+            <p class="muted">Historique de tes commandes et statut.</p>
+            <div id="status" class="muted" style="margin-top: 8px;"></div>
+        </section>
+
+        <section id="ordersGrid" class="grid" style="margin-top: 12px;"></section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <small>Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV</small>
+        </div>
+    </footer>
+
+    <script src="./my-orders.js?v=1"></script>
+</body>
+
+</html>

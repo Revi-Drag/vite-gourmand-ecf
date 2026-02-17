@@ -8,6 +8,7 @@ const els = {
     maxPrice: document.getElementById("maxPrice"),
     minPersons: document.getElementById("minPersons"),
     resetBtn: document.getElementById("resetBtn"),
+    clearBtn: document.getElementById("clearFiltersBtn"),
 };
 
 let allMenus = [];
@@ -59,6 +60,11 @@ function applyFilters() {
     const regime = els.regime.value.trim();
     const maxPrice = els.maxPrice.value ? Number(els.maxPrice.value) : null;
     const minPersons = els.minPersons.value ? Number(els.minPersons.value) : null;
+    const anyActive = theme || regime || maxPrice !== null || minPersons !== null;
+
+    if (els.clearBtn) {
+        els.clearBtn.style.display = anyActive ? "inline-flex" : "none";
+    }
 
     let filtered = [...allMenus];
 
@@ -102,6 +108,9 @@ function resetFilters() {
     els.minPersons.addEventListener(evt, applyFilters);
 });
 els.resetBtn.addEventListener("click", resetFilters);
+if (els.clearBtn) {
+    els.clearBtn.addEventListener("click", resetFilters);
+}
 
 loadMenus().catch((e) => {
     console.error(e);

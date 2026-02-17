@@ -324,3 +324,21 @@ button:active,
     display: flex;
     gap: 8px;
 }
+
+.icon-btn {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+
+.icon-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+#clearFiltersBtn {
+    display: none;
+}
