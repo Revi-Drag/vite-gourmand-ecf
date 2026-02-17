@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Menus</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="container">
+            <h1>Vite & Gourmand</h1>
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html" aria-current="page">Menus</a>
+                <a href="./login.html">Connexion</a>
+                <a href="./contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Tous les menus</h2>
+            <p class="muted">Filtre et affiche les menus dynamiquement (sans rechargement).</p>
+
+            <div class="filters">
+                <div class="field">
+                    <label for="theme">Thème</label>
+                    <select id="theme">
+                        <option value="">Tous</option>
+                        <option value="Classique">Classique</option>
+                        <option value="Noel">Noël</option>
+                        <option value="Paques">Pâques</option>
+                        <option value="Evenement">Évènement</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="regime">Régime</label>
+                    <select id="regime">
+                        <option value="">Tous</option>
+                        <option value="Classique">Classique</option>
+                        <option value="Vegetarien">Végétarien</option>
+                        <option value="Vegan">Vegan</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="maxPrice">Prix maximum (€)</label>
+                    <input id="maxPrice" type="number" min="0" step="1" placeholder="ex: 30" />
+                </div>
+
+                <div class="field">
+                    <label for="minPersons">Personnes minimum</label>
+                    <input id="minPersons" type="number" min="1" step="1" placeholder="ex: 8" />
+                </div>
+
+                <div class="field">
+                    <label>&nbsp;</label>
+                    <button id="resetBtn" class="btn">Réinitialiser</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="status" class="muted" style="margin: 12px 0;"></section>
+
+        <section id="menusGrid" class="grid"></section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <small>Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV</small>
+        </div>
+    </footer>
+
+    <script src="./menus.js"></script>
+</body>
+
+</html>

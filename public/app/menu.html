@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Détail menu</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <main class="container">
+        <a class="btn" href="./menus.html">← Retour</a>
+        <div id="content" class="card" style="margin-top:12px;"></div>
+    </main>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const id = params.get("id");
+
+        async function run() {
+            const res = await fetch(`/api/menus/${id}`);
+            if (!res.ok) {
+                document.getElementById("content").innerHTML = "<p>Menu introuvable.</p>";
+                return;
+            }
+            const m = await res.json();
+            document.getElementById("content").innerHTML = `
+        <h2>${m.title}</h2>
+        <p>${m.description}</p>
+        <p><strong>Thème:</strong> ${m.theme} — <strong>Régime:</strong> ${m.regime}</p>
+        <p><strong>Min:</strong> ${m.minPersons} pers — <strong>Prix:</strong> ${Number(m.basePrice).toFixed(2)} €</p>
+        <p><strong>Conditions:</strong> ${m.conditionsText ?? "—"}</p>
+        <p><strong>Stock:</strong> ${m.stock}</p>
+        <a class="btn" href="./order.html?menu=${m.id}">Commander</a>
+      `;
+        }
+        run();
+    </script>
+</body>
+
+</html>
