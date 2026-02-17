@@ -29,7 +29,7 @@ class CustomerOrder
     private ?string $eventCity = null;
 
     #[ORM\Column]
-    private ?\DateTime $enventDate = null;
+    private ?\DateTime $eventDate = null;
 
     #[ORM\Column(length: 30)]
     private ?string $eventPhone = null;
@@ -105,14 +105,14 @@ class CustomerOrder
         return $this;
     }
 
-    public function getEnventDate(): ?\DateTime
+    public function getEventDate(): ?\DateTime
     {
-        return $this->enventDate;
+        return $this->eventDate;
     }
 
-    public function setEnventDate(\DateTime $enventDate): static
+    public function setEventDate(\DateTime $eventDate): static
     {
-        $this->enventDate = $enventDate;
+        $this->eventDate = $eventDate;
 
         return $this;
     }
