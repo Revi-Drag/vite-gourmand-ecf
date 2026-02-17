@@ -1,47 +1,74 @@
+/* =========================================================
+   Vite & Gourmand — Thème Traiteur 
+   Palette ivoire / bordeaux / doré + typo élégante
+   ========================================================= */
+
 * {
     box-sizing: border-box;
 }
 
+/* ===== Variables globales ===== */
 :root {
-    --bg: #f6f7fb;
-    /* gris perle */
+    --bg: #fbf7f1;
+    /* ivoire */
     --card: #ffffff;
-    --text: #1f2937;
+    --text: #1f2328;
+    /* noir doux */
     --muted: #6b7280;
-    --border: #e6e7ef;
+    --border: #eadfce;
+    /* lin */
 
-    --primary: #6d5bd0;
-    /* bleu lavande */
-    --primary-hover: #5b4cc0;
+    --primary: #7a1f2b;
+    /* bordeaux chic */
+    --primary-hover: #651824;
 
-    --secondary: #eef0ff;
-    /* lavande très clair */
-    --danger: #d94848;
+    --secondary: #f3eadc;
+    /* beige clair */
+    --danger: #b4232c;
 
-    --shadow: 0 10px 28px rgba(31, 41, 55, 0.08);
+    --accent: #b08d57;
+    /* doré */
 
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --shadow: 0 14px 35px rgba(31, 35, 40, 0.10);
+
+    --font-ui: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-title: "Playfair Display", ui-serif, Georgia, "Times New Roman", serif;
+
+    font-family: var(--font-ui);
 }
 
+/* ===== Body background (ambiance traiteur) ===== */
 body {
     margin: 0;
-    background: var(--bg);
     color: var(--text);
+
+    background:
+        radial-gradient(900px 500px at 20% -10%, rgba(176, 141, 87, 0.18), transparent 60%),
+        radial-gradient(900px 500px at 80% -10%, rgba(122, 31, 43, 0.10), transparent 60%),
+        var(--bg);
 }
 
-/* Layout */
+/* ===== Layout ===== */
 .container {
-    max-width: 900px;
-    margin: 32px auto;
+    max-width: 950px;
+    margin: 28px auto;
     padding: 0 16px;
 }
 
+/* ===== Typography ===== */
+h1,
+h2,
+h3 {
+    font-family: var(--font-title);
+    letter-spacing: 0.2px;
+    margin: 0 0 10px;
+}
+
 h1 {
-    margin: 0 0 8px;
+    font-size: 30px;
 }
 
 h2 {
-    margin: 0 0 12px;
     font-size: 18px;
 }
 
@@ -53,58 +80,110 @@ h2 {
     font-size: 12px;
 }
 
-/* Cards */
-.card {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 16px;
-    margin: 16px 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+/* ===== Topbar (premium vitrine) ===== */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    padding: 14px 16px;
+
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid rgba(234, 223, 206, 0.9);
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-/* Forms */
+.topbar-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ===== Cards (papier traiteur) ===== */
+.card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 16px;
+    margin: 16px 0;
+
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    box-shadow: var(--shadow);
+}
+
+/* ===== Forms ===== */
 label {
     display: block;
     margin: 6px 0;
     font-size: 13px;
 }
 
-input {
+input,
+textarea,
+select {
     width: 100%;
     max-width: 100%;
+
     padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    border: 1px solid rgba(234, 223, 206, 1);
+    background: rgba(255, 255, 255, 0.95);
+
     font-size: 14px;
-    display: block;
+    font-family: var(--font-ui);
 }
 
-input:focus {
+textarea {
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
     outline: none;
-    border-color: var(--primary);
+    border-color: rgba(176, 141, 87, 0.85);
+    box-shadow: 0 0 0 4px rgba(176, 141, 87, 0.12);
 }
 
-/* Grid */
+/* ===== Grid ===== */
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 10px;
 }
 
-/* Make title + description full width */
-.grid label:nth-child(1),
-.grid label:nth-child(2) {
-    grid-column: 1 / -1;
+@media (max-width: 720px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* Buttons */
+/* Grid spécial formulaire employé */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 720px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Buttons ===== */
 button,
 .btn {
     padding: 9px 14px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
+
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
@@ -113,6 +192,7 @@ button,
     color: white;
 
     transition: background 0.15s ease, transform 0.05s ease;
+    box-shadow: 0 10px 22px rgba(122, 31, 43, 0.14);
 }
 
 button:hover,
@@ -125,140 +205,31 @@ button:active,
     transform: scale(0.98);
 }
 
+/* Secondary button (sobre) */
 .btn.secondary {
-    background: var(--secondary);
+    background: #fff;
     color: var(--primary);
+
+    border: 1px solid rgba(122, 31, 43, 0.20);
+    box-shadow: none;
 }
 
+.btn.secondary:hover {
+    background: rgba(122, 31, 43, 0.06);
+}
+
+/* Danger */
 .btn.danger {
     background: var(--danger);
     color: white;
 }
 
-/* Messages */
-.msg {
-    margin: 10px 0 0;
-    min-height: 18px;
+/* ===== Status messages ===== */
+.status.error {
+    color: var(--danger);
 }
 
-.msg.ok {
-    color: #15803d;
-}
-
-.msg.error {
-    color: #b91c1c;
-}
-
-/* Tasks */
-.task {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-
-    padding: 14px;
-    margin: 10px 0;
-
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: white;
-}
-
-.task-title {
-    font-weight: 700;
-}
-
-.task-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 140px;
-}
-
-.badge {
-    margin-left: 8px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-
-    background: var(--secondary);
-    color: var(--primary);
-}
-
-.badge-todo {
-    background: #fef3c7;
-    color: #b45309;
-}
-
-.badge-inprogress {
-    background: #f3fedb;
-    color: #2563eb;
-}
-
-.badge-done {
-    background: #d1fae5;
-    color: #15803d;
-}
-
-/* ✅ Task History (started/done info) */
-.task-history {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    font-size: 0.85rem;
-}
-
-.task-userline strong {
-    color: #444;
-    font-weight: 600;
-}
-
-/* Topbar */
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.topbar-actions {
-    display: flex;
-    gap: 10px;
-}
-
-/* Tabs */
-.tabs {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.tab {
-    background: var(--secondary);
-    color: var(--primary);
-    border-radius: 999px;
-    padding: 10px 14px;
-    font-weight: 700;
-}
-
-.tab.active {
-    background: var(--primary);
-    color: #fff;
-}
-
-.tab-panel[hidden] {
-    display: none;
-}
-
-/* separators */
-.sep {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 16px 0;
-}
-
-/* Utility row */
+/* ===== Utility row ===== */
 .row {
     display: flex;
     align-items: center;
@@ -266,79 +237,133 @@ button:active,
     gap: 12px;
 }
 
-/* Task history */
-.task-history {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--border);
+/* ===== Badges (étiquettes traiteur) ===== */
+.badge {
+    margin-left: 8px;
+    padding: 4px 10px;
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    background: rgba(176, 141, 87, 0.14);
+    color: #6a4f2a;
+
+    border: 1px solid rgba(176, 141, 87, 0.30);
 }
 
-.task-userline {
-    margin: 4px 0;
+.badge.danger {
+    background: rgba(180, 35, 44, 0.12);
+    color: var(--danger);
+    border: 1px solid rgba(180, 35, 44, 0.22);
 }
 
-/* Stats card look */
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+/* ===== Separator ===== */
+.sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
 }
 
-.stat-box {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px;
-    background: linear-gradient(180deg, #ffffff, #fafbff);
+.hero {
+    padding: 18px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
     box-shadow: var(--shadow);
+    margin: 16px 0 18px;
 }
 
-.stat-box strong {
-    display: block;
-    margin-bottom: 6px;
+.hero-content h1 {
+    margin: 0 0 6px;
 }
 
-/* Badges - ajustement couleur IN_PROGRESS */
-.badge-inprogress {
-    background: #e9ecff;
-    color: var(--primary);
+.hero-sub {
+    margin: 0 0 14px;
+    color: var(--muted);
+    line-height: 1.45;
 }
 
-/* Edit form inside task */
-.inline-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 10px;
-}
-
-.inline-form label {
-    margin: 0;
-}
-
-.inline-form label.full {
-    grid-column: 1 / -1;
-}
-
-.inline-form .actions {
-    grid-column: 1 / -1;
+.hero-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-.icon-btn {
-    border: 0;
-    background: transparent;
-    font-size: 18px;
+/* Option photo */
+.hero-photo {
+    background:
+        linear-gradient(0deg, rgba(31, 35, 40, 0.35), rgba(31, 35, 40, 0.15)),
+        url("./assets/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    border: none;
+}
+
+.hero-photo .hero-sub {
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-photo .btn.secondary {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+/* Option features */
+.hero-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+}
+
+@media (max-width: 720px) {
+    .hero-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+.brand-title {
+    font-family: "Great Vibes", cursive;
+    font-size: 54px;
+    font-weight: 400;
+    color: var(--primary);
+    text-align: center;
+    margin: 20px 0 5px;
+}
+
+.brand-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 0.3px;
+}
+
+.brand-logo {
+    font-family: "Great Vibes", cursive;
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--primary);
+    margin: 0;
     line-height: 1;
-    cursor: pointer;
+}
+
+.nav a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--text);
     padding: 6px 10px;
     border-radius: 10px;
 }
 
-.icon-btn:hover {
-    background: rgba(0, 0, 0, 0.06);
+.nav a:hover {
+    background: rgba(122, 31, 43, 0.06);
+    color: var(--primary);
 }
 
-#clearFiltersBtn {
-    display: none;
+.nav a[aria-current="page"] {
+    background: rgba(176, 141, 87, 0.14);
+    border: 1px solid rgba(176, 141, 87, 0.30);
+    color: var(--primary);
 }
