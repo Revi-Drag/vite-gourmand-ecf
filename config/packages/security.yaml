@@ -53,6 +53,8 @@ security:
         - { path: ^/admin/_seed_user$, roles: PUBLIC_ACCESS }
         - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/api/employee, roles: ROLE_EMPLOYEE }
+        - { path: ^/api/password/forgot$, roles: PUBLIC_ACCESS, methods: [POST] }
+        - { path: ^/api/password/reset$, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api/login$, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api/login$, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api/contact$, roles: PUBLIC_ACCESS, methods: [POST] }
