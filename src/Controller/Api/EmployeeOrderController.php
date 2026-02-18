@@ -7,13 +7,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class EmployeeOrderController extends AbstractController
 {
     #[Route('/api/employee/orders', methods: ['GET'])]
     public function list(CustomerOrderRepository $repo): JsonResponse
     {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        if (!$user || !$user->isActive()) {
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
+        }
+
         $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $orders = $repo->findBy([], ['createdAt' => 'DESC']);
@@ -47,6 +53,13 @@ class EmployeeOrderController extends AbstractController
         CustomerOrderRepository $repo,
         EntityManagerInterface $em
     ): JsonResponse {
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        if (!$user || !$user->isActive()) {
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
+        }
+
         $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $order = $repo->find($id);
