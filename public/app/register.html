@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Créer un compte — Vite & Gourmand</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <header class="app-header">
+        <nav class="nav" aria-label="Navigation principale">
+            <a class="nav-brand" href="./index.html">Vite & Gourmand</a>
+            <div class="nav-links">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./contact.html">Contact</a>
+                <a href="./login.html">Connexion</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h1>Créer un compte</h1>
+
+            <form id="form">
+                <div class="grid-2">
+                    <label>Prénom
+                        <input name="firstName" required autocomplete="given-name" />
+                    </label>
+                    <label>Nom
+                        <input name="lastName" required autocomplete="family-name" />
+                    </label>
+                </div>
+
+                <label>Email
+                    <input type="email" name="email" required autocomplete="email" />
+                </label>
+
+                <label>GSM
+                    <input name="phone" required autocomplete="tel" />
+                </label>
+
+                <label>Adresse
+                    <input name="address" required autocomplete="street-address" />
+                </label>
+
+                <label>Ville
+                    <input name="city" required autocomplete="address-level2" />
+                </label>
+
+                <label>Mot de passe
+                    <input type="password" name="password" required autocomplete="new-password" minlength="10" />
+                    <small class="muted">
+                        10 caractères min, avec 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.
+                    </small>
+                </label>
+
+                <div class="hero-actions">
+                    <button class="btn" type="submit">Créer mon compte</button>
+                    <a class="btn secondary" href="./login.html">J’ai déjà un compte</a>
+                </div>
+
+                <p id="status" class="muted" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
+    <script src="./register.js"></script>
+</body>
+
+</html>
