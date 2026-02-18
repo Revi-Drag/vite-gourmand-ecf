@@ -53,6 +53,7 @@ security:
         - { path: ^/api/login$, roles: PUBLIC_ACCESS }
         - { path: ^/admin/_seed_user$, roles: PUBLIC_ACCESS }
         - { path: ^/api/employee, roles: ROLE_EMPLOYEE }
+        - { path: ^/api/contact$, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
