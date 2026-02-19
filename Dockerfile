@@ -1,18 +1,14 @@
 FROM php:8.4-fpm-alpine
 
-# deps system
+# deps system (minimum)
 RUN apk add --no-cache \
-    bash \
-    git \
-    unzip \
-    icu-dev \
-    libzip-dev \
-    oniguruma-dev \
+    bash git unzip \
     nginx \
     $PHPIZE_DEPS
 
-# php extensions
-RUN docker-php-ext-install intl opcache pdo pdo_mysql zip
+# php extensions (minimum)
+RUN docker-php-ext-install pdo pdo_mysql opcache
+RUN php -m | grep -i pdo_mysql
 
 #check DUR casse le build si pdo_mysql absent
 RUN php -v && php -m
