@@ -20,7 +20,7 @@ echo "[entrypoint] Start php-fpm..."
 php-fpm -D
 
 echo "[entrypoint] Render nginx.conf with PORT=${PORT:-8080}"
-envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+envsubst '${PORT}' < /etc/nginx/http.d/default.conf.template > /etc/nginx/http.d/default.conf
 
 echo "[entrypoint] Start nginx (foreground)..."
 exec nginx -g "daemon off;"
