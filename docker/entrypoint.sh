@@ -16,6 +16,10 @@ php bin/console doctrine:migrations:migrate -n || echo "[entrypoint] migrations 
 echo "[entrypoint] Warmup cache (non-blocking)..."
 php bin/console cache:clear --env=prod || true
 
+echo "[entrypoint] Prepare php-fpm socket directory..."
+mkdir -p /var/run
+chown -R nginx:nginx /var/run
+
 echo "[entrypoint] Start php-fpm..."
 php-fpm -D
 
