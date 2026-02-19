@@ -28,6 +28,8 @@ WORKDIR /var/www/html
 # copy app
 COPY . .
 
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-listen.conf
+
 # PHP/FPM logs -> Render stdout/stderr
 COPY docker/php.ini /usr/local/etc/php/conf.d/zz-render.ini
 
