@@ -20,11 +20,19 @@ echo "[entrypoint] Prepare php-fpm socket directory..."
 mkdir -p /var/run
 chown -R nginx:nginx /var/run
 
+echo "[entrypoint] ENV PORT='$PORT'"
+echo "[entrypoint] ENV RAILWAY_TCP_PROXY_PORT='$RAILWAY_TCP_PROXY_PORT'"
+echo "[entrypoint] ENV RAILWAY_PUBLIC_DOMAIN='$RAILWAY_PUBLIC_DOMAIN'"
+
 echo "[entrypoint] Start php-fpm..."
 php-fpm -D
 
-echo "[entrypoint] Use nginx.conf (listen 9000)"
-cp /etc/nginx/http.d/default.conf.template /etc/nginx/http.d/default.conf
+# Railway injecte souvent PORT. Si absent, fallback local.
+export PORT="${PORT:-8080}"
+echo "[entrypoint] Using PORT=$PORT"
+
+echo "[entrypoint] Render nginx.conf with PORT=$PORT"
+envsubst '${PORT}' < /etc/nginx/http.d/default.conf.template > /etc/nginx/http.d/default.conf
 
 echo "[entrypoint] Effective listen line:"
 grep -n "listen" /etc/nginx/http.d/default.conf || true

@@ -1,5 +1,5 @@
 server {
-    listen 0.0.0.0:9000;
+    listen 0.0.0.0:${PORT};
     server_name _;
     root /var/www/html/public;
 
@@ -38,7 +38,8 @@ server {
 
     location ~ ^/index\.php(/|$) {
         include fastcgi_params;
-        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass unix:/var/run/php-fpm.sock;
+
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
