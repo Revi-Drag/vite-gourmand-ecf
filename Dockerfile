@@ -2,9 +2,8 @@ FROM php:8.4-fpm-alpine
 
 # deps system (minimum)
 RUN apk add --no-cache \
-    bash git unzip \
-    nginx \
-    $PHPIZE_DEPS
+    bash git unzip nginx gettext \
+    autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c
 
 # php extensions (minimum)
 RUN docker-php-ext-install pdo pdo_mysql opcache
