@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Détail menu</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./legal.html">Mentions légales</a>
+                <a href="./cgv.html">CGV</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="row" style="margin-bottom: 12px;">
+            <a class="btn secondary" href="./menus.html">← Retour</a>
+            <span id="status" class="muted" role="status" aria-live="polite"></span>
+        </div>
+
+        <section class="card" id="menuCard">
+            <div id="content"></div>
+        </section>
+    </main>
+
+    <script src="./menu-detail.js"></script>
+</body>
+
+</html>

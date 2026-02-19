@@ -3,18 +3,23 @@ const API_BASE = ""; // même domaine
 const els = {
     grid: document.getElementById("menusGrid"),
     status: document.getElementById("status"),
-    theme: document.getElementById("theme"),
-    regime: document.getElementById("regime"),
-    maxPrice: document.getElementById("maxPrice"),
-    minPersons: document.getElementById("minPersons"),
-    resetBtn: document.getElementById("resetBtn"),
-    clearBtn: document.getElementById("clearFiltersBtn"),
+
+    fTheme: document.getElementById("fTheme"),
+    fDiet: document.getElementById("fDiet"),
+    fMinPersons: document.getElementById("fMinPersons"),
+    fPriceMin: document.getElementById("fPriceMin"),
+    fPriceMax: document.getElementById("fPriceMax"),
+
+    btnApply: document.getElementById("btnApply"),
+    btnReset: document.getElementById("btnReset"),
 };
 
-let allMenus = [];
+/* -----------------------------
+   Utils
+----------------------------- */
 
 function escapeHtml(str) {
-    return String(str)
+    return String(str ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
@@ -22,97 +27,182 @@ function escapeHtml(str) {
         .replaceAll("'", "&#039;");
 }
 
-function renderMenus(menus) {
-    if (!menus.length) {
-        els.grid.innerHTML = `<div class="card"><p>Aucun menu ne correspond aux filtres.</p></div>`;
+function fmtMoney(n) {
+    const v = Number(n || 0);
+    return `${v.toFixed(2)} €`;
+}
+
+function buildQuery() {
+    const q = new URLSearchParams();
+
+    if (els.fTheme.value) q.set("theme", els.fTheme.value);
+    if (els.fDiet.value) q.set("diet", els.fDiet.value);
+
+    if (els.fMinPersons.value) q.set("minPersons", els.fMinPersons.value);
+    if (els.fPriceMin.value) q.set("priceMin", els.fPriceMin.value);
+    if (els.fPriceMax.value) q.set("priceMax", els.fPriceMax.value);
+
+    return q.toString();
+}
+
+/* -----------------------------
+   Render menus
+----------------------------- */
+
+function renderMenus(items) {
+    if (!items.length) {
+        els.grid.innerHTML = `
+      <div class="card">
+        <p>Aucun menu ne correspond aux filtres.</p>
+      </div>
+    `;
         return;
     }
 
-    els.grid.innerHTML = menus
-        .map((m) => {
-            return `
-        <article class="card">
-          <h3>${escapeHtml(m.title)}</h3>
-          <p>${escapeHtml(m.description)}</p>
+    els.grid.innerHTML = items.map(m => {
 
-          <div class="badges">
-            <span class="badge">${escapeHtml(m.theme)}</span>
-            <span class="badge">${escapeHtml(m.regime)}</span>
-          </div>
+        const allergens = (m.allergens || []).join(", ");
 
-          <div class="row">
-            <span><strong>${m.minPersons}</strong> pers. min</span>
-            <span><strong>${Number(m.basePrice).toFixed(2)} €</strong></span>
-          </div>
+        const dishes = (m.dishes || [])
+            .sort((a, b) => a.type.localeCompare(b.type))
+            .map(d => `
+        <li>
+          <span class="badge">${escapeHtml(d.type)}</span>
+          ${escapeHtml(d.name)}
+        </li>
+      `)
+            .join("");
 
-          <div class="row">
-            <span>Stock: ${m.stock}</span>
-            <a class="btn" href="./menu.html?id=${m.id}">Voir détail</a>
-          </div>
-        </article>
-      `;
-        })
-        .join("");
+        const img = (m.images && m.images.length > 0) ? m.images[0] : null;
+
+        return `
+      <article class="card menu-card">
+
+        ${img ? `
+          <img
+            class="menu-img"
+            src="${escapeHtml(img)}"
+            alt="Illustration du menu ${escapeHtml(m.title)}"
+          >
+        ` : ""}
+
+        <h3>${escapeHtml(m.title)}</h3>
+
+        <p class="menu-meta">
+          Thème : ${escapeHtml(m.theme)}
+          · Régime : ${escapeHtml(m.diet)}
+          · Min : ${m.minPersons} pers
+        </p>
+
+        <p>${escapeHtml(m.description || "")}</p>
+
+        <h4>Plats inclus</h4>
+        <ul class="menu-list">
+          ${dishes}
+        </ul>
+
+        <p class="muted">
+          Allergènes : ${escapeHtml(allergens || "Non précisé")}
+        </p>
+
+        <div class="menu-footer">
+          <strong>${fmtMoney(m.price)}</strong>
+
+          <a class="btn" href="./menu-detail.html?id=${m.id}">
+            Voir détail
+          </a>
+        </div>
+
+      </article>
+    `;
+    }).join("");
 }
 
-function applyFilters() {
-    const theme = els.theme.value.trim();
-    const regime = els.regime.value.trim();
-    const maxPrice = els.maxPrice.value ? Number(els.maxPrice.value) : null;
-    const minPersons = els.minPersons.value ? Number(els.minPersons.value) : null;
-    const anyActive = theme || regime || maxPrice !== null || minPersons !== null;
+/* -----------------------------
+   Hydrate themes dropdown
+----------------------------- */
 
-    if (els.clearBtn) {
-        els.clearBtn.style.display = anyActive ? "inline-flex" : "none";
+function hydrateThemes(items) {
+    const themes = Array.from(
+        new Set(items.map(m => m.theme).filter(Boolean))
+    ).sort();
+
+    const current = els.fTheme.value;
+
+    els.fTheme.innerHTML =
+        `<option value="">Tous</option>` +
+        themes.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join("");
+
+    if (themes.includes(current)) {
+        els.fTheme.value = current;
     }
-
-    let filtered = [...allMenus];
-
-    if (theme) filtered = filtered.filter((m) => m.theme === theme);
-    if (regime) filtered = filtered.filter((m) => m.regime === regime);
-    if (maxPrice !== null) filtered = filtered.filter((m) => Number(m.basePrice) <= maxPrice);
-    if (minPersons !== null) filtered = filtered.filter((m) => Number(m.minPersons) >= minPersons);
-
-    els.status.textContent = `${filtered.length} menu(s) affiché(s)`;
-    renderMenus(filtered);
 }
 
-async function loadMenus() {
-    els.status.textContent = "Chargement des menus…";
-    const res = await fetch(`${API_BASE}/api/menus`, { headers: { "Accept": "application/json" } });
+/* -----------------------------
+   Fetch menus
+----------------------------- */
 
-    if (!res.ok) {
-        els.status.textContent = `Erreur chargement menus (HTTP ${res.status})`;
-        els.grid.innerHTML = "";
+async function fetchMenus() {
+    els.status.textContent = "Chargement des menus...";
+
+    const qs = buildQuery();
+    const url = `${API_BASE}/api/menus${qs ? "?" + qs : ""}`;
+
+    let res, data;
+
+    try {
+        res = await fetch(url, { method: "GET" });
+        data = await res.json();
+    } catch (err) {
+        els.status.textContent = "Erreur réseau.";
         return;
     }
 
-    allMenus = await res.json();
-    els.status.textContent = `${allMenus.length} menu(s) disponible(s)`;
-    applyFilters();
+    if (!res.ok || !data.success) {
+        els.status.textContent = "Erreur lors du chargement.";
+        els.grid.innerHTML = `
+      <div class="card">
+        <p>Impossible de charger les menus.</p>
+      </div>
+    `;
+        return;
+    }
 
+    els.status.textContent = `${data.items.length} menu(x) trouvé(s)`;
+
+    renderMenus(data.items);
+    hydrateThemes(data.items);
 }
+
+/* -----------------------------
+   Reset filters
+----------------------------- */
 
 function resetFilters() {
-    els.theme.value = "";
-    els.regime.value = "";
-    els.maxPrice.value = "";
-    els.minPersons.value = "";
-    applyFilters();
+    els.fTheme.value = "";
+    els.fDiet.value = "";
+    els.fMinPersons.value = "";
+    els.fPriceMin.value = "";
+    els.fPriceMax.value = "";
 }
 
-["change", "input"].forEach((evt) => {
-    els.theme.addEventListener(evt, applyFilters);
-    els.regime.addEventListener(evt, applyFilters);
-    els.maxPrice.addEventListener(evt, applyFilters);
-    els.minPersons.addEventListener(evt, applyFilters);
-});
-els.resetBtn.addEventListener("click", resetFilters);
-if (els.clearBtn) {
-    els.clearBtn.addEventListener("click", resetFilters);
-}
+/* -----------------------------
+   Events
+----------------------------- */
 
-loadMenus().catch((e) => {
-    console.error(e);
-    els.status.textContent = "Erreur inattendue au chargement.";
+els.btnApply.addEventListener("click", (e) => {
+    e.preventDefault();
+    fetchMenus();
 });
+
+els.btnReset.addEventListener("click", (e) => {
+    e.preventDefault();
+    resetFilters();
+    fetchMenus();
+});
+
+/* -----------------------------
+   Init
+----------------------------- */
+
+fetchMenus();

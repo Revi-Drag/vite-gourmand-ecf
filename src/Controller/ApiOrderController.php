@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\OrderStatusEvent;
+use App\Repository\OrderStatusEventRepository;
 
 class ApiOrderController extends AbstractController
 {
@@ -107,6 +109,15 @@ class ApiOrderController extends AbstractController
         $menu->setStock($menu->getStock() - 1);
 
         $em->persist($order);
+
+        // Timeline event: PENDING
+        $ev = new OrderStatusEvent();
+        $ev->setCustomerOrder($order);
+        $ev->setStatus('PENDING');
+        $ev->setChangedAt($order->getCreatedAt());
+        $ev->setChangedBy($user->getEmail());
+        $em->persist($ev);
+
         $em->flush();
 
         return new JsonResponse([
@@ -125,7 +136,7 @@ class ApiOrderController extends AbstractController
     }
 
     #[Route('/api/orders/mine', name: 'api_orders_mine', methods: ['GET'])]
-    public function mine(CustomerOrderRepository $repo): JsonResponse
+    public function mine(CustomerOrderRepository $repo, OrderStatusEventRepository $evRepo): JsonResponse
     {
         $user = $this->getUser();
         if (!$user instanceof User) {
@@ -136,17 +147,34 @@ class ApiOrderController extends AbstractController
 
         $out = [];
         foreach ($orders as $o) {
+
+            // Timeline events (suivi commande)
+            $events = $evRepo->findBy(['customerOrder' => $o], ['changedAt' => 'ASC']);
+            $history = [];
+
+            foreach ($events as $e) {
+                $history[] = [
+                    'status' => $e->getStatus(),
+                    'changedAt' => $e->getChangedAt()->format('Y-m-d H:i'),
+                ];
+            }
+
             $out[] = [
                 'id' => $o->getId(),
                 'status' => $o->getStatus(),
+                'createdAt' => $o->getCreatedAt()->format('Y-m-d H:i'),
+                'history' => $history,
+
                 'persons' => $o->getPersons(),
                 'eventCity' => $o->getEventCity(),
                 'eventAddress' => $o->getEventAddress(),
                 'eventDate' => $o->getEventDate()->format('Y-m-d H:i'),
+
                 'menu' => [
                     'id' => $o->getMenu()->getId(),
                     'title' => $o->getMenu()->getTitle(),
                 ],
+
                 'menuPrice' => (float) $o->getMenuPrice(),
                 'deliveryPrice' => (float) $o->getDeliveryPrice(),
                 'totalPrice' => (float) $o->getTotalPrice(),
@@ -183,6 +211,10 @@ class ApiOrderController extends AbstractController
                 'error' => 'Only pending orders can be cancelled'
             ], 400);
         }
+
+        // remettre le stock du menu
+        $menu = $order->getMenu();
+        $menu->setStock($menu->getStock() + 1);
 
         $em->remove($order);
         $em->flush();

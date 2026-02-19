@@ -46,7 +46,7 @@ form.addEventListener("submit", async (e) => {
 
         // petite pause visuelle
         setTimeout(() => {
-            window.location.href = redirect ? decodeURIComponent(redirect) : "./menus.html";
+            window.location.href = redirect ? decodeURIComponent(redirect) : "./index.html";
         }, 300);
 
 

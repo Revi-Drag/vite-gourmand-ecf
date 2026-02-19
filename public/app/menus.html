@@ -5,83 +5,89 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Vite & Gourmand — Menus</title>
+
     <link rel="stylesheet" href="./app.css" />
 </head>
 
 <body>
+    <!-- HEADER -->
     <header class="topbar">
         <div class="container">
-            <h1>Vite & Gourmand</h1>
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
             <nav class="nav">
                 <a href="./index.html">Accueil</a>
                 <a href="./menus.html" aria-current="page">Menus</a>
-                <a href="./login.html">Connexion</a>
-                <a href="./contact.html">Contact</a>
+                <a href="./legal.html">Mentions légales</a>
+                <a href="./cgv.html">CGV</a>
             </nav>
         </div>
     </header>
 
+    <!-- MAIN -->
     <main class="container">
+        <h1>Nos menus</h1>
+
+        <!-- FILTRES -->
         <section class="card">
-            <h2>Tous les menus</h2>
-            <p class="muted">Filtre et affiche les menus dynamiquement (sans rechargement).</p>
+            <h2>Filtres</h2>
 
-            <div class="filters">
-                <div class="field">
-                    <label for="theme">Thème</label>
-                    <select id="theme">
+            <div class="grid-2">
+
+                <!-- THEME -->
+                <label>
+                    Thème
+                    <select id="fTheme">
                         <option value="">Tous</option>
-                        <option value="Classique">Classique</option>
-                        <option value="Noel">Noël</option>
-                        <option value="Paques">Pâques</option>
-                        <option value="Evenement">Évènement</option>
                     </select>
-                </div>
+                </label>
 
-                <div class="field">
-                    <label for="regime">Régime</label>
-                    <select id="regime">
+                <!-- REGIME -->
+                <label>
+                    Régime
+                    <select id="fDiet">
                         <option value="">Tous</option>
-                        <option value="Classique">Classique</option>
-                        <option value="Vegetarien">Végétarien</option>
-                        <option value="Vegan">Vegan</option>
+                        <option value="NONE">Aucun</option>
+                        <option value="VEGETARIAN">Végétarien</option>
+                        <option value="HALAL">Halal</option>
+                        <option value="GLUTEN_FREE">Sans gluten</option>
                     </select>
+                </label>
+
+                <!-- MIN PERSONS -->
+                <label>
+                    Nombre de personnes (minimum)
+                    <input id="fMinPersons" type="number" min="1" placeholder="ex: 5" />
+                </label>
+
+                <!-- PRICE MIN -->
+                <label>
+                    Prix minimum (€)
+                    <input id="fPriceMin" type="number" min="0" step="0.01" placeholder="ex: 50" />
+                </label>
+
+                <!-- PRICE MAX -->
+                <label>
+                    Prix maximum (€)
+                    <input id="fPriceMax" type="number" min="0" step="0.01" placeholder="ex: 200" />
+                </label>
+
+                <!-- ACTIONS -->
+                <div class="actions">
+                    <button class="btn" id="btnApply">Appliquer</button>
+                    <button class="btn secondary" id="btnReset">Réinitialiser</button>
                 </div>
 
-                <div class="field">
-                    <label for="maxPrice">Prix maximum (€)</label>
-                    <input id="maxPrice" type="number" min="0" step="1" placeholder="ex: 30" />
-                </div>
-
-                <div class="field">
-                    <label for="minPersons">Personnes minimum</label>
-                    <input id="minPersons" type="number" min="1" step="1" placeholder="ex: 8" />
-                </div>
-
-                <div class="field">
-                    <label>&nbsp;</label>
-                    <button id="resetBtn" class="btn">Réinitialiser</button>
-                </div>
             </div>
+
+            <p id="status" class="muted" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="row" style="margin: 12px 0; align-items:center; gap:10px;">
-            <div id="status" class="muted"></div>
-            <button id="clearFiltersBtn" class="icon-btn" type="button" aria-label="Effacer les filtres"
-                title="Effacer les filtres">
-                ✕
-            </button>
-        </section>
-
-        <section id="menusGrid" class="grid"></section>
+        <!-- GRID MENUS -->
+        <section id="menusGrid" class="menus-grid"></section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <small>Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV</small>
-        </div>
-    </footer>
-
+    <!-- JS -->
     <script src="./menus.js"></script>
 </body>
 

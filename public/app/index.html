@@ -14,11 +14,16 @@
     <header class="app-header">
         <nav class="nav" aria-label="Navigation principale">
             <a class="nav-brand" href="./index.html">Vite & Gourmand</a>
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="./index.html" aria-current="page">Accueil</a>
                 <a href="./menus.html">Menus</a>
                 <a href="./contact.html">Contact</a>
                 <a href="./login.html">Connexion</a>
+
+                <a id="navMyOrders" href="./my-orders.html" hidden>Mes commandes</a>
+                <a id="navEmployee" href="./employee-orders.html" hidden>Commandes employés</a>
+
+                <a id="navLogout" href="#" hidden>Déconnexion</a>
             </div>
         </nav>
     </header>
@@ -98,6 +103,34 @@
     </footer>
 
     <script src="./reviews.js"></script>
+    <script>
+        (async function () {
+            const elLogin = document.getElementById("navLogin");
+            const elMyOrders = document.getElementById("navMyOrders");
+            const elEmployee = document.getElementById("navEmployee");
+
+            try {
+                const res = await fetch("/api/me", {
+                    credentials: "include",
+                    headers: { Accept: "application/json" }
+                });
+
+                if (!res.ok) return;
+
+                const data = await res.json().catch(() => null);
+                const roles = data?.user?.roles || [];
+
+                // connecté
+                elLogin.hidden = true;
+                elMyOrders.hidden = false;
+
+                if (roles.includes("ROLE_EMPLOYEE")) {
+                    elEmployee.hidden = false;
+                }
+            } catch (e) { }
+        })();
+    </script>
+
 </body>
 
 </html>

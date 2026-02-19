@@ -21,7 +21,8 @@ function fmtMoney(n) {
 
 function setStatus(msg, isError = false) {
     els.status.textContent = msg;
-    els.status.className = isError ? "status error" : "status";
+    els.status.className = isError ? "msg error" : "msg ok";
+    els.status.className = "msg";
 }
 
 function render(orders) {
@@ -69,8 +70,14 @@ async function loadOrders() {
     setStatus("Chargement...");
     const res = await fetch("/api/employee/orders", { credentials: "include" });
 
-    if (res.status === 401) return setStatus("Non authentifié. Connecte-toi.", true);
-    if (res.status === 403) return setStatus("Accès refusé (ROLE_EMPLOYEE requis).", true);
+    if (res.status === 401) {
+        location.href = `./login.html?redirect=${encodeURIComponent(location.pathname)}`;
+        return;
+    }
+    if (res.status === 403) {
+        setStatus("Accès refusé (ROLE_EMPLOYEE requis).", true);
+        return;
+    }
 
     const data = await res.json();
     render(data);

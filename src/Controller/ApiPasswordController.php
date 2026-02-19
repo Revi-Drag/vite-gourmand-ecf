@@ -21,6 +21,15 @@ class ApiPasswordController extends AbstractController
         return (bool) preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{10,}$/', $pw);
     }
 
+    private function genericForgotResponse(): JsonResponse
+    {
+        // Anti-enumération: même réponse dans tous les cas
+        return $this->json([
+            'success' => true,
+            'message' => 'If the email exists, a reset link has been sent.',
+        ]);
+    }
+
     /**
      * POST /api/password/forgot  (PUBLIC)
      * Body: { "email": "..." }
@@ -35,51 +44,58 @@ class ApiPasswordController extends AbstractController
         $payload = json_decode($request->getContent() ?: '[]', true) ?: [];
         $email = strtolower(trim((string) ($payload['email'] ?? '')));
 
-        // Always respond success (even if email invalid/unknown)
-        $generic = $this->json([
-            'success' => true,
-            'message' => 'If the email exists, a reset link has been sent.'
-        ]);
-
         if ($email === '') {
-            return $generic;
+            return $this->genericForgotResponse();
         }
 
         /** @var User|null $user */
         $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
         if (!$user) {
-            return $generic;
+            return $this->genericForgotResponse();
         }
 
-        // Upsert token: 1 token per user
+        // 1 token max par user (contrainte UNIQUE sur user_id)
         $repo = $em->getRepository(PasswordResetToken::class);
         $prt = $repo->findOneBy(['user' => $user]) ?? new PasswordResetToken();
         $prt->setUser($user);
 
-        $token = bin2hex(random_bytes(32)); // 64 hex chars
+        // Génère un token unique (collision ultra rare, mais on sécurise)
+        do {
+            $token = bin2hex(random_bytes(32)); // 64 hex
+            $exists = $repo->findOneBy(['token' => $token]);
+        } while ($exists);
+
+        $now = new \DateTimeImmutable();
         $prt->setToken($token);
-        $prt->setCreatedAt(new \DateTimeImmutable());
-        $prt->setExpiresAt((new \DateTimeImmutable())->modify('+1 hour'));
+        $prt->setCreatedAt($now);
+        $prt->setExpiresAt($now->modify('+1 hour'));
 
         $em->persist($prt);
         $em->flush();
 
-        // Link (dev-friendly)
-        $resetLink = sprintf('http://localhost:8000/app/reset-password.html?token=%s', $token);
+        // URL côté navigateur (public/app/reset-password.html => /app/reset-password.html)
+        $resetLink = sprintf(
+            '%s/app/reset-password.html?token=%s',
+            $request->getSchemeAndHttpHost(),
+            $token
+        );
 
-        $to = $_ENV['MAIL_TO_CONTACT'] ?? 'contact@vitegourmand.fr';
         $from = $_ENV['MAIL_FROM'] ?? 'no-reply@vitegourmand.fr';
 
-        // Send to user email (not to company)
         $emailMsg = (new Email())
             ->from($from)
             ->to($user->getEmail())
             ->subject('Réinitialisation de mot de passe — Vite & Gourmand')
-            ->text("Bonjour,\n\nPour réinitialiser votre mot de passe, cliquez sur ce lien :\n$resetLink\n\nCe lien expire dans 1 heure.\n");
+            ->text(
+                "Bonjour,\n\n" .
+                "Pour réinitialiser votre mot de passe, cliquez sur ce lien :\n" .
+                $resetLink . "\n\n" .
+                "Ce lien expire dans 1 heure.\n"
+            );
 
         $mailer->send($emailMsg);
 
-        return $generic;
+        return $this->genericForgotResponse();
     }
 
     /**
@@ -113,8 +129,9 @@ class ApiPasswordController extends AbstractController
             return $this->json(['success' => false, 'error' => 'Invalid token.'], 400);
         }
 
-        if ($prt->getExpiresAt() < new \DateTimeImmutable()) {
-            // expired -> delete
+        $now = new \DateTimeImmutable();
+        if ($prt->getExpiresAt() < $now) {
+            // token expiré => on supprime
             $em->remove($prt);
             $em->flush();
 
@@ -124,7 +141,7 @@ class ApiPasswordController extends AbstractController
         $user = $prt->getUser();
         $user->setPassword($hasher->hashPassword($user, $newPassword));
 
-        // token one-time use
+        // One-time use
         $em->remove($prt);
         $em->flush();
 

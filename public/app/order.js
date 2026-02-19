@@ -11,7 +11,7 @@ const eventPhone = document.getElementById("eventPhone");
 const persons = document.getElementById("persons");
 
 const params = new URLSearchParams(location.search);
-const menuId = params.get("menu");
+const menuId = params.get("menuId");
 
 let menu = null;
 
@@ -28,7 +28,7 @@ function computePrices() {
 
     const p = persons.value ? Number(persons.value) : 0;
     const min = Number(menu.minPersons);
-    const base = Number(menu.basePrice); // for minPersons
+    const base = Number(menu.price); // for minPersons
 
     if (!p) {
         priceBox.textContent = "—";
@@ -73,12 +73,24 @@ async function loadMenu() {
         form.style.display = "none";
         return;
     }
-    menu = await res.json();
-    menuInfo.innerHTML = `<strong>${menu.title}</strong> — min ${menu.minPersons} pers — ${euro(menu.basePrice)} (pour le minimum)`;
+
+    const data = await res.json().catch(() => null);
+    if (!data || !data.success || !data.item) {
+        menuInfo.textContent = "Menu introuvable.";
+        form.style.display = "none";
+        return;
+    }
+
+    menu = data.item;
+
+    // ✅ sur l'API publique c'est "price" (pas basePrice)
+    menuInfo.innerHTML = `<strong>${menu.title}</strong> — min ${menu.minPersons} pers — ${euro(menu.price)} (prix de base)`;
     persons.min = String(menu.minPersons);
     persons.placeholder = `min ${menu.minPersons}`;
+
     computePrices();
 }
+
 
 function wire() {
     ["input", "change"].forEach((evt) => {

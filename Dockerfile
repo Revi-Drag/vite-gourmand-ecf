@@ -14,6 +14,11 @@ RUN apk add --no-cache \
 # php extensions
 RUN docker-php-ext-install intl opcache pdo pdo_mysql zip
 
+#check DUR casse le build si pdo_mysql absent
+RUN php -v && php -m
+RUN php -m | grep -i pdo_mysql
+
+
 # mongodb extension (NoSQL)
 RUN pecl install mongodb \
  && docker-php-ext-enable mongodb
