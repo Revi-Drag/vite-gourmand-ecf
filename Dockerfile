@@ -8,15 +8,18 @@ RUN apk add --no-cache \
     icu-dev \
     libzip-dev \
     oniguruma-dev \
-    postgresql-dev \
-    libpq \
-    nginx
+    nginx \
+    $PHPIZE_DEPS
 
 # php extensions
-RUN docker-php-ext-install intl opcache pdo pdo_pgsql zip
+RUN docker-php-ext-install intl opcache pdo pdo_mysql zip
 
-# verify PostgreSQL drivers are installed (PDO + pgsql)
-RUN php -m | grep -E 'pdo_pgsql|pgsql' || (php -m && exit 1)
+# mongodb extension (NoSQL)
+RUN pecl install mongodb \
+ && docker-php-ext-enable mongodb
+
+# verify MySQL drivers are installed (PDO + mysqlnd)
+RUN php -m | grep -E 'pdo_mysql|mysqlnd' || (php -m && exit 1)
 
 WORKDIR /var/www/html
 
