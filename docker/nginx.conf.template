@@ -1,5 +1,5 @@
 server {
-    listen 0.0.0.0:${PORT};
+    listen 0.0.0.0:9000;
     server_name _;
     root /var/www/html/public;
 

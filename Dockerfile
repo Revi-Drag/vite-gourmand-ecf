@@ -54,6 +54,6 @@ RUN mkdir -p var && chown -R www-data:www-data var
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 9000
 
 ENTRYPOINT ["/entrypoint.sh"]

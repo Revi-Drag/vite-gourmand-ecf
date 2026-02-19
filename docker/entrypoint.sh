@@ -19,8 +19,8 @@ php bin/console cache:clear --env=prod || true
 echo "[entrypoint] Start php-fpm..."
 php-fpm -D
 
-echo "[entrypoint] Render nginx.conf with PORT=${PORT:-9000}"
-envsubst '${PORT}' < /etc/nginx/http.d/default.conf.template > /etc/nginx/http.d/default.conf
+echo "[entrypoint] Use nginx.conf (listen 9000)"
+cp /etc/nginx/http.d/default.conf.template /etc/nginx/http.d/default.conf
 
 echo "[entrypoint] Effective listen line:"
 grep -n "listen" /etc/nginx/http.d/default.conf || true
