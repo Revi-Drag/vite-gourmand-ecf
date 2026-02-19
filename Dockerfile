@@ -41,7 +41,7 @@ ENV APP_DEBUG=0
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # install vendors
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # nginx conf
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf

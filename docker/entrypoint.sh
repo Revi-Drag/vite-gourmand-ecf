@@ -13,6 +13,9 @@ fi
 echo "[entrypoint] Try migrations (non-blocking)..."
 php bin/console doctrine:migrations:migrate -n || echo "[entrypoint] migrations skipped (db not ready)"
 
+echo "[entrypoint] Warmup cache (non-blocking)..."
+php bin/console cache:clear --env=prod || true
+
 echo "[entrypoint] Start php-fpm..."
 php-fpm -D
 
