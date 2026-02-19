@@ -5,6 +5,8 @@ RUN apk add --no-cache \
     bash git unzip nginx gettext \
     autoconf dpkg-dev dpkg file g++ gcc libc-dev make pkgconf re2c
 
+RUN which envsubst && envsubst --version
+
 # php extensions (minimum)
 RUN docker-php-ext-install pdo pdo_mysql opcache
 RUN php -m | grep -i pdo_mysql
