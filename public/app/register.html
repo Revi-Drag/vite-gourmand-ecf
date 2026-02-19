@@ -9,63 +9,89 @@
 </head>
 
 <body>
-    <header class="app-header">
-        <nav class="nav" aria-label="Navigation principale">
-            <a class="nav-brand" href="./index.html">Vite & Gourmand</a>
-            <div class="nav-links">
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
+            <nav class="nav" aria-label="Navigation principale">
                 <a href="./index.html">Accueil</a>
                 <a href="./menus.html">Menus</a>
                 <a href="./contact.html">Contact</a>
                 <a href="./login.html">Connexion</a>
-            </div>
-        </nav>
+                <a href="./register.html" aria-current="page">Créer un compte</a>
+            </nav>
+        </div>
     </header>
 
-    <main class="container">
-        <section class="card">
-            <h1>Créer un compte</h1>
+    <main class="container auth">
+        <div class="auth-wrap">
+            <div class="auth-head">
+                <h1 style="margin:0;">Créer un compte</h1>
+                <p class="muted" style="margin:10px 0 0;">
+                    Créez votre espace pour commander et suivre vos demandes.
+                </p>
+            </div>
 
-            <form id="form">
-                <div class="grid-2">
-                    <label>Prénom
-                        <input name="firstName" required autocomplete="given-name" />
-                    </label>
-                    <label>Nom
-                        <input name="lastName" required autocomplete="family-name" />
-                    </label>
-                </div>
+            <section class="card auth-card">
+                <form id="form" class="register-form">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>Prénom
+                                <input name="firstName" required autocomplete="given-name" />
+                            </label>
+                        </div>
 
-                <label>Email
-                    <input type="email" name="email" required autocomplete="email" />
-                </label>
+                        <div class="field">
+                            <label>Nom
+                                <input name="lastName" required autocomplete="family-name" />
+                            </label>
+                        </div>
 
-                <label>GSM
-                    <input name="phone" required autocomplete="tel" />
-                </label>
+                        <div class="field full">
+                            <label>Email
+                                <input type="email" name="email" required autocomplete="email" />
+                            </label>
+                        </div>
 
-                <label>Adresse
-                    <input name="address" required autocomplete="street-address" />
-                </label>
+                        <div class="field">
+                            <label>GSM
+                                <input name="phone" required autocomplete="tel" />
+                            </label>
+                        </div>
 
-                <label>Ville
-                    <input name="city" required autocomplete="address-level2" />
-                </label>
+                        <div class="field">
+                            <label>Ville
+                                <input name="city" required autocomplete="address-level2" />
+                            </label>
+                        </div>
 
-                <label>Mot de passe
-                    <input type="password" name="password" required autocomplete="new-password" minlength="10" />
-                    <small class="muted">
-                        10 caractères min, avec 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.
-                    </small>
-                </label>
+                        <div class="field full">
+                            <label>Adresse
+                                <input name="address" required autocomplete="street-address" />
+                            </label>
+                        </div>
 
-                <div class="hero-actions">
-                    <button class="btn" type="submit">Créer mon compte</button>
-                    <a class="btn secondary" href="./login.html">J’ai déjà un compte</a>
-                </div>
+                        <div class="field full">
+                            <label>Mot de passe
+                                <input type="password" name="password" required autocomplete="new-password"
+                                    minlength="10" />
+                                <small class="muted">
+                                    10 caractères min, avec 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.
+                                </small>
+                            </label>
+                        </div>
+                    </div>
 
-                <p id="status" class="muted" role="status" aria-live="polite"></p>
-            </form>
-        </section>
+                    <div class="auth-actions">
+                        <button class="btn" type="submit">Créer mon compte</button>
+                        <a class="btn secondary" href="./login.html">J’ai déjà un compte</a>
+                    </div>
+
+                    <p id="status" class="muted" role="status" aria-live="polite" style="margin:10px 0 0;"></p>
+                </form>
+            </section>
+        </div>
     </main>
 
     <script src="./register.js"></script>

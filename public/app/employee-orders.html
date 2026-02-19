@@ -4,22 +4,47 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Espace Employé — Commandes</title>
+    <title>Vite & Gourmand — Espace Employé</title>
     <link rel="stylesheet" href="./app.css" />
 </head>
 
 <body>
+
+    <!-- HEADER cohérent -->
     <header class="topbar">
-        <h1>Espace Employé — Commandes</h1>
-        <nav class="topbar-actions">
-            <a class="btn" href="./menus.html">Menus</a>
-            <a class="btn" href="./my-orders.html">Mes commandes</a>
-        </nav>
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./my-orders.html">Mes commandes</a>
+                <a href="./employee-orders.html" aria-current="page">Espace employé</a>
+            </nav>
+        </div>
     </header>
 
     <main class="container">
-        <p id="status"></p>
-        <div id="ordersGrid" class="grid-2"></div>
+
+        <section class="card">
+            <div class="page-title">
+                <div>
+                    <h1 style="margin:0;">Commandes clients</h1>
+                    <p class="muted" style="margin:10px 0 0;">
+                        Gestion et suivi des commandes en attente ou validées.
+                    </p>
+                </div>
+
+                <div class="page-title-actions">
+                    <a class="btn secondary" href="./menus.html">Voir les menus</a>
+                </div>
+            </div>
+
+            <div id="status" class="muted" style="margin-top:10px;" role="status" aria-live="polite"></div>
+        </section>
+
+        <section id="ordersGrid" class="grid-2 orders-grid" style="margin-top:14px;"></section>
+
     </main>
 
     <script src="./employee-orders.js"></script>

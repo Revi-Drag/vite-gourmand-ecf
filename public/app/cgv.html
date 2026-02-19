@@ -9,45 +9,59 @@
 </head>
 
 <body>
-    <header class="app-header">
-        <nav class="nav" aria-label="Navigation principale">
-            <a class="nav-brand" href="./index.html">Vite & Gourmand</a>
-            <div class="nav-links">
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
+            <nav class="nav" aria-label="Navigation principale">
                 <a href="./index.html">Accueil</a>
                 <a href="./menus.html">Menus</a>
                 <a href="./contact.html">Contact</a>
                 <a href="./login.html">Connexion</a>
-            </div>
-        </nav>
+                <a href="./cgv.html" aria-current="page">CGV</a>
+            </nav>
+        </div>
     </header>
 
-    <main class="container">
-        <section class="card">
-            <h1>Conditions Générales de Vente (CGV)</h1>
+    <main class="container legal-page">
+        <section class="card legal-card">
+            <header class="legal-head">
+                <h1 style="margin:0;">Conditions Générales de Vente (CGV)</h1>
+                <p class="muted" style="margin:10px 0 0;">
+                    Informations contractuelles relatives aux commandes, livraisons, annulations et prêt de matériel.
+                </p>
+            </header>
 
-            <h2>Commande & livraison</h2>
-            <p>
-                Une commande est validée après confirmation. La livraison est gratuite dans Bordeaux.
-                Hors Bordeaux : 5€ + 0,59€/km.
-            </p>
+            <hr class="sep" />
 
-            <h2>Annulation / modification</h2>
-            <p>
-                L’annulation et la modification sont possibles tant que la commande n’a pas été acceptée par l’équipe.
-            </p>
+            <div class="legal-content">
+                <h2>Commande & livraison</h2>
+                <p>
+                    Une commande est validée après confirmation. La livraison est gratuite dans Bordeaux.
+                    Hors Bordeaux : 5€ + 0,59€/km.
+                </p>
 
-            <h2>Prêt de matériel</h2>
-            <p>
-                Si du matériel est prêté, le client doit le restituer dans un délai de 10 jours ouvrés à compter du
-                passage
-                au statut “en attente du retour de matériel”.
-                À défaut de restitution dans ce délai, des frais forfaitaires de <strong>600 €</strong> seront facturés.
-            </p>
+                <h2>Annulation / modification</h2>
+                <p>
+                    L’annulation et la modification sont possibles tant que la commande n’a pas été acceptée par
+                    l’équipe.
+                </p>
 
-            <h2>Contact</h2>
-            <p>
-                Pour toute question, merci d’utiliser la page Contact.
-            </p>
+                <h2>Prêt de matériel</h2>
+                <p>
+                    Si du matériel est prêté, le client doit le restituer dans un délai de 10 jours ouvrés à compter du
+                    passage
+                    au statut “en attente du retour de matériel”.
+                    À défaut de restitution dans ce délai, des frais forfaitaires de <strong>600 €</strong> seront
+                    facturés.
+                </p>
+
+                <h2>Contact</h2>
+                <p>
+                    Pour toute question, merci d’utiliser la page Contact.
+                </p>
+            </div>
         </section>
     </main>
 

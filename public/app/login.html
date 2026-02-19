@@ -4,35 +4,59 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LifeSync — Connexion</title>
+    <title>Vite & Gourmand — Connexion</title>
     <link rel="stylesheet" href="./app.css" />
 </head>
 
 <body>
-    <main class="container">
-        <h1>LifeSync</h1>
-        <p class="muted">Connexion (API Symfony)</p>
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
 
-        <p class="small muted">
-            <a href="./forgot-password.html">Mot de passe oublié ?</a>
-        </p>
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./legal.html">Mentions légales</a>
+                <a href="./cgv.html">CGV</a>
+            </nav>
+        </div>
+    </header>
 
-        <form id="loginForm" class="card">
-            <label>
-                Email
-                <input type="email" name="email" />
-            </label>
+    <main class="container auth">
+        <div class="auth-wrap">
+            <div class="auth-head">
+                <h1 style="margin:0;">Connexion</h1>
+                <p class="muted" style="margin:10px 0 0;">
+                    Accédez à votre espace pour commander, suivre vos demandes et gérer vos informations.
+                </p>
 
-            <label>
-                Mot de passe
-                <input type="password" name="password" />
-            </label>
+                <p class="small muted" style="margin:10px 0 0;">
+                    <a href="./forgot-password.html">Mot de passe oublié ?</a>
+                </p>
+            </div>
 
-            <button type="submit">Se connecter</button>
-            <p id="loginMsg" class="msg"></p>
-        </form>
+            <form id="loginForm" class="card auth-card">
+                <label>
+                    Email
+                    <input type="email" name="email" autocomplete="email" />
+                </label>
 
+                <label>
+                    Mot de passe
+                    <input type="password" name="password" autocomplete="current-password" />
+                </label>
 
+                <button type="submit" class="btn">Se connecter</button>
+                <p id="loginMsg" class="msg"></p>
+
+                <hr class="sep" />
+
+                <p class="muted small" style="margin:0;">
+                    En cas de souci de connexion, vérifiez votre email et votre mot de passe.
+                </p>
+            </form>
+        </div>
     </main>
 
     <script src="./login.js?v=3"></script>

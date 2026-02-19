@@ -9,26 +9,73 @@
 </head>
 
 <body>
-    <main class="container">
-        <h1 class="brand-title">Vite & Gourmand</h1>
-        <h2>Contact</h2>
 
-        <form id="contactForm" class="card">
-            <label>Titre
-                <input name="title" required maxlength="255" />
-            </label>
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
 
-            <label>Email
-                <input name="email" type="email" required />
-            </label>
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html">Menus</a>
+                <a href="./contact.html" aria-current="page">Contact</a>
+                <a href="./login.html">Connexion</a>
+            </nav>
+        </div>
+    </header>
 
-            <label>Message
-                <textarea name="description" required rows="6"></textarea>
-            </label>
+    <main class="container contact-page">
 
-            <button class="btn" type="submit">Envoyer</button>
-            <p id="status" class="small muted"></p>
-        </form>
+        <section class="card contact-wrap">
+            <div class="contact-head">
+                <div>
+                    <h1 style="margin:0;">Contact</h1>
+                    <p class="muted" style="margin:10px 0 0;">
+                        Une question, un besoin spécifique ou une demande particulière ?
+                        Nous vous répondons rapidement.
+                    </p>
+                </div>
+
+                <div class="contact-aside muted small">
+                    <strong>Horaires</strong><br>
+                    Lun–Dim : 09:00–19:00<br><br>
+                    Bordeaux & alentours
+                </div>
+            </div>
+
+            <hr class="sep" />
+
+            <form id="contactForm" class="contact-form">
+                <div class="contact-grid">
+
+                    <div class="field">
+                        <label>Titre
+                            <input name="title" required maxlength="255" />
+                        </label>
+                    </div>
+
+                    <div class="field">
+                        <label>Email
+                            <input name="email" type="email" required />
+                        </label>
+                    </div>
+
+                    <div class="field full">
+                        <label>Message
+                            <textarea name="description" required rows="6"></textarea>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="contact-actions">
+                    <button class="btn" type="submit">Envoyer</button>
+                    <p id="status" class="small muted" role="status" aria-live="polite"></p>
+                </div>
+            </form>
+
+        </section>
+
     </main>
 
     <script src="./contact.js"></script>

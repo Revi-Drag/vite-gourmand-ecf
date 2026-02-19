@@ -9,10 +9,28 @@
 </head>
 
 <body>
+    <!-- HEADER (cohérent avec menus.html) -->
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
+            <nav class="nav">
+                <a href="./index.html">Accueil</a>
+                <a href="./menus.html" aria-current="page">Menus</a>
+                <a href="./legal.html">Mentions légales</a>
+                <a href="./cgv.html">CGV</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="container">
-        <a class="btn" href="./menus.html">← Retour</a>
-        <div id="content" class="card" style="margin-top:12px;"></div>
+        <div class="page-head">
+            <a class="btn secondary" href="./menus.html">← Retour</a>
+        </div>
+
+        <div id="content" class="card menu-detail" style="margin-top:12px;"></div>
     </main>
+
     <script>
         const params = new URLSearchParams(location.search);
         const id = params.get("id");
@@ -24,15 +42,54 @@
                 return;
             }
             const m = await res.json();
+
+            // UI “traiteur” : header + meta + sections + CTA
             document.getElementById("content").innerHTML = `
-        <h2>${m.title}</h2>
-        <p>${m.description}</p>
-        <p><strong>Thème:</strong> ${m.theme} — <strong>Régime:</strong> ${m.regime}</p>
-        <p><strong>Min:</strong> ${m.minPersons} pers — <strong>Prix:</strong> ${Number(m.basePrice).toFixed(2)} €</p>
-        <p><strong>Conditions:</strong> ${m.conditionsText ?? "—"}</p>
-        <p><strong>Stock:</strong> ${m.stock}</p>
-        <a class="btn" href="./order.html?menu=${m.id}">Commander</a>
-      `;
+                <div class="menu-detail-hero">
+                    <div class="menu-detail-hero-text">
+                        <h1 class="menu-detail-title">${m.title}</h1>
+                        <p class="menu-detail-desc">${m.description ?? ""}</p>
+
+                        <div class="menu-detail-badges">
+                            <span class="pill">Thème : <strong>${m.theme ?? "—"}</strong></span>
+                            <span class="pill">Régime : <strong>${m.regime ?? "—"}</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="menu-detail-hero-card">
+                        <div class="menu-detail-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">Minimum</span>
+                                <span class="meta-value">${m.minPersons} pers</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">Prix</span>
+                                <span class="meta-value">${Number(m.basePrice).toFixed(2)} €</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">Stock</span>
+                                <span class="meta-value">${m.stock}</span>
+                            </div>
+                        </div>
+
+                        <a class="btn menu-cta" href="./order.html?menu=${m.id}">Commander</a>
+                        <p class="muted small" style="margin:10px 0 0;">
+                            Paiement & confirmation via l’interface de commande.
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="sep" />
+
+                <div class="menu-detail-sections">
+                    <div class="menu-detail-section">
+                        <h2>Conditions</h2>
+                        <p class="muted" style="margin:0;">
+                            ${m.conditionsText ?? "—"}
+                        </p>
+                    </div>
+                </div>
+            `;
         }
         run();
     </script>

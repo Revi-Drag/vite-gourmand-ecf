@@ -11,7 +11,8 @@
 <body>
     <header class="topbar">
         <div class="container">
-            <h1>Vite & Gourmand</h1>
+            <a class="brand" href="./index.html">Vite & Gourmand</a>
+
             <nav class="nav">
                 <a href="./index.html">Accueil</a>
                 <a href="./menus.html">Menus</a>
@@ -24,17 +25,28 @@
 
     <main class="container">
         <section class="card">
-            <h2>Mes commandes</h2>
-            <p class="muted">Historique de tes commandes et statut.</p>
-            <div id="status" class="muted" style="margin-top: 8px;"></div>
+            <div class="page-title">
+                <div>
+                    <h1 style="margin:0;">Mes commandes</h1>
+                    <p class="muted" style="margin:10px 0 0;">Historique de vos commandes et statut.</p>
+                </div>
+
+                <div class="page-title-actions">
+                    <a class="btn secondary" href="./menus.html">Commander un menu</a>
+                </div>
+            </div>
+
+            <div id="status" class="muted" style="margin-top: 10px;" role="status" aria-live="polite"></div>
         </section>
 
-        <section id="ordersGrid" class="grid" style="margin-top: 12px;"></section>
+        <section id="ordersGrid" class="grid orders-grid" style="margin-top: 12px;"></section>
     </main>
 
-    <footer class="footer">
+    <footer class="app-footer">
         <div class="container">
-            <small>Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV</small>
+            <small class="muted">
+                Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV
+            </small>
         </div>
     </footer>
 
