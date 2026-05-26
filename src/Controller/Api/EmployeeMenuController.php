@@ -12,22 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
-class AdminMenuController extends AbstractController
+class EmployeeMenuController extends AbstractController
 {
-    #[Route('/api/admin/menus', name: 'api_admin_menus_list', methods: ['GET'])]
+    #[Route('/api/employee/menus', name: 'api_employee_menus_list', methods: ['GET'])]
     public function list(MenuRepository $menuRepository): JsonResponse
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
 
         if (!$user || !$user->isActive()) {
-            return $this->json([
-                'success' => false,
-                'error' => 'Account disabled.',
-            ], 403);
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
         }
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $menus = $menuRepository->findBy([], ['id' => 'DESC']);
 
@@ -48,8 +45,6 @@ class AdminMenuController extends AbstractController
                 if ($dish->getType() === Dish::TYPE_DESSERT) {
                     $dessert = $dish->getName();
                 }
-
-
             }
 
             return [
@@ -58,37 +53,34 @@ class AdminMenuController extends AbstractController
                 'description' => $menu->getDescription(),
                 'theme' => $menu->getTheme(),
                 'regime' => $menu->getRegime(),
-                'starter' => $starter,
-                'main' => $main,
-                'dessert' => $dessert,
                 'minPersons' => $menu->getMinPersons(),
                 'basePrice' => (float) $menu->getBasePrice(),
                 'conditionsText' => $menu->getConditionsText(),
                 'stock' => $menu->getStock(),
                 'isActive' => $menu->isActive(),
+                'starter' => $starter,
+                'main' => $main,
+                'dessert' => $dessert,
+                'allergens' => $menu->getAllergens()->map(
+                    fn($a) => $a->getName()
+                )->toArray(),
             ];
         }, $menus);
 
-        return $this->json([
-            'success' => true,
-            'items' => $items,
-        ]);
+        return $this->json(['success' => true, 'items' => $items]);
     }
 
-    #[Route('/api/admin/menus/{id<\d+>}', name: 'api_admin_menus_show', methods: ['GET'])]
+    #[Route('/api/employee/menus/{id<\d+>}', name: 'api_employee_menus_show', methods: ['GET'])]
     public function show(int $id, MenuRepository $menuRepository): JsonResponse
     {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
 
         if (!$user || !$user->isActive()) {
-            return $this->json([
-                'success' => false,
-                'error' => 'Account disabled.',
-            ], 403);
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
         }
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $menu = $menuRepository->find($id);
         if (!$menu) {
@@ -115,32 +107,30 @@ class AdminMenuController extends AbstractController
                     'type' => $d->getType(),
                 ])->toArray(),
             ],
-
         ]);
     }
 
-    #[Route('/api/admin/menus', name: 'api_admin_menus_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $em): JsonResponse
-    {
+    #[Route('/api/employee/menus', name: 'api_employee_menus_create', methods: ['POST'])]
+    public function create(
+        Request $request,
+        EntityManagerInterface $em
+    ): JsonResponse {
         /** @var \App\Entity\User|null $user */
         $user = $this->getUser();
 
         if (!$user || !$user->isActive()) {
-            return $this->json([
-                'success' => false,
-                'error' => 'Account disabled.',
-            ], 403);
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
         }
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $payload = json_decode($request->getContent() ?: '[]', true) ?: [];
 
         $title = trim((string) ($payload['title'] ?? ''));
-        if ($title === '') {
+        if ($title == '') {
             return $this->json([
                 'success' => false,
-                'error' => 'Le titre est obligatoire.',
+                'error' => 'Le titre est obligatoire.'
             ], 400);
         }
 
@@ -163,8 +153,9 @@ class AdminMenuController extends AbstractController
             $menu->setImages($payload['images']);
         }
 
-        $em->persist($menu);
+        //$em->persist($menu);
         //$em->flush();
+        $em->persist($menu);
 
         //Récupération des plats envoyés par le front
         $starter = trim((string) ($payload['starter'] ?? ''));
@@ -198,47 +189,22 @@ class AdminMenuController extends AbstractController
             $menu->addDish($dish);
         }
 
-        //Allergènes
+        // Allergènes
         $allergens = $payload['allergens'] ?? [];
 
         if (is_array($allergens)) {
-            $seen = [];
-
-
             foreach ($allergens as $allergenName) {
                 $allergenName = trim((string) $allergenName);
-
                 if ($allergenName === '') {
                     continue;
                 }
-                // Éviter les doublons
-                $normalized = mb_strtolower($allergenName);
-                if (isset($seen[$normalized])) {
-                    continue;
-                }
-                $seen[$normalized] = true;
 
                 $allergen = $em->getRepository(\App\Entity\Allergen::class)
                     ->findOneBy(['name' => $allergenName]);
 
-                //si non trouvé exactement, on cherche en ignorant la casse
-                if (!$allergen) {
-                    $allergen = $em->getRepository(\App\Entity\Allergen::class)
-                        ->createQueryBuilder('a')
-                        ->where('LOWER(a.name) = LOWER(:name)')
-                        ->setParameter('name', $allergenName)
-                        ->getQuery()
-                        ->getOneOrNullResult();
+                if ($allergen) {
+                    $menu->addAllergen($allergen);
                 }
-
-                // si toujours absent, on le crée
-                if (!$allergen) {
-                    $allergen = new \App\Entity\Allergen();
-                    $allergen->setName($allergenName);
-                    $em->persist($allergen);
-                }
-
-                $menu->addAllergen($allergen);
             }
         }
 
@@ -252,9 +218,6 @@ class AdminMenuController extends AbstractController
                 'description' => $menu->getDescription(),
                 'theme' => $menu->getTheme(),
                 'regime' => $menu->getRegime(),
-                'starter' => $starter,
-                'main' => $main,
-                'dessert' => $dessert,
                 'minPersons' => $menu->getMinPersons(),
                 'basePrice' => (float) $menu->getBasePrice(),
                 'conditionsText' => $menu->getConditionsText(),
@@ -264,7 +227,7 @@ class AdminMenuController extends AbstractController
         ], 201);
     }
 
-    #[Route('/api/admin/menus/{id<\d+>}', name: 'api_admin_menus_update', methods: ['PATCH'])]
+    #[Route('/api/employee/menus/{id<\d+>}', name: 'api_employee_menus_update', methods: ['PATCH'])]
     public function update(
         int $id,
         Request $request,
@@ -275,13 +238,10 @@ class AdminMenuController extends AbstractController
         $user = $this->getUser();
 
         if (!$user || !$user->isActive()) {
-            return $this->json([
-                'success' => false,
-                'error' => 'Account disabled.',
-            ], 403);
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
         }
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $menu = $menuRepository->find($id);
         if (!$menu) {
@@ -345,11 +305,11 @@ class AdminMenuController extends AbstractController
                 'conditionsText' => $menu->getConditionsText(),
                 'stock' => $menu->getStock(),
                 'isActive' => $menu->isActive(),
-            ]
+            ],
         ]);
     }
 
-    #[Route('/api/admin/menus/{id<\d+>}', name: 'api_admin_menus_delete', methods: ['DELETE'])]
+    #[Route('/api/employee/menus/{id<\d+>}', name: 'api_employee_menus_delete', methods: ['DELETE'])]
     public function delete(
         int $id,
         MenuRepository $menuRepository,
@@ -359,13 +319,10 @@ class AdminMenuController extends AbstractController
         $user = $this->getUser();
 
         if (!$user || !$user->isActive()) {
-            return $this->json([
-                'success' => false,
-                'error' => 'Account disabled.',
-            ], 403);
+            return $this->json(['success' => false, 'error' => 'Account disabled.'], 403);
         }
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_EMPLOYEE');
 
         $menu = $menuRepository->find($id);
         if (!$menu) {

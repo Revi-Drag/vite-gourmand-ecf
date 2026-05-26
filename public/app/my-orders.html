@@ -9,19 +9,7 @@
 </head>
 
 <body>
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html">Menus</a>
-                <a href="./my-orders.html" aria-current="page">Mes commandes</a>
-                <a href="./login.html">Connexion</a>
-                <a href="./contact.html">Contact</a>
-            </nav>
-        </div>
-    </header>
+    <div id="appHeader"></div>
 
     <main class="container">
         <section class="card">
@@ -42,13 +30,12 @@
         <section id="ordersGrid" class="grid orders-grid" style="margin-top: 12px;"></section>
     </main>
 
-    <footer class="app-footer">
-        <div class="container">
-            <small class="muted">
-                Horaires : Lun–Dim 09:00–19:00 • Mentions légales • CGV
-            </small>
-        </div>
-    </footer>
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
 
     <script src="./my-orders.js?v=1"></script>
 </body>

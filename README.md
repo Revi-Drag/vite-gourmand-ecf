@@ -1,45 +1,62 @@
-# LifeSync — Projet ECF Développeur Web & Web Mobile
+# Vite & Gourmand — Projet ECF Développeur Web & Web Mobile
 
-LifeSync est une application web de gestion de tâches partagées, développée dans le cadre de l’ECF.  
-Elle permet à plusieurs utilisateurs authentifiés de créer, suivre et réaliser des tâches afin d’améliorer
-l’organisation quotidienne et de rendre visible la répartition des responsabilités.
+Vite & Gourmand est une application web de gestion pour un service traiteur situé à Bordeaux, développée dans le cadre de l’ECF.
+Elle permet aux clients de consulter des menus, passer des commandes en ligne et laisser des avis.
+Elle permet également aux employés et administrateurs de gérer les commandes et les menus.
 
 ---
 
 ## Fonctionnalités principales
 
 - Authentification via API (`/api/login`)
-- Gestion complète des tâches (CRUD)
-- Statuts disponibles :
-  - TODO
-  - IN_PROGRESS
-  - DONE
-- Historique automatique :
-  - commencé par (`startedAt`, `startedBy`)
-  - terminé par (`doneAt`, `doneBy`)
-- Partage des tâches :
-  - tous les utilisateurs voient toutes les tâches
-  - tous peuvent changer le statut d’une tâche
-- Permissions :
-  - un utilisateur peut supprimer uniquement ses propres tâches
-  - un administrateur peut supprimer toutes les tâches
-
+  - Inscription (/api/register)
+  - Connexion (/api/login)
+  - Deconnexion
+  - Mot de passe oublié / réinitialisation
+  - Route /api/me (utilisateur connecté)
+- Gestion des menus:
+  - Consultation des menus
+  - Filtres (thème, régime, prix, nombre de personnes)
+  - Détail d’un menu
+  - Création / modification / suppression (ADMIN)
+- Gestion des commandes:
+  - Création de commande
+  - Calcul automatique des frais de livraison
+  - Validation par un employé
+  - Historique client
+  - Contrôle des permissions:
+- Gestion des avis
+  - Création d’avis client
+  - Modération par employé
+  - Affichage des avis validés uniquement
+- Contact
+  - Formulaire de contact via API
+  - Validation backend
 ---
 
 ## Technologies utilisées
 
 ### Backend
 
-- Symfony 7 (framework PHP moderne)
-- Doctrine ORM (entités + accès base de données)
-- MySQL en local → PostgreSQL en production (Render)
+- PHP 8.4
+- Symfony 7
+- Doctrine ORM
 - API REST JSON
+- MySQL
 
 ### Frontend
 
 - HTML / CSS moderne
 - JavaScript Vanilla (Fetch API)
 - Interface disponible dans `public/app`
+
+### Infrastructure
+
+- Docker
+- Nginx + PHP-FPM
+- Railway (déploiement cloud)
+- Variables d’environnement sécurisées
+- Configuration dynamique du port
 
 ### Outils
 
@@ -53,13 +70,13 @@ l’organisation quotidienne et de rendre visible la répartition des responsabi
 ## Liens du projet (ECF)
 
 - Dépôt GitHub :  
-  https://github.com/Revi-Drag/lifesync-ecf
+  https://github.com/Revi-Drag/vite-gourmand-ecf
 
 - Tableau de gestion de projet :  
   https://github.com/users/Revi-Drag/projects/1/views/1
 
-- Déploiement Render :  
-  https://lifesync-ecf.onrender.com
+- Déploiement Railway :  
+  https://vite-gourmand-ecf-production.up.railway.app/app/login.html
 
 ---
 
@@ -67,7 +84,7 @@ l’organisation quotidienne et de rendre visible la répartition des responsabi
 
 Identifiants demandés dans le dossier de rendu :
 
-- Email : **admin@lifesync.local**
+- Email : **admin@vitegourmand.fr**
 - Mot de passe : **Admin-123!**
 - Rôle : **ROLE_ADMIN**
 
@@ -77,10 +94,16 @@ Identifiants demandés dans le dossier de rendu :
 
 ### 1. Cloner le dépôt
 ```bash
-git clone https://github.com/Revi-Drag/lifesync-ecf.git
-cd lifesync-ecf
+git clone https://github.com/Revi-Drag/vite-gourmand-ecf.git
+cd vite-gourmand-ecf
 
 ```
+### Lancer Docker
+```bash
+docker compose up -d --build
+
+```
+
 ### 2. Installer les dépendances
 ```bash
 composer install
@@ -89,7 +112,7 @@ composer install
 ### 3. Configurer la base de données (local)
 Créer un fichier `.env.local` à la racine du projet :
 ```env 
-DATABASE_URL="mysql://root:password@127.0.0.1:3306/lifesync"
+DATABASE_URL="mysql://root:password@127.0.0.1:3306/vite_gourmand"
 ```
 
 ### 4. Créer la base et exécuter les migrations

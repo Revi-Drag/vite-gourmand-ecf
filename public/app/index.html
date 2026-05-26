@@ -11,24 +11,7 @@
 <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <!-- HEADER -->
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav" aria-label="Navigation principale">
-                <a href="./index.html" aria-current="page">Accueil</a>
-                <a href="./menus.html">Menus</a>
-                <a href="./contact.html">Contact</a>
-                <a id="navLogin" href="./login.html">Connexion</a>
-
-                <a id="navMyOrders" href="./my-orders.html" hidden>Mes commandes</a>
-                <a id="navEmployee" href="./employee-orders.html" hidden>Espace employé</a>
-
-                <a id="navLogout" href="#" hidden>Déconnexion</a>
-            </nav>
-        </div>
-    </header>
+    <div id="appHeader"></div>
 
     <main id="main">
         <!-- HERO -->
@@ -43,10 +26,6 @@
                     Livraison à Bordeaux et alentours.
                 </p>
 
-                <div class="hero-actions">
-                    <a class="btn" href="./menus.html">Voir les menus</a>
-                    <a class="btn secondary" href="./contact.html">Nous contacter</a>
-                </div>
 
                 <div class="hero-metrics">
                     <div class="metric">
@@ -102,7 +81,7 @@
             </div>
         </section>
 
-        <!-- BLOCS TEXTE (sobre) -->
+        <!-- BLOCS TEXTE -->
         <section class="container section">
             <div class="grid-2">
                 <article class="card">
@@ -148,59 +127,14 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="app-footer">
-        <div class="container footer-grid">
-            <div>
-                <div class="footer-title">Vite & Gourmand</div>
-                <div class="muted">Traiteur — Bordeaux</div>
-            </div>
+    <div id="appFooter"></div>
 
-            <div>
-                <div class="footer-title">Horaires</div>
-                <ul class="footer-list">
-                    <li>Lun–Dim : 09:00–19:00</li>
-                </ul>
-            </div>
-
-            <div>
-                <div class="footer-title">Informations</div>
-                <ul class="footer-list">
-                    <li><a href="./legal.html">Mentions légales</a></li>
-                    <li><a href="./cgv.html">Conditions Générales de Vente</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
 
     <script src="./reviews.js"></script>
-    <script>
-        (async function () {
-            const elLogin = document.getElementById("navLogin");
-            const elMyOrders = document.getElementById("navMyOrders");
-            const elEmployee = document.getElementById("navEmployee");
-
-            try {
-                const res = await fetch("/api/me", {
-                    credentials: "include",
-                    headers: { Accept: "application/json" }
-                });
-
-                if (!res.ok) return;
-
-                const data = await res.json().catch(() => null);
-                const roles = data?.user?.roles || [];
-
-                // connecté
-                elLogin.hidden = true;
-                elMyOrders.hidden = false;
-
-                if (roles.includes("ROLE_EMPLOYEE")) {
-                    elEmployee.hidden = false;
-                }
-            } catch (e) { }
-        })();
-    </script>
 </body>
 
 </html>

@@ -9,20 +9,7 @@
 </head>
 
 <body>
-    <!-- HEADER -->
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav" aria-label="Navigation principale">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html">Menus</a>
-                <a href="./contact.html">Contact</a>
-                <a href="./login.html">Connexion</a>
-                <a href="./cgv.html" aria-current="page">CGV</a>
-            </nav>
-        </div>
-    </header>
+    <div id="appHeader"></div>
 
     <main class="container legal-page">
         <section class="card legal-card">
@@ -65,23 +52,12 @@
         </section>
     </main>
 
-    <footer class="app-footer">
-        <div class="container footer-grid">
-            <div>
-                <div class="footer-title">Horaires</div>
-                <ul class="footer-list">
-                    <li>Lun–Dim : 09:00–19:00</li>
-                </ul>
-            </div>
-            <div>
-                <div class="footer-title">Informations</div>
-                <ul class="footer-list">
-                    <li><a href="./legal.html">Mentions légales</a></li>
-                    <li><a href="./cgv.html" aria-current="page">CGV</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
 </body>
 
 </html>

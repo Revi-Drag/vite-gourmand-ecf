@@ -9,18 +9,7 @@
 </head>
 
 <body>
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html">Menus</a>
-                <a href="./legal.html">Mentions légales</a>
-                <a href="./cgv.html">CGV</a>
-            </nav>
-        </div>
-    </header>
+    <div id="appHeader"></div>
 
     <main class="container">
         <div class="page-head">
@@ -32,6 +21,13 @@
             <div id="content"></div>
         </section>
     </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
 
     <script src="./menu-detail.js"></script>
 </body>

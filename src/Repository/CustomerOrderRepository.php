@@ -15,6 +15,34 @@ class CustomerOrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CustomerOrder::class);
     }
+    // ==========================================================================================================================
+    public function sumAndCountByPeriod(
+        ?\DateTimeImmutable $from,
+        ?\DateTimeImmutable $to,
+        array $statuses
+    ): array {
+        $qb = $this->createQueryBuilder('o')
+            ->select('COALESCE(SUM(o.totalPrice), 0) as totalSum')
+            ->addSelect('COUNT(o.id) as totalCount')
+            ->andWhere('o.status IN (:statuses)')
+            ->setParameter('statuses', $statuses);
+
+        if ($from) {
+            $qb->andWhere('o.createdAt >= :from')->setParameter('from', $from);
+        }
+
+        if ($to) {
+            $qb->andWhere('o.createdAt < :to')->setParameter('to', $to);
+        }
+
+        $row = $qb->getQuery()->getSingleResult();
+
+        // totalPrice est DECIMAL => Doctrine renvoie souvent une string
+        return [
+            'sum' => (string) ($row['totalSum'] ?? '0'),
+            'count' => (int) ($row['totalCount'] ?? 0),
+        ];
+    }
 
     //    /**
     //     * @return CustomerOrder[] Returns an array of CustomerOrder objects

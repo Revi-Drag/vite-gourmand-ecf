@@ -8,20 +8,14 @@
     <link rel="stylesheet" href="./app.css" />
 </head>
 
-<body>
-    <!-- HEADER (cohérent avec menus.html) -->
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
+<div id="appFooter"></div>
 
-            <nav class="nav">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html" aria-current="page">Menus</a>
-                <a href="./legal.html">Mentions légales</a>
-                <a href="./cgv.html">CGV</a>
-            </nav>
-        </div>
-    </header>
+<script type="module">
+    import { loadLayout } from "./layout.js";
+    loadLayout();
+</script>
+
+<body>
 
     <main class="container">
         <div class="page-head">
@@ -94,5 +88,7 @@
         run();
     </script>
 </body>
+
+<div id="appHeader"></div>
 
 </html>

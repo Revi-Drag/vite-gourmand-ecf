@@ -5,27 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Vite & Gourmand — Menus</title>
-
     <link rel="stylesheet" href="./app.css" />
 </head>
 
 <body>
-    <!-- HEADER -->
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html" aria-current="page">Menus</a>
-                <a href="./legal.html">Mentions légales</a>
-                <a href="./cgv.html">CGV</a>
-            </nav>
-        </div>
-    </header>
+    <div id="appHeader"></div>
 
     <!-- MAIN -->
-    <main class="container">
+    <main class="container menus-page-wrap">
         <h1>Nos menus</h1>
         <p class="muted" style="margin-top: 0;">
             Une sélection pensée pour vos événements : simple, généreux, efficace.
@@ -33,10 +20,9 @@
 
         <!-- FILTRES -->
         <section class="card">
-            <h2>Filtres</h2>
+            <h2>Filtres de recherche</h2>
 
             <div class="grid-2">
-
                 <!-- THEME -->
                 <label>
                     Thème
@@ -77,10 +63,9 @@
 
                 <!-- ACTIONS -->
                 <div class="actions">
-                    <button class="btn" id="btnApply">Appliquer</button>
-                    <button class="btn secondary" id="btnReset">Réinitialiser</button>
+                    <button class="btn" id="btnApply" type="button">Appliquer</button>
+                    <button class="btn secondary" id="btnReset" type="button">Réinitialiser</button>
                 </div>
-
             </div>
 
             <p id="status" class="muted" role="status" aria-live="polite"></p>
@@ -89,6 +74,13 @@
         <!-- GRID MENUS -->
         <section id="menusGrid" class="menus-grid"></section>
     </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
 
     <!-- JS -->
     <script src="./menus.js"></script>

@@ -8,21 +8,14 @@
     <link rel="stylesheet" href="./app.css" />
 </head>
 
+<div id="appFooter"></div>
+
+<script type="module">
+    import { loadLayout } from "./layout.js";
+    loadLayout();
+</script>
+
 <body>
-
-    <!-- HEADER cohérent -->
-    <header class="topbar">
-        <div class="container">
-            <a class="brand" href="./index.html">Vite & Gourmand</a>
-
-            <nav class="nav">
-                <a href="./index.html">Accueil</a>
-                <a href="./menus.html">Menus</a>
-                <a href="./my-orders.html">Mes commandes</a>
-                <a href="./employee-orders.html" aria-current="page">Espace employé</a>
-            </nav>
-        </div>
-    </header>
 
     <main class="container">
 
@@ -36,7 +29,7 @@
                 </div>
 
                 <div class="page-title-actions">
-                    <a class="btn secondary" href="./menus.html">Voir les menus</a>
+                    <a class="btn secondary" href="./employee-menus.html">Voir les menus</a>
                 </div>
             </div>
 
@@ -49,5 +42,7 @@
 
     <script src="./employee-orders.js"></script>
 </body>
+
+<div id="appHeader"></div>
 
 </html>
