@@ -1,0 +1,44 @@
+services:
+  viteetgourmand:
+    build: .
+    container_name: viteetgourmand
+
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:8083:8080"
+
+    env_file:
+      - .env.docker
+
+    environment:
+      DATABASE_URL: postgresql://app:app@db:5432/app
+
+    depends_on:
+      - db
+
+    labels:
+      com.dozzle.group: "Vite Et Gourmand"
+      dozzle.enable: "true"
+
+  db:
+    image: postgres:16
+
+    container_name: viteetgourmand-db
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+
+    volumes:
+      - viteetgourmand_pgdata:/var/lib/postgresql/data
+
+    labels:
+      com.dozzle.group: "Vite Et Gourmand"
+      dozzle.enable: "true"
+
+volumes:
+  viteetgourmand_pgdata:
