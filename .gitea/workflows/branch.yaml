@@ -1,0 +1,19 @@
+name: Vite_Et_Gourmand CI
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  ci:
+    runs-on: linux
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: docker compose build
+
+      - name: Validate
+        run: docker compose config
