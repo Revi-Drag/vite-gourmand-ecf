@@ -12,16 +12,16 @@ jobs:
     steps:
       - name: Update repo
         run: |
-          git config --global --add safe.directory /opt/apps/ViteEtGourmand
-          cd /opt/apps/ViteEtGourmand
+          git config --global --add safe.directory /opt/apps/Vite_Et_Gourmand
+          cd /opt/apps/Vite_Et_Gourmand
           git pull origin main
 
       - name: Build image
         run: |
-          cd /opt/apps/ViteEtGourmand
+          cd /opt/apps/Vite_Et_Gourmand
           docker compose build
 
       - name: Deploy
         run: |
-          cd /opt/apps/ViteEtGourmand
+          cd /opt/apps/Vite_Et_Gourmand
           docker compose up -d
