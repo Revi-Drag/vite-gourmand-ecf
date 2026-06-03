@@ -47,7 +47,7 @@ export function initHeaderMenu() {
             if (!res.ok) throw new Error("logout failed");
 
             close();
-            window.location.href = "/app/index.html";
+            window.location.href = "/app/home.html";
         } catch (e) {
             console.error("Logout error:", e);
             alert("Impossible de se déconnecter.");
