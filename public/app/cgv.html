@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CGV — Vite & Gourmand</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container legal-page">
+        <section class="card legal-card">
+            <header class="legal-head">
+                <h1 style="margin:0;">Conditions Générales de Vente (CGV)</h1>
+                <p class="muted" style="margin:10px 0 0;">
+                    Informations contractuelles relatives aux commandes, livraisons, annulations et prêt de matériel.
+                </p>
+            </header>
+
+            <hr class="sep" />
+
+            <div class="legal-content">
+                <h2>Commande & livraison</h2>
+                <p>
+                    Une commande est validée après confirmation. La livraison est gratuite dans Bordeaux.
+                    Hors Bordeaux : 5€ + 0,59€/km.
+                </p>
+
+                <h2>Annulation / modification</h2>
+                <p>
+                    L’annulation et la modification sont possibles tant que la commande n’a pas été acceptée par
+                    l’équipe.
+                </p>
+
+                <h2>Prêt de matériel</h2>
+                <p>
+                    Si du matériel est prêté, le client doit le restituer dans un délai de 10 jours ouvrés à compter du
+                    passage
+                    au statut “en attente du retour de matériel”.
+                    À défaut de restitution dans ce délai, des frais forfaitaires de <strong>600 €</strong> seront
+                    facturés.
+                </p>
+
+                <h2>Contact</h2>
+                <p>
+                    Pour toute question, merci d’utiliser la page Contact.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+</body>
+
+</html>

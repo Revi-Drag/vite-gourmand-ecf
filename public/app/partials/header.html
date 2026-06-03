@@ -1,0 +1,43 @@
+<header class="app-header">
+    <div class="container header-inner">
+        <a class="brand-script" href="/app/index.html" aria-label="Accueil Vite & Gourmand">
+            Vite & Gourmand
+        </a>
+
+        <button class="hamburger" id="btnMenu" type="button" aria-label="Ouvrir le menu" aria-controls="mobileMenu"
+            aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Overlay menu -->
+    <div id="mobileMenu" class="menu-overlay" hidden>
+        <div class="menu-panel" role="dialog" aria-modal="true" aria-label="Menu">
+            <div class="menu-head">
+                <span class="menu-title">Menu</span>
+                <button class="icon-close" id="btnCloseMenu" type="button" aria-label="Fermer le menu">✕</button>
+            </div>
+
+            <nav class="menu-links" aria-label="Navigation principale">
+                <a href="/app/index.html">Accueil</a>
+                <a href="/app/menus.html">Menus</a>
+                <a href="/app/contact.html">Contact</a>
+
+                <hr class="sep" />
+
+                <!-- visible si NON connecté -->
+                <a href="/app/login.html" data-guest>Connexion</a>
+                <a href="/app/register.html" data-guest>Créer un compte</a>
+
+                <!-- visible si connecté -->
+                <a href="/app/my-orders.html" data-auth hidden>Mon compte</a>
+                <a href="/app/employee-dashboard.html" data-role="employee" hidden>Espace employé</a>
+                <a href="/app/admin-dashboard.html" data-role="admin" hidden>Espace admin</a>
+
+                <button id="btnLogout" data-auth hidden class="btn danger" type="button">Déconnexion</button>
+            </nav>
+        </div>
+    </div>
+</header>

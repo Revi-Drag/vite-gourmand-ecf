@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Détail menu</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<div id="appFooter"></div>
+
+<script type="module">
+    import { loadLayout } from "./layout.js";
+    loadLayout();
+</script>
+
+<body>
+
+    <main class="container">
+        <div class="page-head">
+            <a class="btn secondary" href="./menus.html">← Retour</a>
+        </div>
+
+        <div id="content" class="card menu-detail" style="margin-top:12px;"></div>
+    </main>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+        const id = params.get("id");
+
+        async function run() {
+            const res = await fetch(`/api/menus/${id}`);
+            if (!res.ok) {
+                document.getElementById("content").innerHTML = "<p>Menu introuvable.</p>";
+                return;
+            }
+            const m = await res.json();
+
+            // UI “traiteur” : header + meta + sections + CTA
+            document.getElementById("content").innerHTML = `
+                <div class="menu-detail-hero">
+                    <div class="menu-detail-hero-text">
+                        <h1 class="menu-detail-title">${m.title}</h1>
+                        <p class="menu-detail-desc">${m.description ?? ""}</p>
+
+                        <div class="menu-detail-badges">
+                            <span class="pill">Thème : <strong>${m.theme ?? "—"}</strong></span>
+                            <span class="pill">Régime : <strong>${m.regime ?? "—"}</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="menu-detail-hero-card">
+                        <div class="menu-detail-meta">
+                            <div class="meta-row">
+                                <span class="meta-label">Minimum</span>
+                                <span class="meta-value">${m.minPersons} pers</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">Prix</span>
+                                <span class="meta-value">${Number(m.basePrice).toFixed(2)} €</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-label">Stock</span>
+                                <span class="meta-value">${m.stock}</span>
+                            </div>
+                        </div>
+
+                        <a class="btn menu-cta" href="./order.html?menu=${m.id}">Commander</a>
+                        <p class="muted small" style="margin:10px 0 0;">
+                            Paiement & confirmation via l’interface de commande.
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="sep" />
+
+                <div class="menu-detail-sections">
+                    <div class="menu-detail-section">
+                        <h2>Conditions</h2>
+                        <p class="muted" style="margin:0;">
+                            ${m.conditionsText ?? "—"}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+        run();
+    </script>
+</body>
+
+<div id="appHeader"></div>
+
+</html>

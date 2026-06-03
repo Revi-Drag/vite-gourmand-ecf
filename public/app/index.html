@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Traiteur à Bordeaux</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <div id="appHeader"></div>
+
+    <main id="main">
+        <!-- HERO -->
+        <section class="hero-landing">
+            <div class="hero-landing-bg" aria-hidden="true"></div>
+
+            <div class="container hero-landing-inner">
+                <p class="hero-kicker">Traiteur • Bordeaux</p>
+                <h1 class="hero-title">Cuisine de saison, service précis, événements réussis.</h1>
+                <p class="hero-lead">
+                    Menus de saison (Noël, Pâques, événements) et prestations sur-mesure.
+                    Livraison à Bordeaux et alentours.
+                </p>
+
+
+                <div class="hero-metrics">
+                    <div class="metric">
+                        <span class="metric-value">25 ans</span>
+                        <span class="metric-label">d’expérience</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Bordeaux</span>
+                        <span class="metric-label">& alentours</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">Saison</span>
+                        <span class="metric-label">menus évolutifs</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRESTATIONS -->
+        <section class="container section">
+            <div class="section-head">
+                <h2 class="section-title">Nos prestations</h2>
+                <p class="muted" style="margin:0;">Des formats simples, efficaces, adaptés à vos contraintes.</p>
+            </div>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-media feature-media-1" aria-hidden="true"></div>
+                    <div class="feature-body">
+                        <h3>Événements privés</h3>
+                        <p class="muted">Repas de famille, anniversaires, réceptions. Une cuisine maison et une
+                            logistique soignée.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-media feature-media-2" aria-hidden="true"></div>
+                    <div class="feature-body">
+                        <h3>Événements d’entreprise</h3>
+                        <p class="muted">Cocktails, plateaux, repas. Ponctualité, quantités maîtrisées, présentation
+                            propre.</p>
+                    </div>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-media feature-media-3" aria-hidden="true"></div>
+                    <div class="feature-body">
+                        <h3>Menus saisonniers</h3>
+                        <p class="muted">Noël, Pâques, périodes fortes. Des menus renouvelés et disponibles en ligne.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- BLOCS TEXTE -->
+        <section class="container section">
+            <div class="grid-2">
+                <article class="card">
+                    <h2>Présentation</h2>
+                    <p class="muted" style="margin-top:8px;">
+                        Julie et José vous accompagnent pour tout événement : repas de famille, fêtes, événements
+                        d’entreprise. Cuisine maison, logistique soignée, livraison à Bordeaux et alentours.
+                    </p>
+                    <ul class="list">
+                        <li>Menus en évolution constante</li>
+                        <li>Régimes : classique, végétarien, halal, sans gluten (selon menus)</li>
+                        <li>Commande simple en ligne</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h2>Professionnalisme</h2>
+                    <p class="muted" style="margin-top:8px;">
+                        Une équipe expérimentée, des stocks maîtrisés, et un suivi clair de votre commande.
+                        Notre priorité : qualité, ponctualité, transparence.
+                    </p>
+
+                    <div class="badges">
+                        <span class="badge">25 ans d'expérience</span>
+                        <span class="badge">Bordeaux</span>
+                        <span class="badge">Menus saisonniers</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- AVIS -->
+        <section class="container section">
+            <div class="card">
+                <div class="section-head">
+                    <h2 class="section-title" style="margin:0;">Avis clients</h2>
+                    <p class="muted" style="margin:6px 0 0;">Seuls les avis validés sont affichés.</p>
+                </div>
+
+                <div id="reviewsStatus" class="muted" role="status" aria-live="polite"></div>
+                <div id="reviewsGrid" class="reviews-grid" aria-label="Liste des avis"></div>
+            </div>
+        </section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+
+    <script src="./reviews.js"></script>
+</body>
+
+</html>

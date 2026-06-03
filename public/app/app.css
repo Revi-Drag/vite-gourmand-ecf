@@ -1,326 +1,1503 @@
-* {
+/* =====================================================================================================================
+   VITE & GOURMAND — APP.CSS PROPRE
+   Charte : terroir / papier artisanal / traiteur chic
+   ===================================================================================================================== */
+
+
+/* =====================================================================================================================
+   1. VARIABLES
+   ===================================================================================================================== */
+
+:root {
+    /* Couleurs principales */
+    --vg-page-bg: #fff6e8;
+    --vg-header: #765b4a;
+    --vg-paper: #f3dfc1;
+    --vg-card: #fff8ec;
+    --vg-card-soft: #fbefdc;
+
+    --vg-text: #1f130e;
+    --vg-muted: #6f5a4a;
+
+    --vg-green: #556b2f;
+    --vg-green-dark: #3e5022;
+
+    --vg-terracotta: #c8755f;
+    --vg-terracotta-dark: #ad5b45;
+
+    --vg-border: #9b7a63;
+    --vg-border-soft: #c8a987;
+
+    --vg-dashboard-bg: #c2b6a7;
+    --vg-dashboard-panel: #f3dfc1;
+
+    --vg-danger: #a33a2b;
+    --vg-success: #3f6b45;
+    --vg-warning: #c8755f;
+
+    /* Typographies */
+    --vg-title-font: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+    --vg-body-font: "Montserrat", Arial, sans-serif;
+
+    /* Layout */
+    --vg-page-width: 860px;
+    --vg-wide-width: 960px;
+    --vg-dashboard-width: 920px;
+    --vg-header-height: 170px;
+
+    /* Effets */
+    --vg-shadow-paper: 0 10px 28px rgba(31, 19, 14, 0.28);
+    --vg-shadow-card: 8px 10px 18px rgba(31, 19, 14, 0.22);
+    --vg-shadow-soft: 0 6px 14px rgba(31, 19, 14, 0.16);
+}
+
+
+/* =====================================================================================================================
+   2. RESET LÉGER
+   ===================================================================================================================== */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-:root {
-    --bg: #f6f7fb;
-    /* gris perle */
-    --card: #ffffff;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --border: #e6e7ef;
-
-    --primary: #6d5bd0;
-    /* bleu lavande */
-    --primary-hover: #5b4cc0;
-
-    --secondary: #eef0ff;
-    /* lavande très clair */
-    --danger: #d94848;
-
-    --shadow: 0 10px 28px rgba(31, 41, 55, 0.08);
-
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
+    min-height: 100vh;
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
+    background: var(--vg-page-bg);
+    color: var(--vg-text);
+    font-family: var(--vg-body-font);
+    font-size: 15px;
+    line-height: 1.45;
 }
 
-/* Layout */
+img,
+svg,
+canvas {
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 12px;
+    z-index: 999;
+    background: var(--vg-card);
+    color: var(--vg-text);
+    padding: 8px 12px;
+    border: 1px solid var(--vg-border);
+}
+
+.skip-link:focus {
+    left: 12px;
+}
+
 .container {
-    max-width: 900px;
-    margin: 32px auto;
-    padding: 0 16px;
-}
-
-h1 {
-    margin: 0 0 8px;
-}
-
-h2 {
-    margin: 0 0 12px;
-    font-size: 18px;
+    width: min(var(--vg-page-width), calc(100% - 32px));
+    margin-inline: auto;
 }
 
 .muted {
-    color: var(--muted);
+    color: var(--vg-muted);
 }
 
 .small {
-    font-size: 12px;
+    font-size: 0.82rem;
 }
 
-/* Cards */
-.card {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 16px;
-    margin: 16px 0;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+.sep,
+hr {
+    border: 0;
+    border-top: 1px solid var(--vg-border);
+    margin: 18px 0;
 }
 
-/* Forms */
-label {
-    display: block;
-    margin: 6px 0;
-    font-size: 13px;
+
+/* =====================================================================================================================
+   3. HEADER + LOGO + HAMBURGER
+   ===================================================================================================================== */
+
+.app-header {
+    position: relative;
+    min-height: var(--vg-header-height);
+    background: var(--vg-header);
+    color: #f8ead4;
+    box-shadow: 0 3px 12px rgba(31, 19, 14, 0.22);
 }
 
-input {
-    width: 100%;
-    max-width: 100%;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 14px;
-    display: block;
+.header-inner {
+    position: relative;
+    width: min(1120px, calc(100% - 32px));
+    min-height: var(--vg-header-height);
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-input:focus {
-    outline: none;
-    border-color: var(--primary);
+.brand-script {
+    display: inline-block;
+    color: #f8ead4;
+    font-family: var(--vg-title-font);
+    font-size: clamp(2.5rem, 5vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+    letter-spacing: 0.01em;
 }
 
-/* Grid */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-/* Make title + description full width */
-.grid label:nth-child(1),
-.grid label:nth-child(2) {
-    grid-column: 1 / -1;
-}
-
-/* Buttons */
-button,
-.btn {
-    padding: 9px 14px;
-    border: none;
-    border-radius: 10px;
+.hamburger {
+    position: absolute;
+    right: clamp(20px, 7vw, 70px);
+    top: 50%;
+    translate: 0 -50%;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    border: 1px solid #f8ead4;
+    background: var(--vg-terracotta-dark);
+    box-shadow: var(--vg-shadow-soft);
     cursor: pointer;
-    font-weight: 600;
-    font-size: 14px;
-
-    background: var(--primary);
-    color: white;
-
-    transition: background 0.15s ease, transform 0.05s ease;
-}
-
-button:hover,
-.btn:hover {
-    background: var(--primary-hover);
-}
-
-button:active,
-.btn:active {
-    transform: scale(0.98);
-}
-
-.btn.secondary {
-    background: var(--secondary);
-    color: var(--primary);
-}
-
-.btn.danger {
-    background: var(--danger);
-    color: white;
-}
-
-/* Messages */
-.msg {
-    margin: 10px 0 0;
-    min-height: 18px;
-}
-
-.msg.ok {
-    color: #15803d;
-}
-
-.msg.error {
-    color: #b91c1c;
-}
-
-/* Tasks */
-.task {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 16px;
-
-    padding: 14px;
-    margin: 10px 0;
-
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: white;
+    place-items: center;
+    gap: 0;
 }
 
-.task-title {
-    font-weight: 700;
-}
-
-.task-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 140px;
-}
-
-.badge {
-    margin-left: 8px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-
-    background: var(--secondary);
-    color: var(--primary);
-}
-
-.badge-todo {
-    background: #fef3c7;
-    color: #b45309;
-}
-
-.badge-inprogress {
-    background: #f3fedb;
-    color: #2563eb;
-}
-
-.badge-done {
-    background: #d1fae5;
-    color: #15803d;
-}
-
-/* ✅ Task History (started/done info) */
-.task-history {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    font-size: 0.85rem;
-}
-
-.task-userline strong {
-    color: #444;
-    font-weight: 600;
-}
-
-/* Topbar */
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.topbar-actions {
-    display: flex;
-    gap: 10px;
-}
-
-/* Tabs */
-.tabs {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.tab {
-    background: var(--secondary);
-    color: var(--primary);
-    border-radius: 999px;
-    padding: 10px 14px;
-    font-weight: 700;
-}
-
-.tab.active {
-    background: var(--primary);
-    color: #fff;
-}
-
-.tab-panel[hidden] {
-    display: none;
-}
-
-/* separators */
-.sep {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 16px 0;
-}
-
-/* Utility row */
-.row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-/* Task history */
-.task-history {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--border);
-}
-
-.task-userline {
-    margin: 4px 0;
-}
-
-/* Stats card look */
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.stat-box {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 14px;
-    background: linear-gradient(180deg, #ffffff, #fafbff);
-    box-shadow: var(--shadow);
-}
-
-.stat-box strong {
+.hamburger span {
     display: block;
-    margin-bottom: 6px;
+    width: 38px;
+    height: 3px;
+    margin: 4px 0;
+    background: var(--vg-text);
+    border-radius: 999px;
 }
 
-/* Badges - ajustement couleur IN_PROGRESS */
-.badge-inprogress {
-    background: #e9ecff;
-    color: var(--primary);
+.hamburger:hover {
+    background: var(--vg-terracotta);
 }
 
-/* Edit form inside task */
-.inline-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+
+/* =====================================================================================================================
+   4. MENU HAMBURGER OUVERT
+   ===================================================================================================================== */
+
+.menu-overlay {
+    position: absolute;
+    top: 118px;
+    right: clamp(30px, 6vw, 84px);
+    z-index: 30;
+    background: transparent;
+    backdrop-filter: none;
+}
+
+.menu-panel {
+    width: 190px;
+    background: rgba(255, 248, 236, 0.96);
+    border: 1px solid var(--vg-border-soft);
+    box-shadow: var(--vg-shadow-card);
+    padding: 8px 10px 16px;
+}
+
+.menu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
     gap: 8px;
-    margin-top: 10px;
 }
 
-.inline-form label {
+.menu-title {
+    font-family: var(--vg-title-font);
+    font-size: 1.75rem;
+    font-style: italic;
+    line-height: 1;
+}
+
+.icon-close {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--vg-text);
+}
+
+.menu-links {
+    display: grid;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.menu-links a,
+.menu-links button {
+    min-height: 32px;
+    border: 1px solid var(--vg-border);
+    border-radius: 5px;
+    background: #f5e4ca;
+    color: var(--vg-text);
+    font-family: var(--vg-title-font);
+    font-size: 1.18rem;
+    font-style: italic;
+    text-align: center;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.menu-links a:hover,
+.menu-links button:hover {
+    background: #ead0a9;
+}
+
+.menu-links .sep {
+    margin: 4px 0 8px;
+    border-top: 2px solid var(--vg-text);
+}
+
+.menu-links .danger {
+    background: var(--vg-terracotta);
+    color: #fff8ec;
+}
+
+
+/* =====================================================================================================================
+   5. STRUCTURE GÉNÉRALE DES PAGES
+   ===================================================================================================================== */
+
+main {
+    background: var(--vg-page-bg);
+}
+
+main.container,
+.page-surface,
+.menus-page-wrap {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    box-shadow: var(--vg-shadow-paper);
+    padding: 48px 78px;
+    min-height: 480px;
+}
+
+main.container.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+    padding: 56px 24px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--vg-title-font);
+    color: var(--vg-text);
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.05;
+}
+
+h2 {
+    font-size: 1.35rem;
+}
+
+h3 {
+    font-size: 1.05rem;
+}
+
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================================================================================
+   6. FOOTER NON STICKY
+   ===================================================================================================================== */
+
+.app-footer {
+    position: static;
+    background: var(--vg-terracotta);
+    color: var(--vg-text);
+    padding: 24px 0;
+    min-height: 100px;
+}
+
+.footer-grid {
+    width: min(var(--vg-page-width), calc(100% - 32px));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    font-size: 0.72rem;
+}
+
+.footer-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
 }
 
-.inline-form label.full {
+.footer-list a {
+    text-decoration: none;
+}
+
+.footer-list a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================================================================================
+   7. COMPOSANTS : CARTES, BOUTONS, FORMULAIRES
+   ===================================================================================================================== */
+
+.card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    border-radius: 4px;
+    box-shadow: var(--vg-shadow-soft);
+    padding: 18px;
+}
+
+.btn,
+button.btn,
+a.btn {
+    min-height: 34px;
+    padding: 8px 18px;
+    border: 1px solid var(--vg-green-dark);
+    border-radius: 999px;
+    background: var(--vg-green);
+    color: #fff8ec;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 4px 5px 8px rgba(31, 19, 14, 0.20);
+}
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover {
+    background: var(--vg-green-dark);
+}
+
+.btn.secondary,
+a.btn.secondary,
+button.btn.secondary {
+    background: #f5e4ca;
+    color: var(--vg-text);
+    border-color: var(--vg-border);
+}
+
+.btn.secondary:hover {
+    background: #ead0a9;
+}
+
+.btn.danger,
+button.btn.danger {
+    background: var(--vg-danger);
+    border-color: var(--vg-danger);
+}
+
+label {
+    display: block;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    min-height: 30px;
+    border: 1px solid var(--vg-border);
+    background: #fffaf1;
+    color: var(--vg-text);
+    padding: 6px 8px;
+    border-radius: 2px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid rgba(85, 107, 47, 0.30);
+    border-color: var(--vg-green);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+}
+
+.field.full,
+.form-grid .full {
     grid-column: 1 / -1;
 }
 
-.inline-form .actions {
-    grid-column: 1 / -1;
+.actions,
+.auth-actions,
+.employee-actions,
+.order-actions {
     display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.badge,
+.status,
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #f5e4ca;
+    border: 1px solid var(--vg-border-soft);
+    color: var(--vg-text);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.msg.error {
+    color: var(--vg-danger);
+}
+
+.msg.ok {
+    color: var(--vg-success);
+}
+
+
+/* =====================================================================================================================
+   8. PAGE ACCUEIL
+   ===================================================================================================================== */
+
+.hero-landing {
+    background: var(--vg-page-bg);
+}
+
+.hero-landing-bg {
+    display: none;
+}
+
+.hero-landing-inner {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    box-shadow: var(--vg-shadow-paper);
+    padding: 44px 88px 46px;
+}
+
+.hero-kicker {
+    margin: 0 0 4px;
+    font-family: var(--vg-title-font);
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.hero-title {
+    max-width: 680px;
+    margin: 0;
+    font-size: 2.1rem;
+    line-height: 1.05;
+}
+
+.hero-lead {
+    max-width: 680px;
+    margin: 0;
+    font-family: var(--vg-title-font);
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin-top: 34px;
+    font-family: var(--vg-title-font);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric-value,
+.metric-label {
+    display: block;
+}
+
+.section {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    padding: 0 88px 34px;
+}
+
+.section-head {
+    margin-bottom: 18px;
+}
+
+.section-title {
+    margin-bottom: 2px;
+}
+
+.section-title::after,
+.menus-page-wrap h1::after,
+.page-surface h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--vg-green);
+    margin-top: 6px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.feature-media {
+    display: none;
+}
+
+.feature-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border-soft);
+    box-shadow: var(--vg-shadow-card);
+    padding: 16px;
+}
+
+.feature-card h3 {
+    margin-bottom: 4px;
+}
+
+.grid-2 .card {
+    min-height: 120px;
+}
+
+.list {
+    margin: 12px 0 0;
+    padding-left: 18px;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+    margin-top: 14px;
+}
+
+.reviews-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+
+/* =====================================================================================================================
+   9. PAGE MENUS
+   ===================================================================================================================== */
+
+.menus-page-wrap {
+    padding-top: 28px;
+    padding-bottom: 44px;
+}
+
+.menus-page-wrap>h1 {
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.menus-page-wrap>.card {
+    width: min(390px, 100%);
+    margin: 18px auto 44px;
+    box-shadow: none;
+}
+
+.menus-page-wrap>.card h2 {
+    margin-bottom: 12px;
+}
+
+.menus-page-wrap .grid-2 {
+    gap: 12px 22px;
+}
+
+.menus-page-wrap .actions {
+    align-self: end;
+}
+
+#status {
+    margin: 12px 0 0;
+}
+
+.menus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 62px;
+}
+
+.menu-card {
+    min-height: 250px;
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    box-shadow: none;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-card h2,
+.menu-card h3 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.menu-card p,
+.menu-card li {
+    font-size: 0.78rem;
+}
+
+.menu-card ul {
+    margin: 8px 0;
+    padding-left: 16px;
+}
+
+.menu-card .btn {
+    margin-top: auto;
+    align-self: flex-end;
+    min-height: 24px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+}
+
+.menu-card .badge {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: inherit;
+}
+
+
+/* =====================================================================================================================
+   10. DÉTAIL MENU
+   ===================================================================================================================== */
+
+.menu-detail {
+    width: min(620px, 100%);
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: none;
+}
+
+.menu-detail h1,
+.menu-detail h2,
+.menu-detail h3 {
+    margin-bottom: 8px;
+}
+
+.menu-detail img,
+.menu-detail .dish-image,
+.menu-detail .menu-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid var(--vg-border);
+    background: var(--vg-card-soft);
+}
+
+.menu-detail .dishes,
+.menu-detail .dishes-grid,
+.menu-detail .menu-dishes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 18px 0;
+}
+
+.menu-detail .btn {
+    float: right;
+    min-height: 26px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+}
+
+
+/* =====================================================================================================================
+   11. COMMANDE
+   ===================================================================================================================== */
+
+.order-wrap {
+    width: min(760px, 100%);
+    margin-inline: auto;
+    box-shadow: none;
+}
+
+.order-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: start;
+}
+
+.order-head-aside {
+    max-width: 260px;
+    background: var(--vg-terracotta);
+    color: #fff8ec;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+}
+
+.order-summary {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.order-summary-card,
+.order-actions {
+    border: 1px solid var(--vg-border);
+    padding: 14px;
+    background: rgba(255, 248, 236, 0.65);
+}
+
+.order-actions .btn {
+    width: 100%;
+}
+
+
+/* =====================================================================================================================
+   12. AUTH : LOGIN / REGISTER
+   ===================================================================================================================== */
+
+.auth-wrap {
+    width: min(280px, 100%);
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    border-radius: 6px;
+    padding: 18px;
+}
+
+.auth-head {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-head h1 {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+}
+
+.auth-head p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.auth-card {
+    box-shadow: none;
+    padding: 16px;
+}
+
+.auth-card label {
+    margin-bottom: 14px;
+}
+
+.auth-card .btn,
+.auth-actions .btn {
+    width: 100%;
+    min-height: 28px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    background: var(--vg-terracotta);
+    border-color: var(--vg-terracotta-dark);
+}
+
+.auth-actions {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.auth-actions .secondary {
+    background: #fff8ec;
+    color: var(--vg-text);
+    border-color: var(--vg-border);
+}
+
+.register-form .form-grid {
+    gap: 10px 14px;
+}
+
+.register-form small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.68rem;
+}
+
+
+/* =====================================================================================================================
+   13. DASHBOARDS ADMIN / EMPLOYÉ
+   ===================================================================================================================== */
+
+.page-surface {
+    width: min(var(--vg-dashboard-width), calc(100% - 32px));
+    background: var(--vg-dashboard-bg);
+    padding: 0 0 64px;
+    min-height: 560px;
+}
+
+.employee-dashboard-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 38px 42px;
+}
+
+.employee-dashboard-card>.page-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    background: #b2aa9e;
+    border: 1px solid var(--vg-border);
+    border-radius: 0 0 12px 12px;
+    padding: 12px 28px;
+    margin: 0 -38px 0;
+}
+
+.employee-dashboard-card h1 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.employee-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    margin: 0 -38px 34px;
+}
+
+.employee-tab-btn {
+    min-height: 42px;
+    border: 1px solid var(--vg-border);
+    background: var(--vg-paper);
+    color: var(--vg-text);
+    font-family: var(--vg-title-font);
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.employee-tab-btn.active {
+    background: var(--vg-green);
+    color: #fff8ec;
+    border-color: var(--vg-green-dark);
+}
+
+.employee-tab-btn:hover {
+    filter: brightness(0.96);
+}
+
+.employee-detail-panel {
+    background: var(--vg-dashboard-panel);
+    border: 1px solid var(--vg-border-soft);
+    padding: 18px;
+    margin-bottom: 24px;
+}
+
+.employee-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 18px;
+    margin-bottom: 14px;
+}
+
+.employee-panel-head h2 {
+    margin: 0;
+}
+
+.employee-tab-panel {
+    display: none;
+}
+
+.employee-tab-panel.active {
+    display: block;
+}
+
+.employee-orders-filters,
+.admin-orders-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    background: var(--vg-dashboard-panel);
+    border: 1px solid var(--vg-border-soft);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.employee-cards-grid,
+.admin-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.employee-cards-grid .card,
+.admin-cards-grid .card {
+    min-height: 155px;
+    padding: 12px;
+    background: var(--vg-paper);
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-cards-grid .btn,
+.admin-cards-grid .btn {
+    margin-top: auto;
+    align-self: center;
+    min-height: 22px;
+    padding: 3px 12px;
+    font-size: 0.72rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.stat-box {
+    background: var(--vg-paper);
+    border: 1px solid var(--vg-border-soft);
+    padding: 16px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+
+/* =====================================================================================================================
+   14. PAGES NON MAQUETTÉES MAIS COHÉRENTES
+   ===================================================================================================================== */
+
+.contact-card,
+.contact-panel,
+.contact-form,
+.legal-page,
+.cgv-page,
+.orders-card,
+.my-orders-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    padding: 22px;
+    box-shadow: var(--vg-shadow-soft);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--vg-card);
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid var(--vg-border-soft);
+    text-align: left;
+}
+
+th {
+    background: var(--vg-paper);
+}
+
+
+/* =====================================================================================================================
+   15. RESPONSIVE
+   ===================================================================================================================== */
+
+@media (max-width: 980px) {
+    :root {
+        --vg-header-height: 140px;
+    }
+
+    .brand-script {
+        font-size: clamp(2.1rem, 7vw, 3.5rem);
+    }
+
+    .hamburger {
+        width: 62px;
+        height: 62px;
+        right: 22px;
+    }
+
+    .hamburger span {
+        width: 30px;
+    }
+
+    main.container,
+    .page-surface,
+    .menus-page-wrap,
+    .hero-landing-inner,
+    .section {
+        width: min(100% - 24px, 760px);
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+
+    .feature-grid,
+    .menus-grid,
+    .employee-cards-grid,
+    .admin-cards-grid,
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .employee-tabs {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .menu-overlay {
+        right: 18px;
+        top: 104px;
+    }
+}
+
+@media (max-width: 680px) {
+    body {
+        font-size: 14px;
+    }
+
+    .header-inner {
+        justify-content: flex-start;
+        padding-left: 16px;
+    }
+
+    .brand-script {
+        font-size: 2.1rem;
+    }
+
+    main.container,
+    .page-surface,
+    .menus-page-wrap,
+    .hero-landing-inner,
+    .section {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .hero-metrics,
+    .feature-grid,
+    .menus-grid,
+    .grid-2,
+    .form-grid,
+    .order-summary,
+    .employee-orders-filters,
+    .admin-orders-filters,
+    .employee-cards-grid,
+    .admin-cards-grid,
+    .stats-grid,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-dashboard-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .employee-dashboard-card>.page-head,
+    .employee-tabs {
+        margin-left: -18px;
+        margin-right: -18px;
+    }
+
+    .employee-tabs {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-panel {
+        width: min(220px, calc(100vw - 32px));
+    }
+
+    .footer-grid {
+        gap: 14px;
+    }
+}
+
+/* =====================================================================================================================
+   PATCH DASHBOARDS — cartes menus / commandes lisibles
+   ===================================================================================================================== */
+
+/* Les dashboards ont besoin d'un peu plus de largeur que prévu */
+.page-surface {
+    width: min(1040px, calc(100% - 32px));
+}
+
+/* Le contenu dashboard ne doit pas être microscopique */
+.employee-dashboard-card {
+    padding-left: 44px;
+    padding-right: 44px;
+}
+
+/* Les grilles dashboard ne doivent jamais forcer 5 colonnes */
+.employee-cards-grid,
+.admin-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+/* Les cartes générées dans les dashboards : même logique que la page menus */
+.employee-cards-grid>*,
+.admin-cards-grid>* {
+    min-width: 0;
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    box-shadow: none;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Évite les chevauchements de texte dans les cartes commandes */
+.employee-cards-grid p,
+.employee-cards-grid div,
+.employee-cards-grid span,
+.employee-cards-grid strong,
+.admin-cards-grid p,
+.admin-cards-grid div,
+.admin-cards-grid span,
+.admin-cards-grid strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+/* Les titres de cartes restent lisibles */
+.employee-cards-grid h2,
+.employee-cards-grid h3,
+.admin-cards-grid h2,
+.admin-cards-grid h3 {
+    font-size: 1rem;
+    margin: 0 0 10px;
+}
+
+/* Boutons en bas des cartes */
+.employee-cards-grid .btn,
+.admin-cards-grid .btn,
+.employee-cards-grid button,
+.admin-cards-grid button {
+    margin-top: 12px;
+    align-self: flex-start;
+    min-height: 24px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+    border-radius: 999px;
+}
+
+/* Pour les menus côté admin/employé, rendu proche de menus.html */
+#tab-menus .employee-cards-grid,
+#tab-menus .admin-cards-grid,
+#tab-menus #menusGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+/* Les cartes menus dans le dashboard doivent avoir une hauteur raisonnable */
+#tab-menus .employee-cards-grid>*,
+#tab-menus .admin-cards-grid>*,
+#tab-menus #menusGrid>* {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Le détail sélectionné ne doit pas prendre toute la page en hauteur */
+.employee-detail-panel {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Le détail commande est plus lisible en grille quand le JS génère plusieurs blocs */
+.employee-detail-panel .detail-grid,
+.employee-detail-panel .order-detail-grid,
+.employee-detail-panel .menu-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Les boutons de suivi doivent pouvoir revenir à la ligne proprement */
+.employee-detail-panel .employee-actions,
+.employee-detail-panel .order-actions,
+.employee-detail-panel .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Filtres dashboard : moins écrasés */
+.employee-orders-filters,
+.admin-orders-filters {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
+}
+
+/* Les onglets admin sont nombreux : on garde lisible */
+.admin-dashboard-card .employee-tabs,
+.employee-dashboard-card .employee-tabs {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+
+/* Responsive dashboard */
+@media (max-width: 980px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus .employee-cards-grid,
+    #tab-menus .admin-cards-grid,
+    #tab-menus #menusGrid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+
+    .employee-orders-filters,
+    .admin-orders-filters {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus .employee-cards-grid,
+    #tab-menus .admin-cards-grid,
+    #tab-menus #menusGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-orders-filters,
+    .admin-orders-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-dashboard-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+/* =====================================================================================================================
+   PATCH CARTES DASHBOARD — structure attendue par le JS
+   ===================================================================================================================== */
+
+.dashboard-item-card,
+.order-card,
+.admin-menu-card,
+.employee-menu-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-item-card h3,
+.order-card h3,
+.admin-menu-card h3,
+.employee-menu-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.dashboard-item-card p,
+.order-card p,
+.admin-menu-card p,
+.employee-menu-card p {
+    margin: 0;
+    font-size: 0.82rem;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.card-actions .btn,
+.card-actions button {
+    min-height: 24px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+}
+
+/* =====================================================================================================================
+   CARTES DASHBOARD — commandes / menus
+   ===================================================================================================================== */
+
+.employee-cards-grid,
+.admin-cards-grid,
+#tab-menus #menusGrid,
+#tab-orders #ordersGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+.dashboard-item-card,
+.order-card,
+.admin-menu-card,
+.employee-menu-card,
+.employee-mini-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.dashboard-item-card:hover,
+.order-card:hover,
+.admin-menu-card:hover,
+.employee-menu-card:hover,
+.employee-mini-card:hover {
+    box-shadow: 4px 6px 12px rgba(31, 19, 14, 0.18);
+    transform: translateY(-1px);
+}
+
+.dashboard-item-card h3,
+.order-card h3,
+.admin-menu-card h3,
+.employee-menu-card h3,
+.employee-mini-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.dashboard-item-card p,
+.order-card p,
+.admin-menu-card p,
+.employee-menu-card p,
+.employee-mini-card p {
+    margin: 0;
+    font-size: 0.82rem;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.card-actions .btn,
+.card-actions button {
+    min-height: 24px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+}
+
+@media (max-width: 980px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus #menusGrid,
+    #tab-orders #ordersGrid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus #menusGrid,
+    #tab-orders #ordersGrid {
+        grid-template-columns: 1fr;
+    }
 }

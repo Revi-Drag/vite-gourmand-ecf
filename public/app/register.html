@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Créer un compte — Vite & Gourmand</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container auth">
+        <div class="auth-wrap">
+            <div class="auth-head">
+                <h1 style="margin:0;">Créer un compte</h1>
+                <p class="muted" style="margin:10px 0 0;">
+                    Créez votre espace pour commander et suivre vos demandes.
+                </p>
+            </div>
+
+            <section class="card auth-card">
+                <form id="form" class="register-form">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>Prénom
+                                <input name="firstName" required autocomplete="given-name" />
+                            </label>
+                        </div>
+
+                        <div class="field">
+                            <label>Nom
+                                <input name="lastName" required autocomplete="family-name" />
+                            </label>
+                        </div>
+
+                        <div class="field full">
+                            <label>Email
+                                <input type="email" name="email" required autocomplete="email" />
+                            </label>
+                        </div>
+
+                        <div class="field">
+                            <label>GSM
+                                <input name="phone" required autocomplete="tel" />
+                            </label>
+                        </div>
+
+                        <div class="field">
+                            <label>Ville
+                                <input name="city" required autocomplete="address-level2" />
+                            </label>
+                        </div>
+
+                        <div class="field full">
+                            <label>Adresse
+                                <input name="address" required autocomplete="street-address" />
+                            </label>
+                        </div>
+
+                        <div class="field full">
+                            <label>Mot de passe
+                                <input type="password" name="password" required autocomplete="new-password"
+                                    minlength="10" />
+                                <small class="muted">
+                                    10 caractères min, avec 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial.
+                                </small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="auth-actions">
+                        <button class="btn" type="submit">Créer mon compte</button>
+                        <a class="btn secondary" href="./login.html">J’ai déjà un compte</a>
+                    </div>
+
+                    <p id="status" class="muted" role="status" aria-live="polite" style="margin:10px 0 0;"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+
+    <script src="./register.js"></script>
+</body>
+
+</html>

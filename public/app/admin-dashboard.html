@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Espace Administrateur</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/app/app.css" />
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container page-surface">
+        <section class="card employee-dashboard-card">
+            <div class="page-head">
+                <h1 style="margin:0">Espace Administrateur</h1>
+                <div id="adminStatus" class="muted">Chargement…</div>
+            </div>
+
+            <div class="employee-tabs" role="tablist" aria-label="Navigation espace administrateur">
+                <button class="employee-tab-btn active" data-tab="employees" type="button">Gestion employés</button>
+                <button class="employee-tab-btn" data-tab="stats" type="button">Statistiques de vente</button>
+                <button class="employee-tab-btn" data-tab="orders" type="button">Gestion commandes</button>
+                <button class="employee-tab-btn" data-tab="menus" type="button">Gestion menus</button>
+                <button class="employee-tab-btn" data-tab="reviews" type="button">Avis clients</button>
+            </div>
+
+            <section id="adminDetail" class="employee-detail-panel">
+                <div class="muted">Sélectionne un élément pour voir son détail.</div>
+            </section>
+
+            <section id="tab-employees" class="employee-tab-panel active" aria-label="Gestion employés">
+                <div class="employee-panel-head">
+                    <h2>Employés</h2>
+                    <div class="muted small">Consultation et gestion des employés</div>
+                </div>
+
+                <h2>Liste des employés</h2>
+                <div class="muted small" style="margin-top:-6px">Suspendre = désactiver le compte (toggle).</div>
+
+                <div id="employeesWrap" style="margin-top:12px"></div>
+
+                <h2>Créer un employé</h2>
+
+                <form id="createEmployeeForm" class="form-grid">
+                    <div class="field">
+                        <label>Email</label>
+                        <input id="empEmail" type="email" required placeholder="employe@vitegourmand.fr" />
+                    </div>
+
+                    <div class="field">
+                        <label>Mot de passe</label>
+                        <input id="empPassword" type="password" required placeholder="Ex: Employe-123!" />
+                        <small class="muted">Tu peux imposer un format simple pour l’ECF.</small>
+                    </div>
+
+                    <div class="field full">
+                        <button class="btn" type="submit">Créer l’employé</button>
+                        <div id="createMsg" class="msg"></div>
+                    </div>
+                </form>
+            </section>
+
+            <section id="tab-stats" class="employee-tab-panel" aria-label="Statistiques de vente">
+                <div class="employee-panel-head">
+                    <h2>Statistiques de vente</h2>
+                    <div class="muted small">Analyse des ventes et performances</div>
+                </div>
+
+                <!-- Séction de statistiques globales (CA total, CA du mois, CA du jour, etc.) + historique des snapshots -->
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="muted small">CA total</div>
+                        <div id="statRevenueTotal" class="stat-value">—</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="muted small">Commandes totales</div>
+                        <div id="statOrdersTotal" class="stat-value">—</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="muted small">CA du mois</div>
+                        <div id="statRevenueMonth" class="stat-value">—</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="muted small">Commandes du mois</div>
+                        <div id="statOrdersMonth" class="stat-value">—</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="muted small">CA du jour</div>
+                        <div id="statRevenueToday" class="stat-value">—</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="muted small">Commandes du jour</div>
+                        <div id="statOrdersToday" class="stat-value">—</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top:24px;">Historique des snapshots</h3>
+                <div id="statsHistoryWrap" class="muted">Chargement...</div>
+                <h3 style="margin-top:24px;">Évolution du CA (30 derniers jours)</h3>
+                <canvas id="revenueChart" style="max-width:100%;"></canvas>
+
+                <div id="statsContent" style="padding:16px;">
+                    <div class="muted">Aucune statistique chargée.</div>
+                </div>
+            </section>
+
+            <section id="tab-orders" class="employee-tab-panel" aria-label="Gestion commandes">
+                <div class="employee-panel-head">
+                    <h2>Commandes</h2>
+                    <div class="muted small">Suivi et traitement des commandes</div>
+                </div>
+
+                <div class="admin-orders-filters">
+                    <div class="field">
+                        <label for="orderStatusFilter">Statut</label>
+                        <select id="orderStatusFilter">
+                            <option value="">Tous</option>
+                            <option value="ACCEPTED">Acceptée</option>
+                            <option value="PREPARING">En préparation</option>
+                            <option value="DELIVERING">En livraison</option>
+                            <option value="DELIVERED">Livrée</option>
+                            <option value="DONE">Terminée</option>
+                            <option value="CANCELLED">Annulée</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="orderCustomerFilter">Email client</label>
+                        <input id="orderCustomerFilter" type="text" placeholder="client@exemple.fr" />
+                    </div>
+
+                    <div class="employee-actions" style="align-self:end;">
+                        <button id="applyOrderFiltersBtn" class="btn secondary" type="button">Filtrer</button>
+                        <button id="resetOrderFiltersBtn" class="btn secondary" type="button">Réinitialiser</button>
+                    </div>
+                </div>
+
+                <div id="ordersGrid" class="admin-cards-grid">
+                    <div class="muted">Aucune commande chargée.</div>
+                </div>
+            </section>
+
+            <section id="tab-menus" class="employee-tab-panel" aria-label="Gestion menus">
+                <div class="employee-panel-head">
+                    <h2>Menus</h2>
+                    <div class="muted small">Consultation et gestion des menus</div>
+                </div>
+
+                <div class="employee-actions" style="margin:16px 0;">
+                    <button id="createMenuBtn" class="btn secondary" type="button">Ajouter un menu</button>
+                </div>
+
+                <section id="adminMenuDetail" class="employee-detail-panel">
+                    <div class="muted">Sélectionne un menu ou clique sur "Ajouter un menu" .</div>
+                </section>
+
+                <div id="menusGrid" class="employee-cards-grid">
+                    <div class="muted">Aucun menu chargé.</div>
+                </div>
+            </section>
+
+            <section id="tab-reviews" class="employee-tab-panel" aria-label="Avis clients">
+                <div class="employee-panel-head">
+                    <h2>Avis clients</h2>
+                    <div class="muted small">Validation ou refus des avis</div>
+                </div>
+
+                <div id="reviewsGrid" class="employee-cards-grid">
+                    <div class="muted">Aucun avis chargé.</div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module" src="/app/admin-dashboard.js"></script>
+</body>
+
+</html>

@@ -11,6 +11,10 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_EMPLOYEE
+        ROLE_EMPLOYEE: ROLE_USER
 
     firewalls:
         dev:
@@ -48,12 +52,24 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        - { path: ^/api/_debug/request$, roles: PUBLIC_ACCESS }
-        - { path: ^/api/login$, roles: PUBLIC_ACCESS }
-        - { path: ^/admin/_seed_user$, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+      - { path: ^/api/menus, roles: PUBLIC_ACCESS, methods: [GET] }
+
+      - { path: ^/api/_debug/request$, roles: PUBLIC_ACCESS }
+      - { path: ^/admin/_seed_user$, roles: PUBLIC_ACCESS }
+
+      - { path: ^/api/password/forgot$, roles: PUBLIC_ACCESS, methods: [POST] }
+      - { path: ^/api/password/reset$, roles: PUBLIC_ACCESS, methods: [POST] }
+
+      - { path: ^/api/login$, roles: PUBLIC_ACCESS, methods: [POST] }
+      - { path: ^/api/register$, roles: PUBLIC_ACCESS, methods: [POST] }
+      - { path: ^/api/contact$, roles: PUBLIC_ACCESS, methods: [POST] }
+      - { path: ^/api/reviews$, roles: PUBLIC_ACCESS, methods: [GET] }
+
+      - { path: ^/api/admin, roles: ROLE_ADMIN }
+      - { path: ^/api/employee, roles: ROLE_EMPLOYEE }
+
+      - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
 
 when@test:
     security:

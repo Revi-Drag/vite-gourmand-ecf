@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Menus</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <!-- MAIN -->
+    <main class="container menus-page-wrap">
+        <h1>Nos menus</h1>
+        <p class="muted" style="margin-top: 0;">
+            Une sélection pensée pour vos événements : simple, généreux, efficace.
+        </p>
+
+        <!-- FILTRES -->
+        <section class="card">
+            <h2>Filtres de recherche</h2>
+
+            <div class="grid-2">
+                <!-- THEME -->
+                <label>
+                    Thème
+                    <select id="fTheme">
+                        <option value="">Tous</option>
+                    </select>
+                </label>
+
+                <!-- REGIME -->
+                <label>
+                    Régime
+                    <select id="fDiet">
+                        <option value="">Tous</option>
+                        <option value="NONE">Aucun</option>
+                        <option value="VEGETARIAN">Végétarien</option>
+                        <option value="HALAL">Halal</option>
+                        <option value="GLUTEN_FREE">Sans gluten</option>
+                    </select>
+                </label>
+
+                <!-- MIN PERSONS -->
+                <label>
+                    Nombre de personnes (minimum)
+                    <input id="fMinPersons" type="number" min="1" placeholder="ex: 5" />
+                </label>
+
+                <!-- PRICE MIN -->
+                <label>
+                    Prix minimum (€)
+                    <input id="fPriceMin" type="number" min="0" step="0.01" placeholder="ex: 50" />
+                </label>
+
+                <!-- PRICE MAX -->
+                <label>
+                    Prix maximum (€)
+                    <input id="fPriceMax" type="number" min="0" step="0.01" placeholder="ex: 200" />
+                </label>
+
+                <!-- ACTIONS -->
+                <div class="actions">
+                    <button class="btn" id="btnApply" type="button">Appliquer</button>
+                    <button class="btn secondary" id="btnReset" type="button">Réinitialiser</button>
+                </div>
+            </div>
+
+            <p id="status" class="muted" role="status" aria-live="polite"></p>
+        </section>
+
+        <!-- GRID MENUS -->
+        <section id="menusGrid" class="menus-grid"></section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+
+    <!-- JS -->
+    <script src="./menus.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Mes commandes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container">
+        <section class="card">
+            <div class="page-title">
+                <div>
+                    <h1 style="margin:0;">Mes commandes</h1>
+                    <p class="muted" style="margin:10px 0 0;">Historique de vos commandes et statut.</p>
+                </div>
+
+                <div class="page-title-actions">
+                    <a class="btn secondary" href="./menus.html">Commander un menu</a>
+                </div>
+            </div>
+
+            <div id="status" class="muted" style="margin-top: 10px;" role="status" aria-live="polite"></div>
+        </section>
+
+        <section id="ordersGrid" class="grid orders-grid" style="margin-top: 12px;"></section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+
+    <script src="./my-orders.js?v=1"></script>
+</body>
+
+</html>

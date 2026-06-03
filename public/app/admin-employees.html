@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Espace Admin - Vite & Gourmand</title>
+
+    <link rel="stylesheet" href="/app/app.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container page-surface">
+        <div class="page-head">
+            <h1 style="margin:0">Espace Admin</h1>
+            <div id="status" class="muted">—</div>
+        </div>
+
+
+        <!-- Séction de statistiques globales (CA total, CA du mois, CA du jour, etc.) + historique des snapshots -->
+        <section class="card">
+            <h2>Statistiques de vente</h2>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="muted small">CA total</div>
+                    <div id="statRevenueTotal" class="stat-value">—</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="muted small">Commandes totales</div>
+                    <div id="statOrdersTotal" class="stat-value">—</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="muted small">CA du mois</div>
+                    <div id="statRevenueMonth" class="stat-value">—</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="muted small">Commandes du mois</div>
+                    <div id="statOrdersMonth" class="stat-value">—</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="muted small">CA du jour</div>
+                    <div id="statRevenueToday" class="stat-value">—</div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="muted small">Commandes du jour</div>
+                    <div id="statOrdersToday" class="stat-value">—</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top:24px;">Historique des snapshots</h3>
+            <div id="statsHistoryWrap" class="muted">Chargement...</div>
+            <h3 style="margin-top:24px;">Évolution du CA (30 derniers jours)</h3>
+            <canvas id="revenueChart" style="max-width:100%;"></canvas>
+        </section>
+
+
+        <!-- Séction de gestion des employés (création + liste) -->
+        <section class="card">
+            <h2>Créer un employé</h2>
+
+            <form id="createEmployeeForm" class="form-grid">
+                <div class="field">
+                    <label>Email</label>
+                    <input id="empEmail" type="email" required placeholder="employe@vitegourmand.fr" />
+                </div>
+
+                <div class="field">
+                    <label>Mot de passe</label>
+                    <input id="empPassword" type="password" required placeholder="Ex: Employe-123!" />
+                    <small class="muted">Tu peux imposer un format simple pour l’ECF.</small>
+                </div>
+
+                <div class="field full">
+                    <button class="btn" type="submit">Créer l’employé</button>
+                    <div id="createMsg" class="msg"></div>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>Liste des employés</h2>
+            <div class="muted small" style="margin-top:-6px">Suspendre = désactiver le compte (toggle).</div>
+
+            <div id="employeesWrap" style="margin-top:12px"></div>
+        </section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module" src="/app/admin-employees.js"></script>
+</body>
+
+</html>

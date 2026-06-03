@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vite & Gourmand — Commander</title>
+    <link rel="stylesheet" href="./app.css" />
+</head>
+
+<body>
+    <div id="appHeader"></div>
+
+    <main class="container">
+        <div class="page-head">
+            <a class="btn secondary" href="./menus.html">← Retour</a>
+        </div>
+
+        <section class="card order-wrap" style="margin-top:12px;">
+            <div class="order-head">
+                <div>
+                    <h1 style="margin:0;">Commande</h1>
+                    <p id="menuInfo" class="muted" style="margin:8px 0 0;">Chargement du menu…</p>
+                </div>
+                <div class="order-head-aside muted small">
+                    <div>Merci de vérifier l’adresse, la date et le nombre de personnes.</div>
+                </div>
+            </div>
+
+            <hr class="sep" />
+
+            <form id="orderForm" class="form">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="eventAddress">Adresse de la prestation</label>
+                        <input id="eventAddress" required placeholder="Adresse complète" />
+                    </div>
+
+                    <div class="field">
+                        <label for="eventCity">Ville</label>
+                        <input id="eventCity" required placeholder="Bordeaux / autre" />
+                    </div>
+
+                    <div class="field">
+                        <label for="distanceKm">Distance (km) si hors Bordeaux</label>
+                        <input id="distanceKm" type="number" min="0" step="0.1" placeholder="ex: 12.5" />
+                        <small class="muted">Si ville = Bordeaux → laisse vide (0).</small>
+                    </div>
+
+                    <div class="field">
+                        <label for="eventDate">Date & heure de livraison</label>
+                        <input id="eventDate" type="datetime-local" required />
+                    </div>
+
+                    <div class="field">
+                        <label for="eventPhone">GSM</label>
+                        <input id="eventPhone" required placeholder="06..." />
+                    </div>
+
+                    <div class="field">
+                        <label for="persons">Nombre de personnes</label>
+                        <input id="persons" type="number" min="1" step="1" required />
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <div class="order-summary-card">
+                        <div class="order-summary-title">
+                            <h2 style="margin:0;">Récap prix</h2>
+                            <span class="muted small">Mise à jour automatique</span>
+                        </div>
+                        <div id="priceBox" class="muted" style="margin-top:10px;">—</div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn" type="submit">Valider la commande</button>
+                        <div id="status" class="muted" role="status" aria-live="polite"></div>
+                        <p class="muted small" style="margin:0;">
+                            En validant, vous confirmez les informations saisies.
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="appFooter"></div>
+
+    <script type="module">
+        import { loadLayout } from "./layout.js";
+        loadLayout();
+    </script>
+
+    <script src="./order.js"></script>
+</body>
+
+</html>

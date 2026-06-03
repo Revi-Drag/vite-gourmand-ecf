@@ -40,10 +40,15 @@ form.addEventListener("submit", async (e) => {
         msg.textContent = `Connecté : ${data.user?.email}`;
         msg.className = "msg ok";
 
+        // redirect intelligent : si on vient d'une page protégée, on y retourne
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect");
+
         // petite pause visuelle
         setTimeout(() => {
-            window.location.href = "./tasks.html";
+            window.location.href = redirect ? decodeURIComponent(redirect) : "./index.html";
         }, 300);
+
 
     } catch (err) {
         msg.textContent = "Erreur réseau ou serveur non disponible.";
