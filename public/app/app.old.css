@@ -1,0 +1,2734 @@
+/* =========================================================
+   Vite & Gourmand — Front style “traiteur” (inspiration vitrine)
+   Objectif : sobre, photo-centré, spacing généreux, UI discrète
+   ========================================================= */
+
+/* Reset / base */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    /* Palette “ivoire / bordeaux / doré” */
+    --bg: #fbf7f1;
+    /* ivoire */
+    --bg-2: #f6efe3;
+    /* beige clair */
+    --card: #ffffff;
+    /* blanc */
+    --text: #1f2328;
+    /* noir doux */
+    --muted: #6b7280;
+    --border: #eadfce;
+    /* lin */
+    --primary: #7a1f2b;
+    /* bordeaux chic */
+    --primary-hover: #651824;
+    --secondary: #f3eadc;
+    /* beige */
+    --danger: #b4232c;
+    --accent: #b08d57;
+    /* fond global assombrit */
+    --page-bg-darken: 0.10;
+    /* ajuste entre 0.04 et 0.10 */
+
+    /* doré */
+    --shadow: 0 14px 35px rgba(31, 35, 40, 0.10);
+    --shadow-soft: 0 10px 24px rgba(31, 35, 40, 0.08);
+
+    --radius: 18px;
+    --radius-sm: 12px;
+
+    /* Typo : titres “serif”, UI “sans” (sans dépendances externes) */
+    --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-title: ui-serif, Georgia, "Times New Roman", Times, serif;
+
+    /* Layout */
+    --container: 1100px;
+}
+
+
+body {
+    margin: 0;
+    font-family: var(--font-ui);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 108px;
+
+    /* Fond vitrine : léger dégradé + respiration */
+    background:
+        radial-gradient(1200px 600px at 10% 0%, rgba(176, 141, 87, 0.08), transparent 60%),
+        radial-gradient(900px 500px at 100% 20%, rgba(122, 31, 43, 0.06), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Layout
+   ========================================================= */
+.container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 18px 18px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-title);
+    letter-spacing: -0.01em;
+}
+
+h1 {
+    margin: 18px 0 8px;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.05;
+}
+
+h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+p {
+    line-height: 1.55;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.small {
+    font-size: 12px;
+}
+
+/* Accessibilité */
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    padding: 10px 12px;
+    background: #000;
+    color: #fff;
+    z-index: 999;
+}
+
+.skip-link:focus {
+    left: 10px;
+    top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   GLOBAL — carte vitrine derrière le contenu (toutes pages)
+   ========================================================= */
+
+main {
+    position: relative;
+    padding: 28px 18px 60px;
+    min-height: calc(100vh - 108px);
+    /* header fixe */
+}
+
+/* la grande carte derrière */
+main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1500px, 98vw);
+
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.55),
+            rgba(243, 234, 220, 0.35));
+
+    border: 1px solid rgba(234, 223, 206, 0.65);
+    border-radius: 28px;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* remet le contenu au-dessus */
+main>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   APP HEADER (glass) + hamburger
+   ============================ */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(246, 239, 227, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(234, 223, 206, 0.95);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    min-height: 108px;
+    padding: 18px 22px;
+    position: relative;
+}
+
+.brand-script {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 900;
+    font-size: clamp(36px, 4.6vw, 60px);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    font-family: "Edwardian Script ITC", "Palace Script MT", "Segoe Script", "Apple Chancery", "Snell Roundhand", "Brush Script MT",
+        "Lucida Handwriting", cursive;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.hamburger {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: var(--shadow-soft);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: rgba(31, 35, 40, 0.78);
+    border-radius: 2px;
+    margin: 2.5px 0;
+}
+
+/* Header fixe : on ajoute un padding top au main pour éviter que le contenu colle au header */
+body {
+    padding-top: 108px;
+}
+
+/* Overlay menu */
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(31, 35, 40, 0.35);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    display: grid;
+    place-items: start end;
+    padding: 12px;
+}
+
+.menu-panel {
+    width: min(360px, 92vw);
+    margin-top: 64px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(234, 223, 206, 0.90);
+    box-shadow: var(--shadow);
+    padding: 14px;
+}
+
+.menu-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 8px;
+}
+
+.menu-title {
+    font-family: var(--font-title);
+    font-weight: 900;
+}
+
+.icon-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(243, 234, 220, 0.85);
+    cursor: pointer;
+}
+
+.menu-links {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: rgba(31, 35, 40, 0.85);
+    font-weight: 800;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(243, 234, 220, 0.55);
+    border: 1px solid rgba(234, 223, 206, 0.85);
+}
+
+.menu-links a:hover {
+    background: rgba(243, 234, 220, 0.85);
+}
+
+.menu-links .btn {
+    width: 100%;
+    text-align: center;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Cards
+   ========================================================= */
+.card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(234, 223, 206, 0.85);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin: 16px 0;
+    box-shadow: var(--shadow-soft);
+}
+
+.sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 16px 0;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Forms
+   ========================================================= */
+label {
+    display: block;
+    margin: 6px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(31, 35, 40, 0.85);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    font-size: 14px;
+    display: block;
+    background: rgba(255, 255, 255, 0.98);
+    color: var(--text);
+    box-shadow: 0 1px 0 rgba(31, 35, 40, 0.02);
+}
+
+select {
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(31, 35, 40, 0.55) 50%),
+        linear-gradient(135deg, rgba(31, 35, 40, 0.55) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 55%,
+        calc(100% - 12px) 55%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 34px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: rgba(122, 31, 43, 0.55);
+    box-shadow: 0 0 0 4px rgba(122, 31, 43, 0.10);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+/* Grid helpers */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* Make title + description full width (legacy) */
+.grid label:nth-child(1),
+.grid label:nth-child(2) {
+    grid-column: 1 / -1;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+@media (max-width: 800px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Buttons (moins “SaaS”, plus vitrine)
+   ========================================================= */
+button,
+.btn {
+    padding: 10px 14px;
+    border: 1px solid rgba(122, 31, 43, 0.25);
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    background: var(--primary);
+    color: white;
+    transition: transform 0.05s ease, background 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 22px rgba(122, 31, 43, 0.14);
+}
+
+button:hover,
+.btn:hover {
+    background: var(--primary-hover);
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn.secondary {
+    background: rgba(243, 234, 220, 0.85);
+    color: var(--primary);
+    border-color: rgba(234, 223, 206, 0.95);
+    box-shadow: none;
+}
+
+.btn.secondary:hover {
+    background: rgba(243, 234, 220, 1);
+}
+
+.btn.danger {
+    background: var(--danger);
+    border-color: rgba(180, 35, 44, 0.35);
+    box-shadow: 0 10px 22px rgba(180, 35, 44, 0.14);
+}
+
+/* Icon button (legacy) */
+.icon-btn {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+
+.icon-btn:hover {
+    background: rgba(31, 35, 40, 0.06);
+}
+
+/* Messages */
+.msg {
+    margin: 10px 0 0;
+    min-height: 18px;
+}
+
+.msg.ok {
+    color: #15803d;
+}
+
+.msg.error {
+    color: #b91c1c;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Menus catalogue (menus.html)
+   ========================================================= */
+#menusGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+    padding-bottom: 22px;
+}
+
+@media (max-width: 980px) {
+    #menusGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    #menusGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+    padding: 5px;
+    min-height: 340px;
+    width: 100%;
+}
+
+.menu-card .menu-cover {
+    position: relative;
+    height: 160px;
+    background: radial-gradient(700px 260px at 20% 20%, rgba(122, 31, 43, 0.12), transparent 60%), linear-gradient(135deg, rgba(243, 234, 220, 1), rgba(251, 247, 241, 1));
+    border-bottom: 1px solid rgba(234, 223, 206, 0.75);
+    width: 100%;
+}
+
+.menu-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    border: none;
+    filter: saturate(1.02) contrast(1.02);
+}
+
+.menu-card .menu-body {
+    padding: 16px 16px 12px;
+    width: 100%;
+}
+
+.menu-card h3 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.15;
+    width: 100%;
+}
+
+.menu-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.menu-list {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    font-size: 14px;
+    color: rgba(31, 35, 40, 0.86);
+}
+
+.menu-footer {
+    margin-top: auto;
+    padding: 0 16px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 14px;
+}
+
+/* Card “vitrine” : image + contenu + footer */
+.menu-card.card {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(234, 223, 206, 0.9);
+    background: rgba(255, 255, 255, 0.96);
+    padding: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100%;
+}
+
+.menu-card.card:hover {
+    transform: translateY(-1px);
+    transition: transform 0.15s ease;
+    width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Reviews / Footer (si tu les utilises ailleurs)
+   ========================================================= */
+#reviewsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    #reviewsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    #reviewsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.review-card {
+    padding: 14px;
+    border-radius: 14px;
+    outline: none;
+    width: 100%;
+}
+
+.review-card:focus {
+    box-shadow: 0 0 0 3px rgba(31, 35, 40, .2);
+    width: 100%;
+}
+
+.review-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.review-stars {
+    font-size: 18px;
+}
+
+.review-comment {
+    margin-top: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   Stats (stats.html)
+   ============================ */
+.stat-box {
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    border-radius: var(--radius);
+    padding: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(251, 247, 241, 0.65));
+    box-shadow: var(--shadow-soft);
+}
+
+.stat-box strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   MENU DETAIL (menu.html)
+   ============================ */
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.menu-detail {
+    padding: 18px;
+}
+
+.menu-detail-hero {
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    gap: 18px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .menu-detail-hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+.menu-detail-title {
+    margin: 0;
+    font-size: clamp(26px, 3vw, 40px);
+    line-height: 1.05;
+}
+
+.menu-detail-desc {
+    margin: 10px 0 0;
+    color: rgba(31, 35, 40, 0.85);
+}
+
+.menu-detail-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(243, 234, 220, 0.7);
+    font-size: 13px;
+    color: rgba(31, 35, 40, 0.85);
+}
+
+.pill strong {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.menu-detail-hero-card {
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-soft);
+    padding: 16px;
+    width: 100%;
+}
+
+.menu-detail-meta {
+    display: grid;
+    gap: 10px;
+}
+
+.meta-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(251, 247, 241, 0.65));
+    border: 1px solid rgba(234, 223, 206, 0.85);
+}
+
+.meta-label {
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.meta-value {
+    font-family: var(--font-title);
+    font-weight: 800;
+}
+
+.menu-cta {
+    width: 100%;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.menu-detail-section h2 {
+    margin: 0 0 10px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   MENU DETAIL (status row)
+   ============================ */
+.page-head #status {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(243, 234, 220, 0.55);
+    max-width: 520px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   ORDER (order.html)
+   ============================ */
+.order-wrap {
+    padding: 18px;
+}
+
+.order-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: start;
+}
+
+@media (max-width: 800px) {
+    .order-head {
+        grid-template-columns: 1fr;
+    }
+}
+
+.order-head-aside {
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(243, 234, 220, 0.55);
+    max-width: 360px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.form-grid .full {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 800px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.field small {
+    display: block;
+    margin-top: 6px;
+}
+
+.order-summary {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 14px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .order-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+.order-summary-card {
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-soft);
+    padding: 16px;
+    width: 100%;
+}
+
+.order-summary-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.order-actions {
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: var(--shadow-soft);
+    padding: 16px;
+    display: grid;
+    gap: 10px;
+}
+
+.order-actions .btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   AUTH (login / register)
+   ============================ */
+.auth {
+    padding-top: 24px;
+    padding-bottom: 28px;
+}
+
+.auth-wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.auth-head {
+    margin-top: 10px;
+}
+
+.auth-card {
+    margin-top: 16px;
+    width: 100%;
+}
+
+.auth-card .btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+    width: 100%;
+}
+
+/* les liens dans les cartes d'authentification sont mis en avant pour faire plus “vitrine” */
+.auth-card a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    width: 100%;
+}
+
+/* les liens dans les cartes d'authentification sont soulignés au hover pour faire plus “cliquable” */
+.auth-card a:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   MY ORDERS (my-orders.html)
+   ============================ */
+
+/* wrapper pour la page “Mes commandes” : on lui donne de l'air pour que ce soit plus agréable à lire */
+.page-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* les actions liées au titre (ex: “Voir le menu”) sont séparées du titre et regroupées pour faire plus “vitrine” */
+.page-title-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   EMPLOYEE ORDERS
+   ============================ */
+
+/* Grid de commandes : 3 colonnes sur grand écran, 1 colonne sur petit */
+.orders-grid {
+    gap: 16px;
+}
+
+/* 3 colonnes sur grand écran, 2 sur moyen, 1 sur petit */
+@media (max-width: 900px) {
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card “vitrine” : image + contenu + footer */
+.orders-grid .card,
+.orders-grid .order-card,
+.orders-grid>div {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(255, 255, 255, 0.96);
+    padding: 16px;
+    width: 100%;
+}
+
+/* Card “vitrine” : image + contenu + footer */
+.orders-grid .btn {
+    margin-top: 8px;
+    width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   LANDING (index.html)
+   ============================ */
+
+/* wrapper pour les sections de la landing : on leur donne de l'air pour faire plus “vitrine” */
+.section {
+    padding: 26px 0;
+}
+
+/* wrapper pour les titres de section : on les sépare du reste du contenu pour faire plus “vitrine” */
+.section-head {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+/* les titres de section sont plus grands que les titres classiques, pour faire plus “vitrine” */
+.section-title {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* HERO */
+.hero-landing {
+    position: relative;
+    padding: 56px 0 26px;
+    overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   CONTACT PAGE
+   ============================ */
+
+/* wrapper pour la page contact : on lui donne de l'air pour que ce soit plus agréable à lire */
+.contact-page {
+    padding-top: 26px;
+    padding-bottom: 28px;
+}
+
+/* wrapper pour le contenu de la page contact : on lui donne une carte pour que ce soit plus agréable à lire */
+.contact-wrap {
+    padding: 20px;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   LEGAL PAGES (legal.html / cgv.html)
+   ============================ */
+
+/* wrapper pour la page légale : on lui donne de l'air pour que ce soit plus agréable à lire */
+.legal-page {
+    padding-top: 26px;
+    padding-bottom: 28px;
+}
+
+/* wrapper pour le contenu de la page légale : on lui donne une carte pour que ce soit plus agréable à lire */
+.legal-card {
+    padding: 20px;
+    width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* ============================
+   REGISTER
+   ============================ */
+
+/* Formulaire d'inscription : on sépare les actions (ex: “Créer un compte”) du reste du formulaire pour les mettre en bas et les faire ressortir */
+.auth-actions {
+    margin-top: 14px;
+    display: grid;
+    gap: 10px;
+}
+
+/* les boutons d'action (ex: “Créer un compte”) prennent toute la largeur du card */
+.auth-actions .btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* Le header sticky prend de la place : on évite que le contenu colle au header */
+main {
+    flex: 1 0 auto;
+}
+
+/* Le footer doit rester en bas même si le contenu est court */
+#appFooter {
+    margin-top: auto;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* Force le comportement HTML "hidden" */
+[hidden] {
+    display: none !important;
+}
+
+/* (optionnel) sécurité ciblée */
+.menu-overlay[hidden] {
+    display: none !important;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   MENUS — grand fond derrière toute la page (plus large + pleine hauteur)
+   ========================================================= */
+
+/* 1) Le wrapper garde le comportement "container" (centré)
+   mais on lui donne de l'air, et une hauteur utile. */
+.menus-page-wrap {
+    position: relative;
+    padding: 28px 18px 60px;
+    min-height: calc(100vh - 108px);
+    /* header fixe */
+}
+
+/* 2) Le grand fond : plus large que le container et qui "descend" jusqu'en bas */
+.menus-page-wrap::before {
+    content: "";
+    position: absolute;
+
+    /* on fait dépasser à gauche/droite */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* largeur voulue du fond */
+    width: min(1500px, 98vw);
+
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.45),
+            rgba(243, 234, 220, 0.30));
+
+    border: 1px solid rgba(234, 223, 206, 0.65);
+    border-radius: 28px;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 3) Le contenu reste au-dessus */
+.menus-page-wrap>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* =========================================================
+   Surface globale (carte derrière sur toutes les pages)
+   ========================================================= */
+
+/* wrapper pour la surface de la page (tout sauf header) */
+.page-surface {
+    position: relative;
+    padding-top: 22px;
+    padding-bottom: 40px;
+}
+
+/* fond plus foncé que la carte */
+.page-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1400px, 96vw);
+
+    background: linear-gradient(180deg,
+            rgba(234, 223, 206, 0.55),
+            rgba(234, 223, 206, 0.35));
+
+    border-radius: 28px;
+    border: 1px solid rgba(234, 223, 206, 0.75);
+    z-index: 0;
+}
+
+/* contenu au-dessus */
+.page-surface>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* petites cartes employé */
+.employees-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+/* Card “vitrine” : image + contenu + footer */
+.employee-card {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(234, 223, 206, 0.95);
+    background: rgba(255, 255, 255, 0.96);
+    padding: 14px;
+    width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* =========================================================
+   Stats + historique (stats.html)
+   ========================================================= */
+/* grid pour les petites cartes statistiques */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* petites cartes statistiques */
+.stat-box {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 14px;
+    background: #fff;
+}
+
+/* valeur principale de la stat */
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+/* historique : liste verticale d'items */
+.history-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+/* élément d'historique */
+.history-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    background: #fff;
+}
+
+/* ligne d'info dans l'historique : flex pour aligner à gauche/droite */
+.history-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+
+/*--------------------------------------------------------------------- */
+
+
+/* =========================================================
+   Employee page (employee.html)
+   ========================================================= */
+
+/* wrapper pour la page employé : on lui donne de l'air pour que ce soit plus agréable à lire */
+.employee-dashboard-card {
+    display: grid;
+    gap: 18px;
+    width: 100%;
+}
+
+/* grid pour les onglets de la page employé */
+.employee-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f3f0eb;
+}
+
+/* boutons d'onglet : on les stylise pour qu'ils ressemblent à des onglets, et qu'on voit clairement lequel est actif */
+.employee-tab-btn {
+    border: none;
+    padding: 14px 16px;
+    background: transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+/* effet au hover pour faire plus “vitrine” */
+.employee-tab-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* onglet actif : fond blanc + texte coloré pour faire ressortir l'onglet actif */
+.employee-tab-btn.active {
+    background: #ffffff;
+    color: #7c1f2a;
+}
+
+/* panneau de détail de l'employé : on lui donne une carte pour que ce soit plus agréable à lire */
+.employee-detail-panel {
+    min-height: 420px;
+    max-height: 420px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 16px;
+    background: #fff;
+}
+
+/* les panneaux d'onglet sont cachés par défaut, seul le panneau actif est affiché */
+.employee-tab-panel {
+    display: none;
+    gap: 14px;
+}
+
+/* panneau actif */
+.employee-tab-panel.active {
+    display: grid;
+}
+
+/* header de chaque panneau d'onglet : on sépare le titre des actions pour faire plus “vitrine” */
+.employee-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* grid pour les petites cartes d'employé dans le panneau “Mes commandes” */
+.employee-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+/* petites cartes d'employé dans le panneau “Mes commandes” */
+.employee-mini-card {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    background: #fff;
+    padding: 14px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    width: 100%;
+}
+
+/* effet au hover pour faire plus “vitrine” */
+.employee-mini-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* contenu de la petite carte d'employé : on sépare le titre des autres infos pour faire plus “vitrine” */
+.employee-mini-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+/* les autres infos de la petite carte d'employé : on les espace pour que ce soit plus lisible */
+.employee-mini-card p {
+    margin: 4px 0;
+    width: 100%;
+}
+
+/* grid pour les détails de l'employé dans le panneau “Mon profil” */
+.employee-detail-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 16px;
+}
+
+/* détails de l'employé dans le panneau “Mon profil” : on leur donne une carte pour que ce soit plus agréable à lire */
+.employee-detail-box {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+}
+
+/* header de chaque détail de l'employé : on les sépare du reste du contenu pour faire plus “vitrine” */
+.employee-detail-box h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+/* les actions liées à chaque détail de l'employé (ex: “Modifier le profil”) sont regroupées pour les faire ressortir */
+.employee-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+/* responsive : sur petit écran, les onglets passent en vertical, et les détails de l'employé prennent toute la largeur */
+@media (max-width: 900px) {
+
+    /* onglets en vertical */
+    .employee-tabs {
+        grid-template-columns: 1fr;
+    }
+
+    /* détails de l'employé en full width */
+    .employee-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* grid pour les filtres de la page “Mes commandes” : 2 colonnes sur grand écran, 1 colonne sur petit */
+.employee-orders-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+}
+
+/* responsive : sur petit écran, les filtres passent en vertical */
+@media (max-width: 900px) {
+    .employee-orders-filters {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   Employee dashboard — largeur desktop
+   ========================================================= */
+
+main.page-surface:has(.employee-dashboard-card) {
+    max-width: 1400px;
+}
+
+.employee-dashboard-card {
+    width: 100%;
+}
+
+#tab-menus {
+    width: 100%;
+}
+
+#employeeMenuDetail {
+    width: 100%;
+}
+
+#menusGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+/* --------------------------------------------------------------------- */
+
+/* =========================================================
+   Order status badges (order.html)
+   ========================================================= */
+/* badge de statut de commande : on les stylise pour qu'ils soient facilement identifiables et agréables à lire */
+.order-status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+}
+
+/* les statuts de commande acceptée ont un fond bleu très pâle et une bordure bleue plus foncée pour indiquer clairement que la commande est acceptée */
+.order-status-accepted {
+    background: #e8f1ff;
+    border-color: #bcd4ff;
+    color: #1d4ed8;
+}
+
+/* les status de commande en préparation ont un fond orange très pâle et une bordure orange plus foncée pour indiquer clairement que la commande est en préparation */
+.order-status-preparing {
+    background: #fff4e5;
+    border-color: #ffd59a;
+    color: #b45309;
+}
+
+/* les statuts de commande en cours de livraison ont un fond violet très pâle et une bordure violette plus foncée pour indiquer clairement que la commande est en cours de livraison */
+.order-status-delivering {
+    background: #f1ebff;
+    border-color: #ceb8ff;
+    color: #7c3aed;
+}
+
+/* les statuts de commande livrée ont un fond vert très pâle et une bordure verte plus foncée pour indiquer clairement que la commande est livrée */
+.order-status-delivered {
+    background: #e9f7ef;
+    border-color: #b8e0c6;
+    color: #15803d;
+}
+
+/* les statuts de commande terminée ont un fond vert pâle et une bordure verte plus foncée pour indiquer clairement que la commande est terminée */
+.order-status-done {
+    background: #e7f8ea;
+    border-color: #a9d9b2;
+    color: #166534;
+}
+
+/* les statuts d'annulation ont un fond rouge pâle et une bordure rouge plus foncée pour indiquer clairement que la commande a été annulée */
+.order-status-cancelled {
+    background: #fdeaea;
+    border-color: #f3b2b2;
+    color: #b91c1c;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.order-footer .btn {
+    margin-left: auto;
+}
+
+/* ==========================================================
+   CHARTE TERROIR CHIC VIVANT SIMPLIFIÉ
+   ========================================================== */
+
+:root {
+    --vg-bg: #FFF6E8;
+    --vg-bg-soft: #F3DFC1;
+    --vg-surface: #FFFDF7;
+
+    --vg-text: #2A1810;
+    --vg-muted: #725B4D;
+
+    --vg-primary: #556B2F;
+    --vg-primary-dark: #3E5022;
+    --vg-accent: #C94F2D;
+
+    --vg-border: #E3C9A8;
+    --vg-shadow: 0 16px 38px rgba(42, 24, 16, 0.12);
+
+    --vg-danger: #A33A2B;
+    --vg-success: #3F6B45;
+
+    --vg-title-font: "Playfair Display", Georgia, serif;
+    --vg-body-font: "Montserrat", Arial, sans-serif;
+}
+
+body {
+    font-family: var(--vg-body-font);
+    background:
+        radial-gradient(circle at top left, rgba(201, 79, 45, 0.11), transparent 28rem),
+        linear-gradient(180deg, var(--vg-bg), #FFFDF7);
+    color: var(--vg-text);
+}
+
+h1,
+h2,
+h3,
+.brand-script,
+.menu-title {
+    font-family: var(--vg-title-font);
+    color: var(--vg-text);
+}
+
+h1 {
+    letter-spacing: -0.035em;
+}
+
+h2,
+h3 {
+    letter-spacing: -0.02em;
+}
+
+p,
+li,
+label,
+input,
+textarea,
+select,
+button,
+a {
+    font-family: var(--vg-body-font);
+}
+
+.muted,
+.small {
+    color: var(--vg-muted);
+}
+
+/* Header */
+.app-header {
+    background: rgba(255, 253, 247, 0.92);
+    border-bottom: 1px solid var(--vg-border);
+    box-shadow: 0 8px 30px rgba(42, 24, 16, 0.07);
+    backdrop-filter: blur(14px);
+}
+
+.brand-script {
+    color: var(--vg-primary-dark);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+}
+
+.hamburger span {
+    background: var(--vg-primary-dark);
+}
+
+/* Surfaces */
+.card,
+.auth-card,
+.menu-card,
+.dashboard-card,
+.stat-card,
+.panel,
+.table-wrap,
+.admin-card,
+.employee-card,
+.orders-card {
+    background: var(--vg-surface);
+    border: 1px solid var(--vg-border);
+    border-radius: 22px;
+    box-shadow: var(--vg-shadow);
+}
+
+/* Boutons */
+.btn,
+button.btn,
+a.btn,
+button[type="submit"] {
+    background: var(--vg-primary);
+    color: #FFFDF7;
+    border: 1px solid var(--vg-primary);
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover,
+button[type="submit"]:hover {
+    background: var(--vg-primary-dark);
+    border-color: var(--vg-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(62, 80, 34, 0.24);
+}
+
+.btn.secondary,
+a.btn.secondary,
+button.secondary {
+    background: transparent;
+    color: var(--vg-primary-dark);
+    border-color: var(--vg-primary);
+}
+
+.btn.secondary:hover,
+a.btn.secondary:hover,
+button.secondary:hover {
+    background: rgba(85, 107, 47, 0.09);
+}
+
+.btn.danger,
+button.danger {
+    background: var(--vg-danger);
+    border-color: var(--vg-danger);
+    color: #FFFDF7;
+}
+
+/* Accent CTA */
+.hero .btn:first-of-type,
+.auth-card .btn,
+.menu-card .btn,
+.order-summary .btn {
+    background: var(--vg-accent);
+    border-color: var(--vg-accent);
+}
+
+.hero .btn:first-of-type:hover,
+.auth-card .btn:hover,
+.menu-card .btn:hover,
+.order-summary .btn:hover {
+    background: #A83E24;
+    border-color: #A83E24;
+}
+
+/* Formulaires */
+input,
+textarea,
+select {
+    background: #FFFDF7;
+    color: var(--vg-text);
+    border: 1px solid var(--vg-border);
+    border-radius: 12px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--vg-primary);
+    box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.17);
+}
+
+/* Menu overlay */
+.menu-overlay {
+    background: rgba(42, 24, 16, 0.34);
+    backdrop-filter: blur(8px);
+}
+
+.menu-panel {
+    background: var(--vg-surface);
+    border-left: 1px solid var(--vg-border);
+    box-shadow: -20px 0 60px rgba(42, 24, 16, 0.24);
+}
+
+.menu-links a {
+    color: var(--vg-text);
+    border-radius: 12px;
+}
+
+.menu-links a:hover {
+    background: var(--vg-bg-soft);
+    color: var(--vg-primary-dark);
+}
+
+/* Séparateurs */
+.sep,
+hr {
+    border: 0;
+    border-top: 1px solid var(--vg-border);
+}
+
+/* Tableaux */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    color: var(--vg-muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+td,
+th {
+    border-bottom: 1px solid var(--vg-border);
+}
+
+/* Badges / statuts */
+.badge,
+.status,
+.status-pill {
+    border-radius: 999px;
+    font-weight: 700;
+    background: var(--vg-bg-soft);
+    color: var(--vg-primary-dark);
+    border: 1px solid var(--vg-border);
+}
+
+.badge.success,
+.status.success,
+.status-pill.success {
+    background: rgba(63, 107, 69, 0.12);
+    color: var(--vg-success);
+    border-color: rgba(63, 107, 69, 0.25);
+}
+
+.badge.danger,
+.status.danger,
+.status-pill.danger {
+    background: rgba(163, 58, 43, 0.12);
+    color: var(--vg-danger);
+    border-color: rgba(163, 58, 43, 0.25);
+}
+
+.badge.warning,
+.status.warning,
+.status-pill.warning {
+    background: rgba(201, 79, 45, 0.12);
+    color: var(--vg-accent);
+    border-color: rgba(201, 79, 45, 0.25);
+}
+
+/* Messages */
+.msg.ok {
+    color: var(--vg-success);
+}
+
+.msg.error {
+    color: var(--vg-danger);
+}
+
+/* Petits détails visuels */
+::selection {
+    background: rgba(201, 79, 45, 0.22);
+}
+
+a {
+    color: var(--vg-primary-dark);
+}
+
+a:hover {
+    color: var(--vg-accent);
+}
+
+/* ==========================================================
+   RENFORT VISUEL — TERROIR CHIC PLUS VIVANT
+   ========================================================== */
+
+/* Fond plus vivant */
+body {
+    background:
+        radial-gradient(circle at 8% 8%, rgba(201, 79, 45, 0.16), transparent 22rem),
+        radial-gradient(circle at 92% 12%, rgba(85, 107, 47, 0.14), transparent 24rem),
+        linear-gradient(180deg, #FFF6E8 0%, #FFFDF7 46%, #F3DFC1 100%);
+}
+
+/* Donne plus de présence aux sections principales */
+.hero,
+.auth-wrap,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell,
+.menu-shell,
+.menus-shell,
+.container.auth {
+    position: relative;
+}
+
+/* Gros blocs type maquette */
+.hero,
+.auth-wrap,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.86), rgba(243, 223, 193, 0.62));
+    border: 1px solid rgba(227, 201, 168, 0.85);
+    border-radius: 32px;
+    box-shadow: 0 22px 55px rgba(42, 24, 16, 0.13);
+}
+
+/* Si certaines pages ont déjà un container serré, on donne de l'air */
+.hero,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    padding: clamp(24px, 4vw, 54px);
+}
+
+/* Accent visuel discret en haut des gros blocs */
+.hero::before,
+.auth-wrap::before,
+.dashboard-shell::before,
+.admin-shell::before,
+.employee-shell::before,
+.orders-shell::before {
+    content: "";
+    display: block;
+    width: 96px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--vg-accent);
+    margin-bottom: 22px;
+}
+
+/* Titres plus proches de la maquette */
+h1 {
+    color: var(--vg-text);
+    font-weight: 800;
+    text-wrap: balance;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 72px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--vg-primary);
+    margin-top: 16px;
+}
+
+.auth-head h1::after,
+.menu-title::after,
+.brand-script::after {
+    display: none;
+}
+
+/* Brand plus marquée */
+.brand-script {
+    font-size: clamp(1.6rem, 2vw, 2.1rem);
+    color: var(--vg-text);
+}
+
+.brand-script::first-letter {
+    color: var(--vg-accent);
+}
+
+/* Header plus premium */
+.app-header {
+    border-bottom: 2px solid rgba(227, 201, 168, 0.85);
+}
+
+.header-inner {
+    min-height: 82px;
+}
+
+/* Cartes plus gourmandes */
+.card,
+.auth-card,
+.menu-card,
+.dashboard-card,
+.stat-card,
+.panel,
+.table-wrap,
+.admin-card,
+.employee-card,
+.orders-card {
+    background:
+        linear-gradient(180deg, #FFFDF7 0%, #FFF9EF 100%);
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    box-shadow:
+        0 18px 40px rgba(42, 24, 16, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Cartes au hover */
+.card:hover,
+.menu-card:hover,
+.dashboard-card:hover,
+.stat-card:hover,
+.panel:hover,
+.admin-card:hover,
+.employee-card:hover,
+.orders-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 24px 54px rgba(42, 24, 16, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Transition propre */
+.card,
+.menu-card,
+.dashboard-card,
+.stat-card,
+.panel,
+.admin-card,
+.employee-card,
+.orders-card {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Boutons plus présents */
+.btn,
+button.btn,
+a.btn,
+button[type="submit"] {
+    min-height: 44px;
+    padding: 11px 18px;
+    box-shadow: 0 10px 22px rgba(85, 107, 47, 0.18);
+}
+
+/* Boutons importants en tomate */
+.auth-card button[type="submit"],
+.hero a.btn:first-of-type,
+.hero button.btn:first-of-type,
+.menu-card a.btn,
+.menu-card button.btn,
+.order-summary .btn {
+    background: var(--vg-accent);
+    border-color: var(--vg-accent);
+    box-shadow: 0 12px 26px rgba(201, 79, 45, 0.24);
+}
+
+.auth-card button[type="submit"]:hover,
+.hero a.btn:first-of-type:hover,
+.hero button.btn:first-of-type:hover,
+.menu-card a.btn:hover,
+.menu-card button.btn:hover,
+.order-summary .btn:hover {
+    background: #A83E24;
+    border-color: #A83E24;
+    box-shadow: 0 14px 30px rgba(201, 79, 45, 0.30);
+}
+
+/* Liens du menu plus travaillés */
+.menu-links a {
+    padding: 12px 14px;
+    font-weight: 700;
+}
+
+.menu-links a:hover {
+    background: rgba(201, 79, 45, 0.10);
+    color: var(--vg-accent);
+}
+
+/* Inputs plus qualitatifs */
+input,
+textarea,
+select {
+    min-height: 44px;
+    padding: 10px 13px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Tableaux plus lisibles */
+table {
+    overflow: hidden;
+}
+
+th {
+    background: rgba(243, 223, 193, 0.58);
+    color: var(--vg-text);
+}
+
+tbody tr:hover {
+    background: rgba(255, 246, 232, 0.75);
+}
+
+/* Badges plus visibles */
+.badge,
+.status,
+.status-pill {
+    padding: 6px 10px;
+    background: rgba(85, 107, 47, 0.10);
+    color: var(--vg-primary-dark);
+    border-color: rgba(85, 107, 47, 0.24);
+}
+
+/* Accent tomate pour les statuts d'attention */
+.status-pending,
+.badge.pending,
+.status-pill.pending,
+.status.warning,
+.badge.warning,
+.status-pill.warning {
+    background: rgba(201, 79, 45, 0.12);
+    color: var(--vg-accent);
+    border-color: rgba(201, 79, 45, 0.28);
+}
+
+/* Petits séparateurs plus esthétiques */
+.sep,
+hr {
+    border-top: 1px solid rgba(227, 201, 168, 0.95);
+    margin: 18px 0;
+}
+
+/* Footer plus cohérent */
+.app-footer {
+    background: rgba(42, 24, 16, 0.96);
+    color: #FFF6E8;
+}
+
+.app-footer a {
+    color: #FFF6E8;
+}
+
+.app-footer a:hover {
+    color: #F3DFC1;
+}
+
+/* Correction : pas de barre décorative sur la page login */
+.auth-wrap::before {
+    display: none;
+}
+
+/* Correction badges plats inclus */
+.menu-card li .badge,
+.menu-card li .status,
+.menu-card li .status-pill,
+.menu-card .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 74px;
+    max-width: max-content;
+    padding: 3px 8px;
+    margin-right: 8px;
+    font-size: 0.72rem;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+    top: -1px;
+}
+
+/* Respiration entre les plats */
+.menu-card li {
+    margin-bottom: 8px;
+    line-height: 1.45;
+}
+
+/* Liste plus propre dans les cartes menus */
+.menu-card ul {
+    padding-left: 1.1rem;
+}
+
+/* Page accueil : hero plus vivant */
+.hero {
+    background:
+        radial-gradient(circle at 88% 20%, rgba(201, 79, 45, 0.13), transparent 22rem),
+        linear-gradient(135deg, #FFFDF7 0%, #FFF6E8 48%, #F3DFC1 100%);
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    bottom: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: rgba(85, 107, 47, 0.10);
+    pointer-events: none;
+}
+
+.hero>* {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    max-width: 920px;
+}
+
+.hero p {
+    max-width: 860px;
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+}
+
+/* Petite ligne verte sous le titre moins timide */
+.hero h1::after {
+    width: 96px;
+    height: 4px;
+    background: var(--vg-primary);
+}
+
+/* Mise en valeur des petits arguments */
+.hero ul,
+.hero .features,
+.hero .hero-points {
+    color: var(--vg-text);
+    font-weight: 500;
+}
+
+/* Cartes menus : meilleur rythme visuel */
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.menu-card h2,
+.menu-card h3 {
+    margin-bottom: 8px;
+}
+
+.menu-card p {
+    color: var(--vg-muted);
+}
+
+.menu-card .price,
+.menu-card strong.price {
+    color: var(--vg-text);
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.menu-card .btn {
+    align-self: flex-end;
+}
+
+/* ==========================================================
+   CADRE CENTRAL GLOBAL — recentrer l’attention
+   ========================================================== */
+
+body {
+    background:
+        radial-gradient(circle at 8% 8%, rgba(201, 79, 45, 0.12), transparent 22rem),
+        radial-gradient(circle at 92% 12%, rgba(85, 107, 47, 0.12), transparent 24rem),
+        linear-gradient(180deg, #FFF6E8 0%, #FFFDF7 46%, #F3DFC1 100%);
+}
+
+/* Le contenu principal devient une grande feuille centrale */
+main.container,
+main.container.auth,
+.container.hero,
+.hero,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell,
+.menu-shell,
+.menus-shell {
+    width: min(1180px, calc(100% - 48px));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Cadre visuel principal */
+main.container,
+main.container.auth,
+.hero,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell,
+.menu-shell,
+.menus-shell {
+    background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.94), rgba(255, 246, 232, 0.88));
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 34px;
+    box-shadow:
+        0 24px 70px rgba(42, 24, 16, 0.13),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Donne de l’air dans les grands cadres */
+main.container,
+main.container.auth,
+.hero,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell,
+.menu-shell,
+.menus-shell {
+    padding: clamp(28px, 4vw, 58px);
+}
+
+/* Évite que le cadre colle au header */
+.app-header+main,
+.app-header+.container,
+#appHeader+main,
+#appHeader+.container {
+    margin-top: 34px;
+}
+
+/* Responsive : on garde de l’air sans casser mobile */
+@media (max-width: 760px) {
+
+    main.container,
+    main.container.auth,
+    .container.hero,
+    .hero,
+    .dashboard-shell,
+    .admin-shell,
+    .employee-shell,
+    .orders-shell,
+    .menu-shell,
+    .menus-shell {
+        width: min(100% - 24px, 1180px);
+        border-radius: 24px;
+        padding: 24px;
+    }
+}
+
+/* ==========================================================
+   LOGIN — carte plus centrée et plus respirante
+   ========================================================== */
+
+main.container.auth {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-wrap {
+    width: min(620px, 100%);
+    margin: 0 auto;
+    padding: clamp(28px, 4vw, 48px);
+}
+
+/* On supprime la barre décorative rouge au-dessus du login */
+.auth-wrap::before {
+    display: none;
+}
+
+.auth-head {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.auth-head h1 {
+    margin-bottom: 12px;
+}
+
+.auth-head h1::after {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.auth-head p {
+    max-width: 520px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    line-height: 1.65;
+}
+
+.auth-card {
+    padding: clamp(24px, 3vw, 34px);
+}
+
+.auth-card label {
+    display: block;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.auth-card input {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.auth-card .btn,
+.auth-card button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.auth-card .sep {
+    margin: 28px 0 18px;
+}
+
+/* ==========================================================
+   AJUSTEMENT CADRE CENTRAL — moins de vide, meilleur focus
+   ========================================================== */
+
+main.container,
+main.container.auth,
+.hero,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell,
+.menu-shell,
+.menus-shell {
+    width: min(1040px, calc(100% - 56px));
+    padding: clamp(26px, 3vw, 44px);
+}
+
+/* Pages avec contenu large : menus et dashboards */
+.menus-shell,
+.menu-shell,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    width: min(1120px, calc(100% - 56px));
+}
+
+/* Page d'accueil : cadre plus éditorial, moins massif */
+.hero {
+    min-height: auto;
+    padding-top: clamp(52px, 7vw, 92px);
+    padding-bottom: clamp(52px, 7vw, 92px);
+}
+
+/* ==========================================================
+   PAGES AUTH / CONTACT — simplification des cadres
+   ========================================================== */
+
+/* La page auth garde le fond global, mais évite l'effet triple cadre */
+main.container.auth {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding-top: clamp(38px, 5vw, 70px);
+    padding-bottom: clamp(38px, 5vw, 70px);
+}
+
+/* Le vrai cadre devient auth-wrap */
+.auth-wrap {
+    background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(255, 246, 232, 0.90));
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 30px;
+    box-shadow: 0 24px 70px rgba(42, 24, 16, 0.13);
+}
+
+/* La carte formulaire reste claire, mais plus compacte */
+.auth-card {
+    box-shadow: none;
+    border-radius: 22px;
+}
+
+/* Contact : cadre plus propre et moins perdu dans la page */
+.contact-card,
+.contact-panel,
+.contact-form,
+main.container .card {
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==========================================================
+   MENUS — cartes plus équilibrées
+   ========================================================== */
+
+.menus-grid,
+.menu-grid {
+    gap: 22px;
+}
+
+.menu-card {
+    min-height: 360px;
+    padding: 22px;
+}
+
+.menu-card h2,
+.menu-card h3 {
+    font-size: 1.35rem;
+}
+
+.menu-card .btn {
+    margin-top: auto;
+}
+
+.menu-card ul {
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+.auth-head h1 {
+    font-size: clamp(2.3rem, 4vw, 3.4rem);
+}
+
+.auth-head {
+    margin-bottom: 34px;
+}
+
+/* ==========================================================
+   AJUSTEMENT FINAL — CADRES ET ONGLETS
+   ========================================================== */
+
+/* 1. Pages contenu : on évite l'effet triple cadre */
+.menus-shell,
+.menu-shell,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding-top: clamp(34px, 4vw, 56px);
+    padding-bottom: clamp(34px, 4vw, 56px);
+}
+
+/* 2. Le vrai cadre devient le contenu interne, pas toute la page */
+.menus-shell>*,
+.menu-shell>*,
+.dashboard-shell>*,
+.admin-shell>*,
+.employee-shell>*,
+.orders-shell>* {
+    background:
+        linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(255, 246, 232, 0.90));
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 28px;
+    box-shadow: 0 22px 58px rgba(42, 24, 16, 0.12);
+}
+
+/* 3. Mais on évite d'encadrer chaque petit enfant direct inutilement */
+.menus-shell>h1,
+.menus-shell>p,
+.menu-shell>h1,
+.menu-shell>p,
+.dashboard-shell>h1,
+.dashboard-shell>p,
+.admin-shell>h1,
+.admin-shell>p,
+.employee-shell>h1,
+.employee-shell>p,
+.orders-shell>h1,
+.orders-shell>p {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* 4. Sur les pages menus/contact, les cartes internes doivent rester lisibles mais pas trop lourdes */
+.menus-shell .card,
+.menu-shell .card,
+.dashboard-shell .card,
+.admin-shell .card,
+.employee-shell .card,
+.orders-shell .card,
+.menus-shell .table-wrap,
+.menu-shell .table-wrap,
+.dashboard-shell .table-wrap,
+.admin-shell .table-wrap,
+.employee-shell .table-wrap,
+.orders-shell .table-wrap {
+    box-shadow: 0 12px 28px rgba(42, 24, 16, 0.08);
+}
+
+/* 5. Onglets dashboards : base */
+.tabs,
+.dashboard-tabs,
+.employee-tabs,
+.admin-tabs,
+.tab-list {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(243, 223, 193, 0.55);
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 999px;
+    margin: 20px 0 22px;
+}
+
+/* 6. Onglets : boutons */
+.tabs button,
+.dashboard-tabs button,
+.employee-tabs button,
+.admin-tabs button,
+.tab-list button,
+.tabs .tab,
+.dashboard-tabs .tab,
+.employee-tabs .tab,
+.admin-tabs .tab,
+.tab-list .tab {
+    flex: 1;
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--vg-primary-dark);
+    font-weight: 800;
+    box-shadow: none;
+    opacity: 1;
+}
+
+/* 7. Onglet hover */
+.tabs button:hover,
+.dashboard-tabs button:hover,
+.employee-tabs button:hover,
+.admin-tabs button:hover,
+.tab-list button:hover,
+.tabs .tab:hover,
+.dashboard-tabs .tab:hover,
+.employee-tabs .tab:hover,
+.admin-tabs .tab:hover,
+.tab-list .tab:hover {
+    background: rgba(255, 253, 247, 0.8);
+    color: var(--vg-accent);
+    transform: none;
+    box-shadow: none;
+}
+
+/* 8. Onglet actif : plusieurs noms possibles */
+.tabs button.active,
+.dashboard-tabs button.active,
+.employee-tabs button.active,
+.admin-tabs button.active,
+.tab-list button.active,
+.tabs .tab.active,
+.dashboard-tabs .tab.active,
+.employee-tabs .tab.active,
+.admin-tabs .tab.active,
+.tab-list .tab.active,
+.tabs button[aria-selected="true"],
+.dashboard-tabs button[aria-selected="true"],
+.employee-tabs button[aria-selected="true"],
+.admin-tabs button[aria-selected="true"],
+.tab-list button[aria-selected="true"] {
+    background: var(--vg-primary);
+    color: #FFFDF7;
+    border-color: var(--vg-primary);
+    box-shadow: 0 10px 22px rgba(85, 107, 47, 0.22);
+}
+
+/* 9. Si un bouton désactivé est utilisé comme onglet, il reste visible */
+.tabs button:disabled,
+.dashboard-tabs button:disabled,
+.employee-tabs button:disabled,
+.admin-tabs button:disabled,
+.tab-list button:disabled {
+    opacity: 0.65;
+    color: var(--vg-muted);
+}
+
+/* 10. Mobile : onglets sur plusieurs lignes */
+@media (max-width: 760px) {
+
+    .tabs,
+    .dashboard-tabs,
+    .employee-tabs,
+    .admin-tabs,
+    .tab-list {
+        flex-direction: column;
+        border-radius: 22px;
+    }
+
+    .tabs button,
+    .dashboard-tabs button,
+    .employee-tabs button,
+    .admin-tabs button,
+    .tab-list button {
+        width: 100%;
+    }
+}
+
+/* ==========================================================
+   CORRECTION MULTI-CADRES — pages contenu
+   ========================================================== */
+
+/* On enlève le grand cadre décoratif sur les pages de contenu */
+.menus-shell,
+.menu-shell,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* On évite aussi l'encadrement automatique de tous les enfants directs */
+.menus-shell>*,
+.menu-shell>*,
+.dashboard-shell>*,
+.admin-shell>*,
+.employee-shell>*,
+.orders-shell>* {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* On conserve uniquement les vrais blocs utiles */
+.menus-shell .card,
+.menus-shell form,
+.menus-shell .menu-card,
+.menus-shell .table-wrap,
+.menu-shell .card,
+.menu-shell .menu-card,
+.dashboard-shell .card,
+.dashboard-shell .dashboard-card,
+.dashboard-shell .stat-card,
+.dashboard-shell .panel,
+.admin-shell .card,
+.admin-shell .admin-card,
+.admin-shell .stat-card,
+.admin-shell .panel,
+.employee-shell .card,
+.employee-shell .employee-card,
+.employee-shell .stat-card,
+.employee-shell .panel,
+.employee-shell .table-wrap,
+.orders-shell .card,
+.orders-shell .orders-card,
+.orders-shell .table-wrap {
+    background:
+        linear-gradient(180deg, #FFFDF7 0%, #FFF9EF 100%);
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 14px 34px rgba(42, 24, 16, 0.10);
+}
+
+/* Les pages restent centrées mais sans grosse boîte autour */
+.menus-shell,
+.menu-shell,
+.dashboard-shell,
+.admin-shell,
+.employee-shell,
+.orders-shell {
+    width: min(1120px, calc(100% - 56px));
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: clamp(34px, 4vw, 56px);
+    padding-bottom: clamp(34px, 4vw, 56px);
+}
+
+/* Contact : une seule vraie carte, pas plusieurs cadres */
+.contact-card,
+.contact-panel,
+.contact-form {
+    background:
+        linear-gradient(180deg, #FFFDF7 0%, #FFF9EF 100%);
+    border: 1px solid rgba(227, 201, 168, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 14px 34px rgba(42, 24, 16, 0.10);
+}
+
+/* Si la page contact utilise main.container comme cadre, on l'allège */
+body:has(#contactForm) main.container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}

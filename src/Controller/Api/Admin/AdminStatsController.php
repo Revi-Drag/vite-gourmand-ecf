@@ -47,44 +47,53 @@ final class AdminStatsController extends AbstractController
         );
 
         // Enregistrement d'un snapshot dans MongoDB
-        $scope = 'admin_dashboard';
-        $periodKey = date('Y-m-d-H');
+        $mongoAvailable = true;
+        $mongoError = null;
 
-        $existingSnapshot = $documentManager
-            ->getRepository(AdminStatsSnapshot::class)
-            ->findOneBy([
-                'scope' => $scope,
-                'periodKey' => $periodKey,
-            ]);
+        try {
+            $scope = 'admin_dashboard';
+            $periodKey = date('Y-m-d-H');
 
-        if (!$existingSnapshot) {
-            $snapshot = new AdminStatsSnapshot();
-            $snapshot->setScope($scope);
-            $snapshot->setPeriodKey($periodKey);
-            $snapshot->setRevenue((float) $totalStats['sum']);
-            $snapshot->setOrdersCount($totalStats['count']);
-            $snapshot->setGeneratedAt(new \DateTimeImmutable());
+            $existingSnapshot = $documentManager
+                ->getRepository(AdminStatsSnapshot::class)
+                ->findOneBy([
+                    'scope' => $scope,
+                    'periodKey' => $periodKey,
+                ]);
 
-            $documentManager->persist($snapshot);
-            $documentManager->flush();
-        } else {
-            // Optionnel : mettre à jour le snapshot existant si les stats ont changé
-            $existingSnapshot->setRevenue((float) $totalStats['sum']);
-            $existingSnapshot->setOrdersCount($totalStats['count']);
-            $existingSnapshot->setGeneratedAt(new \DateTimeImmutable());
+            if (!$existingSnapshot) {
+                $snapshot = new AdminStatsSnapshot();
+                $snapshot->setScope($scope);
+                $snapshot->setPeriodKey($periodKey);
+                $snapshot->setRevenue((float) ($totalStats['sum'] ?? 0));
+                $snapshot->setOrdersCount((int) ($totalStats['count'] ?? 0));
+                $snapshot->setGeneratedAt(new \DateTimeImmutable());
 
-            $documentManager->flush();
+                $documentManager->persist($snapshot);
+                $documentManager->flush();
+            } else {
+                $existingSnapshot->setRevenue((float) ($totalStats['sum'] ?? 0));
+                $existingSnapshot->setOrdersCount((int) ($totalStats['count'] ?? 0));
+                $existingSnapshot->setGeneratedAt(new \DateTimeImmutable());
+
+                $documentManager->flush();
+            }
+        } catch (\Throwable $exception) {
+            $mongoAvailable = false;
+            $mongoError = $exception->getMessage();
         }
 
         return $this->json([
             'success' => true,
             'data' => [
-                'revenueTotal' => $totalStats['sum'],
-                'ordersTotal' => $totalStats['count'],
-                'revenueToday' => $todayStats['sum'],
-                'ordersToday' => $todayStats['count'],
-                'revenueMonth' => $monthStats['sum'],
-                'ordersMonth' => $monthStats['count'],
+                'revenueTotal' => $totalStats['sum'] ?? 0,
+                'ordersTotal' => $totalStats['count'] ?? 0,
+                'revenueToday' => $todayStats['sum'] ?? 0,
+                'ordersToday' => $todayStats['count'] ?? 0,
+                'revenueMonth' => $monthStats['sum'] ?? 0,
+                'ordersMonth' => $monthStats['count'] ?? 0,
+                'mongoAvailable' => $mongoAvailable,
+                'mongoError' => $mongoError,
             ],
         ]);
     }
@@ -94,27 +103,36 @@ final class AdminStatsController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function history(DocumentManager $documentManager): JsonResponse
     {
-        $repository = $documentManager->getRepository(AdminStatsSnapshot::class);
+        try {
+            $repository = $documentManager->getRepository(AdminStatsSnapshot::class);
 
-        $snapshots = $repository->createQueryBuilder()
-            ->sort('generatedAt', 'ASC')
-            ->limit(50)
-            ->getQuery()
-            ->execute();
+            $snapshots = $repository->createQueryBuilder()
+                ->sort('generatedAt', 'ASC')
+                ->limit(50)
+                ->getQuery()
+                ->execute();
 
-        $data = [];
+            $data = [];
 
-        foreach ($snapshots as $snapshot) {
-            $data[] = [
-                'date' => $snapshot->getGeneratedAt()->format('Y-m-d H:i'),
-                'revenue' => $snapshot->getRevenue(),
-                'orders' => $snapshot->getOrdersCount()
-            ];
+            foreach ($snapshots as $snapshot) {
+                $data[] = [
+                    'date' => $snapshot->getGeneratedAt()->format('Y-m-d H:i'),
+                    'revenue' => $snapshot->getRevenue(),
+                    'orders' => $snapshot->getOrdersCount(),
+                ];
+            }
+
+            return $this->json([
+                'success' => true,
+                'data' => $data,
+            ]);
+        } catch (\Throwable $exception) {
+            return $this->json([
+                'success' => true,
+                'data' => [],
+                'warning' => 'Historique MongoDB indisponible.',
+                'error' => $exception->getMessage(),
+            ]);
         }
-
-        return $this->json([
-            'success' => true,
-            'data' => $data
-        ]);
     }
 }

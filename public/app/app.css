@@ -1,1542 +1,1503 @@
-/* =========================================================
-   Vite & Gourmand — Front style “traiteur” (inspiration vitrine)
-   Objectif : sobre, photo-centré, spacing généreux, UI discrète
-   ========================================================= */
+/* =====================================================================================================================
+   VITE & GOURMAND — APP.CSS PROPRE
+   Charte : terroir / papier artisanal / traiteur chic
+   ===================================================================================================================== */
 
-/* Reset / base */
-* {
+
+/* =====================================================================================================================
+   1. VARIABLES
+   ===================================================================================================================== */
+
+:root {
+    /* Couleurs principales */
+    --vg-page-bg: #fff6e8;
+    --vg-header: #765b4a;
+    --vg-paper: #f3dfc1;
+    --vg-card: #fff8ec;
+    --vg-card-soft: #fbefdc;
+
+    --vg-text: #1f130e;
+    --vg-muted: #6f5a4a;
+
+    --vg-green: #556b2f;
+    --vg-green-dark: #3e5022;
+
+    --vg-terracotta: #c8755f;
+    --vg-terracotta-dark: #ad5b45;
+
+    --vg-border: #9b7a63;
+    --vg-border-soft: #c8a987;
+
+    --vg-dashboard-bg: #c2b6a7;
+    --vg-dashboard-panel: #f3dfc1;
+
+    --vg-danger: #a33a2b;
+    --vg-success: #3f6b45;
+    --vg-warning: #c8755f;
+
+    /* Typographies */
+    --vg-title-font: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+    --vg-body-font: "Montserrat", Arial, sans-serif;
+
+    /* Layout */
+    --vg-page-width: 860px;
+    --vg-wide-width: 960px;
+    --vg-dashboard-width: 920px;
+    --vg-header-height: 170px;
+
+    /* Effets */
+    --vg-shadow-paper: 0 10px 28px rgba(31, 19, 14, 0.28);
+    --vg-shadow-card: 8px 10px 18px rgba(31, 19, 14, 0.22);
+    --vg-shadow-soft: 0 6px 14px rgba(31, 19, 14, 0.16);
+}
+
+
+/* =====================================================================================================================
+   2. RESET LÉGER
+   ===================================================================================================================== */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-:root {
-    /* Palette “ivoire / bordeaux / doré” */
-    --bg: #fbf7f1;
-    /* ivoire */
-    --bg-2: #f6efe3;
-    /* beige clair */
-    --card: #ffffff;
-    /* blanc */
-    --text: #1f2328;
-    /* noir doux */
-    --muted: #6b7280;
-    --border: #eadfce;
-    /* lin */
-    --primary: #7a1f2b;
-    /* bordeaux chic */
-    --primary-hover: #651824;
-    --secondary: #f3eadc;
-    /* beige */
-    --danger: #b4232c;
-    --accent: #b08d57;
-    /* fond global assombrit */
-    --page-bg-darken: 0.10;
-    /* ajuste entre 0.04 et 0.10 */
-
-    /* doré */
-    --shadow: 0 14px 35px rgba(31, 35, 40, 0.10);
-    --shadow-soft: 0 10px 24px rgba(31, 35, 40, 0.08);
-
-    --radius: 18px;
-    --radius-sm: 12px;
-
-    /* Typo : titres “serif”, UI “sans” (sans dépendances externes) */
-    --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    --font-title: ui-serif, Georgia, "Times New Roman", Times, serif;
-
-    /* Layout */
-    --container: 1100px;
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
 }
-
 
 body {
-    margin: 0;
-    font-family: var(--font-ui);
-    color: var(--text);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: 108px;
-
-    /* Fond vitrine : léger dégradé + respiration */
-    background:
-        radial-gradient(1200px 600px at 10% 0%, rgba(176, 141, 87, 0.08), transparent 60%),
-        radial-gradient(900px 500px at 100% 20%, rgba(122, 31, 43, 0.06), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
+    margin: 0;
+    background: var(--vg-page-bg);
+    color: var(--vg-text);
+    font-family: var(--vg-body-font);
+    font-size: 15px;
+    line-height: 1.45;
 }
 
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   Layout
-   ========================================================= */
-.container {
-    max-width: var(--container);
-    margin: 0 auto;
-    padding: 18px 18px;
+img,
+svg,
+canvas {
+    max-width: 100%;
 }
 
-h1,
-h2,
-h3,
-h4 {
-    font-family: var(--font-title);
-    letter-spacing: -0.01em;
+button,
+input,
+select,
+textarea {
+    font: inherit;
 }
 
-h1 {
-    margin: 18px 0 8px;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.05;
+a {
+    color: inherit;
 }
 
-h2 {
-    margin: 0 0 12px;
-    font-size: 18px;
+[hidden] {
+    display: none !important;
 }
 
-p {
-    line-height: 1.55;
-}
-
-.muted {
-    color: var(--muted);
-}
-
-.small {
-    font-size: 12px;
-}
-
-/* Accessibilité */
 .skip-link {
     position: absolute;
     left: -999px;
-    top: 0;
-    padding: 10px 12px;
-    background: #000;
-    color: #fff;
+    top: 12px;
     z-index: 999;
+    background: var(--vg-card);
+    color: var(--vg-text);
+    padding: 8px 12px;
+    border: 1px solid var(--vg-border);
 }
 
 .skip-link:focus {
-    left: 10px;
-    top: 10px;
+    left: 12px;
 }
 
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   GLOBAL — carte vitrine derrière le contenu (toutes pages)
-   ========================================================= */
-
-main {
-    position: relative;
-    padding: 28px 18px 60px;
-    min-height: calc(100vh - 108px);
-    /* header fixe */
+.container {
+    width: min(var(--vg-page-width), calc(100% - 32px));
+    margin-inline: auto;
 }
 
-/* la grande carte derrière */
-main::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1500px, 98vw);
-
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.55),
-            rgba(243, 234, 220, 0.35));
-
-    border: 1px solid rgba(234, 223, 206, 0.65);
-    border-radius: 28px;
-
-    z-index: 0;
-    pointer-events: none;
+.muted {
+    color: var(--vg-muted);
 }
 
-/* remet le contenu au-dessus */
-main>* {
-    position: relative;
-    z-index: 1;
+.small {
+    font-size: 0.82rem;
 }
 
-/* ------------------------------------------------------------------ */
+.sep,
+hr {
+    border: 0;
+    border-top: 1px solid var(--vg-border);
+    margin: 18px 0;
+}
 
 
-/* ============================
-   APP HEADER (glass) + hamburger
-   ============================ */
+/* =====================================================================================================================
+   3. HEADER + LOGO + HAMBURGER
+   ===================================================================================================================== */
+
 .app-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: rgba(246, 239, 227, 0.72);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(234, 223, 206, 0.95);
+    position: relative;
+    min-height: var(--vg-header-height);
+    background: var(--vg-header);
+    color: #f8ead4;
+    box-shadow: 0 3px 12px rgba(31, 19, 14, 0.22);
 }
 
 .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    min-height: 108px;
-    padding: 18px 22px;
     position: relative;
+    width: min(1120px, calc(100% - 32px));
+    min-height: var(--vg-header-height);
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .brand-script {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    text-decoration: none;
-    color: var(--primary);
-    font-weight: 900;
-    font-size: clamp(36px, 4.6vw, 60px);
-    letter-spacing: 0.02em;
+    display: inline-block;
+    color: #f8ead4;
+    font-family: var(--vg-title-font);
+    font-size: clamp(2.5rem, 5vw, 4.4rem);
+    font-weight: 400;
     line-height: 1;
-    font-family: "Edwardian Script ITC", "Palace Script MT", "Segoe Script", "Apple Chancery", "Snell Roundhand", "Brush Script MT",
-        "Lucida Handwriting", cursive;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+    letter-spacing: 0.01em;
 }
 
 .hamburger {
     position: absolute;
-    right: 22px;
+    right: clamp(20px, 7vw, 70px);
     top: 50%;
-    transform: translateY(-50%);
-    width: 54px;
-    height: 54px;
-    border-radius: 999px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(255, 255, 255, 0.62);
-    box-shadow: var(--shadow-soft);
+    translate: 0 -50%;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    border: 1px solid #f8ead4;
+    background: var(--vg-terracotta-dark);
+    box-shadow: var(--vg-shadow-soft);
+    cursor: pointer;
     display: grid;
     place-items: center;
-    cursor: pointer;
-    margin-left: auto;
+    gap: 0;
 }
 
 .hamburger span {
     display: block;
-    width: 20px;
-    height: 2px;
-    background: rgba(31, 35, 40, 0.78);
-    border-radius: 2px;
-    margin: 2.5px 0;
+    width: 38px;
+    height: 3px;
+    margin: 4px 0;
+    background: var(--vg-text);
+    border-radius: 999px;
 }
 
-/* Header fixe : on ajoute un padding top au main pour éviter que le contenu colle au header */
-body {
-    padding-top: 108px;
+.hamburger:hover {
+    background: var(--vg-terracotta);
 }
 
-/* Overlay menu */
+
+/* =====================================================================================================================
+   4. MENU HAMBURGER OUVERT
+   ===================================================================================================================== */
+
 .menu-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(31, 35, 40, 0.35);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    display: grid;
-    place-items: start end;
-    padding: 12px;
+    position: absolute;
+    top: 118px;
+    right: clamp(30px, 6vw, 84px);
+    z-index: 30;
+    background: transparent;
+    backdrop-filter: none;
 }
 
 .menu-panel {
-    width: min(360px, 92vw);
-    margin-top: 64px;
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(234, 223, 206, 0.90);
-    box-shadow: var(--shadow);
-    padding: 14px;
+    width: 190px;
+    background: rgba(255, 248, 236, 0.96);
+    border: 1px solid var(--vg-border-soft);
+    box-shadow: var(--vg-shadow-card);
+    padding: 8px 10px 16px;
 }
 
 .menu-head {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding-bottom: 8px;
+    align-items: start;
+    gap: 8px;
 }
 
 .menu-title {
-    font-family: var(--font-title);
-    font-weight: 900;
+    font-family: var(--vg-title-font);
+    font-size: 1.75rem;
+    font-style: italic;
+    line-height: 1;
 }
 
 .icon-close {
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(243, 234, 220, 0.85);
+    border: 0;
+    background: transparent;
     cursor: pointer;
+    font-size: 1rem;
+    color: var(--vg-text);
 }
 
 .menu-links {
     display: grid;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 14px;
+    margin-top: 6px;
 }
 
-.menu-links a {
-    text-decoration: none;
-    color: rgba(31, 35, 40, 0.85);
-    font-weight: 800;
-    padding: 10px 12px;
-    border-radius: 14px;
-    background: rgba(243, 234, 220, 0.55);
-    border: 1px solid rgba(234, 223, 206, 0.85);
-}
-
-.menu-links a:hover {
-    background: rgba(243, 234, 220, 0.85);
-}
-
-.menu-links .btn {
-    width: 100%;
+.menu-links a,
+.menu-links button {
+    min-height: 32px;
+    border: 1px solid var(--vg-border);
+    border-radius: 5px;
+    background: #f5e4ca;
+    color: var(--vg-text);
+    font-family: var(--vg-title-font);
+    font-size: 1.18rem;
+    font-style: italic;
     text-align: center;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
 }
 
-body.menu-open {
-    overflow: hidden;
+.menu-links a:hover,
+.menu-links button:hover {
+    background: #ead0a9;
 }
 
-/* ------------------------------------------------------------------ */
+.menu-links .sep {
+    margin: 4px 0 8px;
+    border-top: 2px solid var(--vg-text);
+}
+
+.menu-links .danger {
+    background: var(--vg-terracotta);
+    color: #fff8ec;
+}
 
 
-/* =========================================================
-   Cards
-   ========================================================= */
+/* =====================================================================================================================
+   5. STRUCTURE GÉNÉRALE DES PAGES
+   ===================================================================================================================== */
+
+main {
+    background: var(--vg-page-bg);
+}
+
+main.container,
+.page-surface,
+.menus-page-wrap {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    box-shadow: var(--vg-shadow-paper);
+    padding: 48px 78px;
+    min-height: 480px;
+}
+
+main.container.auth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+    padding: 56px 24px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--vg-title-font);
+    color: var(--vg-text);
+    margin-top: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.05;
+}
+
+h2 {
+    font-size: 1.35rem;
+}
+
+h3 {
+    font-size: 1.05rem;
+}
+
+.page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================================================================================
+   6. FOOTER NON STICKY
+   ===================================================================================================================== */
+
+.app-footer {
+    position: static;
+    background: var(--vg-terracotta);
+    color: var(--vg-text);
+    padding: 24px 0;
+    min-height: 100px;
+}
+
+.footer-grid {
+    width: min(var(--vg-page-width), calc(100% - 32px));
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    font-size: 0.72rem;
+}
+
+.footer-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-list a {
+    text-decoration: none;
+}
+
+.footer-list a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================================================================================
+   7. COMPOSANTS : CARTES, BOUTONS, FORMULAIRES
+   ===================================================================================================================== */
+
 .card {
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(234, 223, 206, 0.85);
-    border-radius: var(--radius);
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    border-radius: 4px;
+    box-shadow: var(--vg-shadow-soft);
     padding: 18px;
-    margin: 16px 0;
-    box-shadow: var(--shadow-soft);
 }
 
-.sep {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 16px 0;
+.btn,
+button.btn,
+a.btn {
+    min-height: 34px;
+    padding: 8px 18px;
+    border: 1px solid var(--vg-green-dark);
+    border-radius: 999px;
+    background: var(--vg-green);
+    color: #fff8ec;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 4px 5px 8px rgba(31, 19, 14, 0.20);
 }
 
-/* ------------------------------------------------------------------ */
+.btn:hover,
+button.btn:hover,
+a.btn:hover {
+    background: var(--vg-green-dark);
+}
 
+.btn.secondary,
+a.btn.secondary,
+button.btn.secondary {
+    background: #f5e4ca;
+    color: var(--vg-text);
+    border-color: var(--vg-border);
+}
 
-/* =========================================================
-   Forms
-   ========================================================= */
+.btn.secondary:hover {
+    background: #ead0a9;
+}
+
+.btn.danger,
+button.btn.danger {
+    background: var(--vg-danger);
+    border-color: var(--vg-danger);
+}
+
 label {
     display: block;
-    margin: 6px 0;
-    font-size: 13px;
-    font-weight: 600;
-    color: rgba(31, 35, 40, 0.85);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
 }
 
 input,
 select,
 textarea {
     width: 100%;
-    max-width: 100%;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    font-size: 14px;
-    display: block;
-    background: rgba(255, 255, 255, 0.98);
-    color: var(--text);
-    box-shadow: 0 1px 0 rgba(31, 35, 40, 0.02);
+    min-height: 30px;
+    border: 1px solid var(--vg-border);
+    background: #fffaf1;
+    color: var(--vg-text);
+    padding: 6px 8px;
+    border-radius: 2px;
 }
 
-select {
-    appearance: none;
-    background-image:
-        linear-gradient(45deg, transparent 50%, rgba(31, 35, 40, 0.55) 50%),
-        linear-gradient(135deg, rgba(31, 35, 40, 0.55) 50%, transparent 50%);
-    background-position:
-        calc(100% - 18px) 55%,
-        calc(100% - 12px) 55%;
-    background-size: 6px 6px, 6px 6px;
-    background-repeat: no-repeat;
-    padding-right: 34px;
+textarea {
+    min-height: 110px;
+    resize: vertical;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-    outline: none;
-    border-color: rgba(122, 31, 43, 0.55);
-    box-shadow: 0 0 0 4px rgba(122, 31, 43, 0.10);
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-    align-items: end;
-    flex-wrap: wrap;
-}
-
-/* Grid helpers */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-/* Make title + description full width (legacy) */
-.grid label:nth-child(1),
-.grid label:nth-child(2) {
-    grid-column: 1 / -1;
+    outline: 2px solid rgba(85, 107, 47, 0.30);
+    border-color: var(--vg-green);
 }
 
 .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 12px;
-}
-
-@media (max-width: 800px) {
-    .grid-2 {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   Buttons (moins “SaaS”, plus vitrine)
-   ========================================================= */
-button,
-.btn {
-    padding: 10px 14px;
-    border: 1px solid rgba(122, 31, 43, 0.25);
-    border-radius: 999px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 14px;
-    background: var(--primary);
-    color: white;
-    transition: transform 0.05s ease, background 0.15s ease, box-shadow 0.15s ease;
-    box-shadow: 0 10px 22px rgba(122, 31, 43, 0.14);
-}
-
-button:hover,
-.btn:hover {
-    background: var(--primary-hover);
-}
-
-button:active,
-.btn:active {
-    transform: scale(0.98);
-}
-
-.btn.secondary {
-    background: rgba(243, 234, 220, 0.85);
-    color: var(--primary);
-    border-color: rgba(234, 223, 206, 0.95);
-    box-shadow: none;
-}
-
-.btn.secondary:hover {
-    background: rgba(243, 234, 220, 1);
-}
-
-.btn.danger {
-    background: var(--danger);
-    border-color: rgba(180, 35, 44, 0.35);
-    box-shadow: 0 10px 22px rgba(180, 35, 44, 0.14);
-}
-
-/* Icon button (legacy) */
-.icon-btn {
-    border: 0;
-    background: transparent;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 10px;
-}
-
-.icon-btn:hover {
-    background: rgba(31, 35, 40, 0.06);
-}
-
-/* Messages */
-.msg {
-    margin: 10px 0 0;
-    min-height: 18px;
-}
-
-.msg.ok {
-    color: #15803d;
-}
-
-.msg.error {
-    color: #b91c1c;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   Menus catalogue (menus.html)
-   ========================================================= */
-#menusGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-    padding-bottom: 22px;
-}
-
-@media (max-width: 980px) {
-    #menusGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 650px) {
-    #menusGrid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.menu-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overflow: hidden;
-    padding: 5px;
-    min-height: 340px;
-    width: 100%;
-}
-
-.menu-card .menu-cover {
-    position: relative;
-    height: 160px;
-    background: radial-gradient(700px 260px at 20% 20%, rgba(122, 31, 43, 0.12), transparent 60%), linear-gradient(135deg, rgba(243, 234, 220, 1), rgba(251, 247, 241, 1));
-    border-bottom: 1px solid rgba(234, 223, 206, 0.75);
-    width: 100%;
-}
-
-.menu-img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-    border-radius: 0;
-    border: none;
-    filter: saturate(1.02) contrast(1.02);
-}
-
-.menu-card .menu-body {
-    padding: 16px 16px 12px;
-    width: 100%;
-}
-
-.menu-card h3 {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.15;
-    width: 100%;
-}
-
-.menu-meta {
-    margin-top: 8px;
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.menu-list {
-    margin: 12px 0 0;
-    padding-left: 18px;
-    font-size: 14px;
-    color: rgba(31, 35, 40, 0.86);
-}
-
-.menu-footer {
-    margin-top: auto;
-    padding: 0 16px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    padding-top: 14px;
-}
-
-/* Card “vitrine” : image + contenu + footer */
-.menu-card.card {
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(234, 223, 206, 0.9);
-    background: rgba(255, 255, 255, 0.96);
-    padding: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 100%;
-}
-
-.menu-card.card:hover {
-    transform: translateY(-1px);
-    transition: transform 0.15s ease;
-    width: 100%;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   Reviews / Footer (si tu les utilises ailleurs)
-   ========================================================= */
-#reviewsGrid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 12px;
-}
-
-@media (max-width: 900px) {
-    #reviewsGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 600px) {
-    #reviewsGrid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.review-card {
-    padding: 14px;
-    border-radius: 14px;
-    outline: none;
-    width: 100%;
-}
-
-.review-card:focus {
-    box-shadow: 0 0 0 3px rgba(31, 35, 40, .2);
-    width: 100%;
-}
-
-.review-top {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.review-stars {
-    font-size: 18px;
-}
-
-.review-comment {
-    margin-top: 8px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   Stats (stats.html)
-   ============================ */
-.stat-box {
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    border-radius: var(--radius);
-    padding: 14px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(251, 247, 241, 0.65));
-    box-shadow: var(--shadow-soft);
-}
-
-.stat-box strong {
-    display: block;
-    margin-bottom: 6px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   MENU DETAIL (menu.html)
-   ============================ */
-.page-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 18px;
-}
-
-.menu-detail {
-    padding: 18px;
-}
-
-.menu-detail-hero {
-    display: grid;
-    grid-template-columns: 1.4fr 0.9fr;
     gap: 18px;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .menu-detail-hero {
-        grid-template-columns: 1fr;
-    }
-}
-
-.menu-detail-title {
-    margin: 0;
-    font-size: clamp(26px, 3vw, 40px);
-    line-height: 1.05;
-}
-
-.menu-detail-desc {
-    margin: 10px 0 0;
-    color: rgba(31, 35, 40, 0.85);
-}
-
-.menu-detail-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 14px;
-}
-
-.pill {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(243, 234, 220, 0.7);
-    font-size: 13px;
-    color: rgba(31, 35, 40, 0.85);
-}
-
-.pill strong {
-    color: var(--primary);
-    font-weight: 800;
-}
-
-.menu-detail-hero-card {
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: var(--shadow-soft);
-    padding: 16px;
-    width: 100%;
-}
-
-.menu-detail-meta {
-    display: grid;
-    gap: 10px;
-}
-
-.meta-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 12px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(251, 247, 241, 0.65));
-    border: 1px solid rgba(234, 223, 206, 0.85);
-}
-
-.meta-label {
-    color: var(--muted);
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.meta-value {
-    font-family: var(--font-title);
-    font-weight: 800;
-}
-
-.menu-cta {
-    width: 100%;
-    text-align: center;
-    margin-top: 12px;
-}
-
-.menu-detail-section h2 {
-    margin: 0 0 10px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   MENU DETAIL (status row)
-   ============================ */
-.page-head #status {
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(243, 234, 220, 0.55);
-    max-width: 520px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   ORDER (order.html)
-   ============================ */
-.order-wrap {
-    padding: 18px;
-}
-
-.order-head {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 14px;
-    align-items: start;
-}
-
-@media (max-width: 800px) {
-    .order-head {
-        grid-template-columns: 1fr;
-    }
-}
-
-.order-head-aside {
-    padding: 10px 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(243, 234, 220, 0.55);
-    max-width: 360px;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px 16px;
 }
 
+.field.full,
 .form-grid .full {
     grid-column: 1 / -1;
 }
 
-@media (max-width: 800px) {
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
+.actions,
+.auth-actions,
+.employee-actions,
+.order-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.field small {
+.badge,
+.status,
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #f5e4ca;
+    border: 1px solid var(--vg-border-soft);
+    color: var(--vg-text);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.msg.error {
+    color: var(--vg-danger);
+}
+
+.msg.ok {
+    color: var(--vg-success);
+}
+
+
+/* =====================================================================================================================
+   8. PAGE ACCUEIL
+   ===================================================================================================================== */
+
+.hero-landing {
+    background: var(--vg-page-bg);
+}
+
+.hero-landing-bg {
+    display: none;
+}
+
+.hero-landing-inner {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    box-shadow: var(--vg-shadow-paper);
+    padding: 44px 88px 46px;
+}
+
+.hero-kicker {
+    margin: 0 0 4px;
+    font-family: var(--vg-title-font);
+    font-size: 0.95rem;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.hero-title {
+    max-width: 680px;
+    margin: 0;
+    font-size: 2.1rem;
+    line-height: 1.05;
+}
+
+.hero-lead {
+    max-width: 680px;
+    margin: 0;
+    font-family: var(--vg-title-font);
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin-top: 34px;
+    font-family: var(--vg-title-font);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric-value,
+.metric-label {
     display: block;
+}
+
+.section {
+    width: min(var(--vg-wide-width), calc(100% - 32px));
+    margin-inline: auto;
+    background: var(--vg-paper);
+    border-left: 1px solid var(--vg-border);
+    border-right: 1px solid var(--vg-border);
+    padding: 0 88px 34px;
+}
+
+.section-head {
+    margin-bottom: 18px;
+}
+
+.section-title {
+    margin-bottom: 2px;
+}
+
+.section-title::after,
+.menus-page-wrap h1::after,
+.page-surface h1::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--vg-green);
     margin-top: 6px;
 }
 
-.order-summary {
-    margin-top: 14px;
+.feature-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.feature-media {
+    display: none;
+}
+
+.feature-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border-soft);
+    box-shadow: var(--vg-shadow-card);
+    padding: 16px;
+}
+
+.feature-card h3 {
+    margin-bottom: 4px;
+}
+
+.grid-2 .card {
+    min-height: 120px;
+}
+
+.list {
+    margin: 12px 0 0;
+    padding-left: 18px;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.reviews-grid {
+    display: grid;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+
+/* =====================================================================================================================
+   9. PAGE MENUS
+   ===================================================================================================================== */
+
+.menus-page-wrap {
+    padding-top: 28px;
+    padding-bottom: 44px;
+}
+
+.menus-page-wrap>h1 {
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.menus-page-wrap>.card {
+    width: min(390px, 100%);
+    margin: 18px auto 44px;
+    box-shadow: none;
+}
+
+.menus-page-wrap>.card h2 {
+    margin-bottom: 12px;
+}
+
+.menus-page-wrap .grid-2 {
+    gap: 12px 22px;
+}
+
+.menus-page-wrap .actions {
+    align-self: end;
+}
+
+#status {
+    margin: 12px 0 0;
+}
+
+.menus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 62px;
+}
+
+.menu-card {
+    min-height: 250px;
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    box-shadow: none;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-card h2,
+.menu-card h3 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.menu-card p,
+.menu-card li {
+    font-size: 0.78rem;
+}
+
+.menu-card ul {
+    margin: 8px 0;
+    padding-left: 16px;
+}
+
+.menu-card .btn {
+    margin-top: auto;
+    align-self: flex-end;
+    min-height: 24px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+}
+
+.menu-card .badge {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: inherit;
+}
+
+
+/* =====================================================================================================================
+   10. DÉTAIL MENU
+   ===================================================================================================================== */
+
+.menu-detail {
+    width: min(620px, 100%);
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: none;
+}
+
+.menu-detail h1,
+.menu-detail h2,
+.menu-detail h3 {
+    margin-bottom: 8px;
+}
+
+.menu-detail img,
+.menu-detail .dish-image,
+.menu-detail .menu-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid var(--vg-border);
+    background: var(--vg-card-soft);
+}
+
+.menu-detail .dishes,
+.menu-detail .dishes-grid,
+.menu-detail .menu-dishes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin: 18px 0;
+}
+
+.menu-detail .btn {
+    float: right;
+    min-height: 26px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+}
+
+
+/* =====================================================================================================================
+   11. COMMANDE
+   ===================================================================================================================== */
+
+.order-wrap {
+    width: min(760px, 100%);
+    margin-inline: auto;
+    box-shadow: none;
+}
+
+.order-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
     align-items: start;
 }
 
-@media (max-width: 900px) {
-    .order-summary {
-        grid-template-columns: 1fr;
-    }
+.order-head-aside {
+    max-width: 260px;
+    background: var(--vg-terracotta);
+    color: #fff8ec;
+    padding: 8px 10px;
+    font-size: 0.75rem;
 }
 
-.order-summary-card {
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: var(--shadow-soft);
-    padding: 16px;
-    width: 100%;
-}
-
-.order-summary-title {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.order-actions {
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: var(--shadow-soft);
-    padding: 16px;
+.order-summary {
     display: grid;
-    gap: 10px;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.order-summary-card,
+.order-actions {
+    border: 1px solid var(--vg-border);
+    padding: 14px;
+    background: rgba(255, 248, 236, 0.65);
 }
 
 .order-actions .btn {
     width: 100%;
-    text-align: center;
 }
 
-/* ------------------------------------------------------------------ */
 
-
-/* ============================
-   AUTH (login / register)
-   ============================ */
-.auth {
-    padding-top: 24px;
-    padding-bottom: 28px;
-}
+/* =====================================================================================================================
+   12. AUTH : LOGIN / REGISTER
+   ===================================================================================================================== */
 
 .auth-wrap {
-    display: grid;
-    grid-template-columns: 1fr;
-    max-width: 520px;
-    margin: 0 auto;
+    width: min(280px, 100%);
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    border-radius: 6px;
+    padding: 18px;
 }
 
 .auth-head {
-    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-head h1 {
+    font-size: 1.65rem;
+    margin-bottom: 8px;
+}
+
+.auth-head p {
+    font-size: 0.78rem;
+    line-height: 1.35;
 }
 
 .auth-card {
-    margin-top: 16px;
-    width: 100%;
-}
-
-.auth-card .btn {
-    width: 100%;
-    text-align: center;
-    margin-top: 8px;
-    width: 100%;
-}
-
-/* les liens dans les cartes d'authentification sont mis en avant pour faire plus “vitrine” */
-.auth-card a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 700;
-    width: 100%;
-}
-
-/* les liens dans les cartes d'authentification sont soulignés au hover pour faire plus “cliquable” */
-.auth-card a:hover {
-    text-decoration: underline;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   MY ORDERS (my-orders.html)
-   ============================ */
-
-/* wrapper pour la page “Mes commandes” : on lui donne de l'air pour que ce soit plus agréable à lire */
-.page-title {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-/* les actions liées au titre (ex: “Voir le menu”) sont séparées du titre et regroupées pour faire plus “vitrine” */
-.page-title-actions {
-    display: flex;
-    gap: 10px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   EMPLOYEE ORDERS
-   ============================ */
-
-/* Grid de commandes : 3 colonnes sur grand écran, 1 colonne sur petit */
-.orders-grid {
-    gap: 16px;
-}
-
-/* 3 colonnes sur grand écran, 2 sur moyen, 1 sur petit */
-@media (max-width: 900px) {
-    .orders-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Card “vitrine” : image + contenu + footer */
-.orders-grid .card,
-.orders-grid .order-card,
-.orders-grid>div {
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(255, 255, 255, 0.96);
+    box-shadow: none;
     padding: 16px;
-    width: 100%;
 }
 
-/* Card “vitrine” : image + contenu + footer */
-.orders-grid .btn {
-    margin-top: 8px;
-    width: 100%;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   LANDING (index.html)
-   ============================ */
-
-/* wrapper pour les sections de la landing : on leur donne de l'air pour faire plus “vitrine” */
-.section {
-    padding: 26px 0;
-}
-
-/* wrapper pour les titres de section : on les sépare du reste du contenu pour faire plus “vitrine” */
-.section-head {
-    display: grid;
-    gap: 6px;
+.auth-card label {
     margin-bottom: 14px;
 }
 
-/* les titres de section sont plus grands que les titres classiques, pour faire plus “vitrine” */
-.section-title {
-    margin: 0;
-    font-size: 20px;
-}
-
-/* HERO */
-.hero-landing {
-    position: relative;
-    padding: 56px 0 26px;
-    overflow: hidden;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   CONTACT PAGE
-   ============================ */
-
-/* wrapper pour la page contact : on lui donne de l'air pour que ce soit plus agréable à lire */
-.contact-page {
-    padding-top: 26px;
-    padding-bottom: 28px;
-}
-
-/* wrapper pour le contenu de la page contact : on lui donne une carte pour que ce soit plus agréable à lire */
-.contact-wrap {
-    padding: 20px;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   LEGAL PAGES (legal.html / cgv.html)
-   ============================ */
-
-/* wrapper pour la page légale : on lui donne de l'air pour que ce soit plus agréable à lire */
-.legal-page {
-    padding-top: 26px;
-    padding-bottom: 28px;
-}
-
-/* wrapper pour le contenu de la page légale : on lui donne une carte pour que ce soit plus agréable à lire */
-.legal-card {
-    padding: 20px;
-    width: 100%;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* ============================
-   REGISTER
-   ============================ */
-
-/* Formulaire d'inscription : on sépare les actions (ex: “Créer un compte”) du reste du formulaire pour les mettre en bas et les faire ressortir */
-.auth-actions {
-    margin-top: 14px;
-    display: grid;
-    gap: 10px;
-}
-
-/* les boutons d'action (ex: “Créer un compte”) prennent toute la largeur du card */
+.auth-card .btn,
 .auth-actions .btn {
     width: 100%;
+    min-height: 28px;
+    padding: 5px 12px;
+    font-size: 0.78rem;
+    background: var(--vg-terracotta);
+    border-color: var(--vg-terracotta-dark);
+}
+
+.auth-actions {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.auth-actions .secondary {
+    background: #fff8ec;
+    color: var(--vg-text);
+    border-color: var(--vg-border);
+}
+
+.register-form .form-grid {
+    gap: 10px 14px;
+}
+
+.register-form small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.68rem;
+}
+
+
+/* =====================================================================================================================
+   13. DASHBOARDS ADMIN / EMPLOYÉ
+   ===================================================================================================================== */
+
+.page-surface {
+    width: min(var(--vg-dashboard-width), calc(100% - 32px));
+    background: var(--vg-dashboard-bg);
+    padding: 0 0 64px;
+    min-height: 560px;
+}
+
+.employee-dashboard-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0 38px 42px;
+}
+
+.employee-dashboard-card>.page-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    background: #b2aa9e;
+    border: 1px solid var(--vg-border);
+    border-radius: 0 0 12px 12px;
+    padding: 12px 28px;
+    margin: 0 -38px 0;
+}
+
+.employee-dashboard-card h1 {
+    font-size: 1.5rem;
     text-align: center;
 }
 
-/* ------------------------------------------------------------------ */
-
-
-/* Le header sticky prend de la place : on évite que le contenu colle au header */
-main {
-    flex: 1 0 auto;
-}
-
-/* Le footer doit rester en bas même si le contenu est court */
-#appFooter {
-    margin-top: auto;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* Force le comportement HTML "hidden" */
-[hidden] {
-    display: none !important;
-}
-
-/* (optionnel) sécurité ciblée */
-.menu-overlay[hidden] {
-    display: none !important;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   MENUS — grand fond derrière toute la page (plus large + pleine hauteur)
-   ========================================================= */
-
-/* 1) Le wrapper garde le comportement "container" (centré)
-   mais on lui donne de l'air, et une hauteur utile. */
-.menus-page-wrap {
-    position: relative;
-    padding: 28px 18px 60px;
-    min-height: calc(100vh - 108px);
-    /* header fixe */
-}
-
-/* 2) Le grand fond : plus large que le container et qui "descend" jusqu'en bas */
-.menus-page-wrap::before {
-    content: "";
-    position: absolute;
-
-    /* on fait dépasser à gauche/droite */
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-
-    /* largeur voulue du fond */
-    width: min(1500px, 98vw);
-
-    background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.45),
-            rgba(243, 234, 220, 0.30));
-
-    border: 1px solid rgba(234, 223, 206, 0.65);
-    border-radius: 28px;
-
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* 3) Le contenu reste au-dessus */
-.menus-page-wrap>* {
-    position: relative;
-    z-index: 1;
-}
-
-/* ------------------------------------------------------------------ */
-
-
-/* =========================================================
-   Surface globale (carte derrière sur toutes les pages)
-   ========================================================= */
-
-/* wrapper pour la surface de la page (tout sauf header) */
-.page-surface {
-    position: relative;
-    padding-top: 22px;
-    padding-bottom: 40px;
-}
-
-/* fond plus foncé que la carte */
-.page-surface::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1400px, 96vw);
-
-    background: linear-gradient(180deg,
-            rgba(234, 223, 206, 0.55),
-            rgba(234, 223, 206, 0.35));
-
-    border-radius: 28px;
-    border: 1px solid rgba(234, 223, 206, 0.75);
-    z-index: 0;
-}
-
-/* contenu au-dessus */
-.page-surface>* {
-    position: relative;
-    z-index: 1;
-}
-
-/* petites cartes employé */
-.employees-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-}
-
-/* Card “vitrine” : image + contenu + footer */
-.employee-card {
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(234, 223, 206, 0.95);
-    background: rgba(255, 255, 255, 0.96);
-    padding: 14px;
-    width: 100%;
-}
-
-/* ------------------------------------------------------------------ */
-/* =========================================================
-   Stats + historique (stats.html)
-   ========================================================= */
-/* grid pour les petites cartes statistiques */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin-top: 12px;
-}
-
-/* petites cartes statistiques */
-.stat-box {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 14px;
-    background: #fff;
-}
-
-/* valeur principale de la stat */
-.stat-value {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-top: 6px;
-}
-
-/* historique : liste verticale d'items */
-.history-list {
-    display: grid;
-    gap: 10px;
-    margin-top: 12px;
-}
-
-/* élément d'historique */
-.history-item {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 12px;
-    background: #fff;
-}
-
-/* ligne d'info dans l'historique : flex pour aligner à gauche/droite */
-.history-line {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-
-/*--------------------------------------------------------------------- */
-
-
-/* =========================================================
-   Employee page (employee.html)
-   ========================================================= */
-
-/* wrapper pour la page employé : on lui donne de l'air pour que ce soit plus agréable à lire */
-.employee-dashboard-card {
-    display: grid;
-    gap: 18px;
-    width: 100%;
-}
-
-/* grid pour les onglets de la page employé */
 .employee-tabs {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
-    border: 1px solid #ddd;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #f3f0eb;
+    margin: 0 -38px 34px;
 }
 
-/* boutons d'onglet : on les stylise pour qu'ils ressemblent à des onglets, et qu'on voit clairement lequel est actif */
 .employee-tab-btn {
-    border: none;
-    padding: 14px 16px;
-    background: transparent;
-    font-weight: 700;
+    min-height: 42px;
+    border: 1px solid var(--vg-border);
+    background: var(--vg-paper);
+    color: var(--vg-text);
+    font-family: var(--vg-title-font);
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: background .2s ease, color .2s ease;
+    border-radius: 12px;
 }
 
-/* effet au hover pour faire plus “vitrine” */
-.employee-tab-btn:hover {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-/* onglet actif : fond blanc + texte coloré pour faire ressortir l'onglet actif */
 .employee-tab-btn.active {
-    background: #ffffff;
-    color: #7c1f2a;
+    background: var(--vg-green);
+    color: #fff8ec;
+    border-color: var(--vg-green-dark);
 }
 
-/* panneau de détail de l'employé : on lui donne une carte pour que ce soit plus agréable à lire */
+.employee-tab-btn:hover {
+    filter: brightness(0.96);
+}
+
 .employee-detail-panel {
-    min-height: 420px;
-    max-height: 420px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    border-radius: 14px;
-    padding: 16px;
-    background: #fff;
+    background: var(--vg-dashboard-panel);
+    border: 1px solid var(--vg-border-soft);
+    padding: 18px;
+    margin-bottom: 24px;
 }
 
-/* les panneaux d'onglet sont cachés par défaut, seul le panneau actif est affiché */
-.employee-tab-panel {
-    display: none;
-    gap: 14px;
-}
-
-/* panneau actif */
-.employee-tab-panel.active {
-    display: grid;
-}
-
-/* header de chaque panneau d'onglet : on sépare le titre des actions pour faire plus “vitrine” */
 .employee-panel-head {
     display: flex;
     justify-content: space-between;
     align-items: end;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 14px;
 }
 
-/* grid pour les petites cartes d'employé dans le panneau “Mes commandes” */
-.employee-cards-grid {
+.employee-panel-head h2 {
+    margin: 0;
+}
+
+.employee-tab-panel {
+    display: none;
+}
+
+.employee-tab-panel.active {
+    display: block;
+}
+
+.employee-orders-filters,
+.admin-orders-filters {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    background: var(--vg-dashboard-panel);
+    border: 1px solid var(--vg-border-soft);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.employee-cards-grid,
+.admin-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 30px;
+}
+
+.employee-cards-grid .card,
+.admin-cards-grid .card {
+    min-height: 155px;
+    padding: 12px;
+    background: var(--vg-paper);
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.employee-cards-grid .btn,
+.admin-cards-grid .btn {
+    margin-top: auto;
+    align-self: center;
+    min-height: 22px;
+    padding: 3px 12px;
+    font-size: 0.72rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
 }
 
-/* petites cartes d'employé dans le panneau “Mes commandes” */
-.employee-mini-card {
-    border: 1px solid #ddd;
-    border-radius: 14px;
-    background: #fff;
-    padding: 14px;
-    cursor: pointer;
-    transition: transform .15s ease, box-shadow .15s ease;
+.stat-box {
+    background: var(--vg-paper);
+    border: 1px solid var(--vg-border-soft);
+    padding: 16px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+
+/* =====================================================================================================================
+   14. PAGES NON MAQUETTÉES MAIS COHÉRENTES
+   ===================================================================================================================== */
+
+.contact-card,
+.contact-panel,
+.contact-form,
+.legal-page,
+.cgv-page,
+.orders-card,
+.my-orders-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-border);
+    padding: 22px;
+    box-shadow: var(--vg-shadow-soft);
+}
+
+table {
     width: 100%;
+    border-collapse: collapse;
+    background: var(--vg-card);
 }
 
-/* effet au hover pour faire plus “vitrine” */
-.employee-mini-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid var(--vg-border-soft);
+    text-align: left;
 }
 
-/* contenu de la petite carte d'employé : on sépare le titre des autres infos pour faire plus “vitrine” */
-.employee-mini-card h3 {
-    margin: 0 0 8px;
-    font-size: 1rem;
-    width: 100%;
+th {
+    background: var(--vg-paper);
 }
 
-/* les autres infos de la petite carte d'employé : on les espace pour que ce soit plus lisible */
-.employee-mini-card p {
-    margin: 4px 0;
-    width: 100%;
+
+/* =====================================================================================================================
+   15. RESPONSIVE
+   ===================================================================================================================== */
+
+@media (max-width: 980px) {
+    :root {
+        --vg-header-height: 140px;
+    }
+
+    .brand-script {
+        font-size: clamp(2.1rem, 7vw, 3.5rem);
+    }
+
+    .hamburger {
+        width: 62px;
+        height: 62px;
+        right: 22px;
+    }
+
+    .hamburger span {
+        width: 30px;
+    }
+
+    main.container,
+    .page-surface,
+    .menus-page-wrap,
+    .hero-landing-inner,
+    .section {
+        width: min(100% - 24px, 760px);
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+
+    .feature-grid,
+    .menus-grid,
+    .employee-cards-grid,
+    .admin-cards-grid,
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .employee-tabs {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .menu-overlay {
+        right: 18px;
+        top: 104px;
+    }
 }
 
-/* grid pour les détails de l'employé dans le panneau “Mon profil” */
-.employee-detail-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr 1fr;
-    gap: 16px;
-}
+@media (max-width: 680px) {
+    body {
+        font-size: 14px;
+    }
 
-/* détails de l'employé dans le panneau “Mon profil” : on leur donne une carte pour que ce soit plus agréable à lire */
-.employee-detail-box {
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px;
-    background: #fff;
-}
+    .header-inner {
+        justify-content: flex-start;
+        padding-left: 16px;
+    }
 
-/* header de chaque détail de l'employé : on les sépare du reste du contenu pour faire plus “vitrine” */
-.employee-detail-box h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
+    .brand-script {
+        font-size: 2.1rem;
+    }
 
-/* les actions liées à chaque détail de l'employé (ex: “Modifier le profil”) sont regroupées pour les faire ressortir */
-.employee-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-}
+    main.container,
+    .page-surface,
+    .menus-page-wrap,
+    .hero-landing-inner,
+    .section {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
 
-/* responsive : sur petit écran, les onglets passent en vertical, et les détails de l'employé prennent toute la largeur */
-@media (max-width: 900px) {
+    .hero-metrics,
+    .feature-grid,
+    .menus-grid,
+    .grid-2,
+    .form-grid,
+    .order-summary,
+    .employee-orders-filters,
+    .admin-orders-filters,
+    .employee-cards-grid,
+    .admin-cards-grid,
+    .stats-grid,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 
-    /* onglets en vertical */
+    .employee-dashboard-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .employee-dashboard-card>.page-head,
+    .employee-tabs {
+        margin-left: -18px;
+        margin-right: -18px;
+    }
+
     .employee-tabs {
         grid-template-columns: 1fr;
     }
 
-    /* détails de l'employé en full width */
-    .employee-detail-grid {
-        grid-template-columns: 1fr;
+    .menu-panel {
+        width: min(220px, calc(100vw - 32px));
+    }
+
+    .footer-grid {
+        gap: 14px;
     }
 }
 
-/* grid pour les filtres de la page “Mes commandes” : 2 colonnes sur grand écran, 1 colonne sur petit */
-.employee-orders-filters {
+/* =====================================================================================================================
+   PATCH DASHBOARDS — cartes menus / commandes lisibles
+   ===================================================================================================================== */
+
+/* Les dashboards ont besoin d'un peu plus de largeur que prévu */
+.page-surface {
+    width: min(1040px, calc(100% - 32px));
+}
+
+/* Le contenu dashboard ne doit pas être microscopique */
+.employee-dashboard-card {
+    padding-left: 44px;
+    padding-right: 44px;
+}
+
+/* Les grilles dashboard ne doivent jamais forcer 5 colonnes */
+.employee-cards-grid,
+.admin-cards-grid {
     display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+/* Les cartes générées dans les dashboards : même logique que la page menus */
+.employee-cards-grid>*,
+.admin-cards-grid>* {
+    min-width: 0;
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    box-shadow: none;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Évite les chevauchements de texte dans les cartes commandes */
+.employee-cards-grid p,
+.employee-cards-grid div,
+.employee-cards-grid span,
+.employee-cards-grid strong,
+.admin-cards-grid p,
+.admin-cards-grid div,
+.admin-cards-grid span,
+.admin-cards-grid strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+/* Les titres de cartes restent lisibles */
+.employee-cards-grid h2,
+.employee-cards-grid h3,
+.admin-cards-grid h2,
+.admin-cards-grid h3 {
+    font-size: 1rem;
+    margin: 0 0 10px;
+}
+
+/* Boutons en bas des cartes */
+.employee-cards-grid .btn,
+.admin-cards-grid .btn,
+.employee-cards-grid button,
+.admin-cards-grid button {
+    margin-top: 12px;
+    align-self: flex-start;
+    min-height: 24px;
+    padding: 4px 14px;
+    font-size: 0.72rem;
+    border-radius: 999px;
+}
+
+/* Pour les menus côté admin/employé, rendu proche de menus.html */
+#tab-menus .employee-cards-grid,
+#tab-menus .admin-cards-grid,
+#tab-menus #menusGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+/* Les cartes menus dans le dashboard doivent avoir une hauteur raisonnable */
+#tab-menus .employee-cards-grid>*,
+#tab-menus .admin-cards-grid>*,
+#tab-menus #menusGrid>* {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Le détail sélectionné ne doit pas prendre toute la page en hauteur */
+.employee-detail-panel {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Le détail commande est plus lisible en grille quand le JS génère plusieurs blocs */
+.employee-detail-panel .detail-grid,
+.employee-detail-panel .order-detail-grid,
+.employee-detail-panel .menu-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Les boutons de suivi doivent pouvoir revenir à la ligne proprement */
+.employee-detail-panel .employee-actions,
+.employee-detail-panel .order-actions,
+.employee-detail-panel .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Filtres dashboard : moins écrasés */
+.employee-orders-filters,
+.admin-orders-filters {
     grid-template-columns: 1fr 1fr auto;
-    gap: 12px;
     align-items: end;
 }
 
-/* responsive : sur petit écran, les filtres passent en vertical */
-@media (max-width: 900px) {
-    .employee-orders-filters {
-        grid-template-columns: 1fr;
+/* Les onglets admin sont nombreux : on garde lisible */
+.admin-dashboard-card .employee-tabs,
+.employee-dashboard-card .employee-tabs {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+
+/* Responsive dashboard */
+@media (max-width: 980px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus .employee-cards-grid,
+    #tab-menus .admin-cards-grid,
+    #tab-menus #menusGrid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+
+    .employee-orders-filters,
+    .admin-orders-filters {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
+@media (max-width: 680px) {
 
-/* =========================================================
-   Employee dashboard — largeur desktop
-   ========================================================= */
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus .employee-cards-grid,
+    #tab-menus .admin-cards-grid,
+    #tab-menus #menusGrid {
+        grid-template-columns: 1fr;
+    }
 
-main.page-surface:has(.employee-dashboard-card) {
-    max-width: 1400px;
+    .employee-orders-filters,
+    .admin-orders-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-dashboard-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
 }
 
-.employee-dashboard-card {
-    width: 100%;
-}
+/* =====================================================================================================================
+   PATCH CARTES DASHBOARD — structure attendue par le JS
+   ===================================================================================================================== */
 
-#tab-menus {
-    width: 100%;
-}
-
-#employeeMenuDetail {
-    width: 100%;
-}
-
-#menusGrid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
-}
-
-/* --------------------------------------------------------------------- */
-
-/* =========================================================
-   Order status badges (order.html)
-   ========================================================= */
-/* badge de statut de commande : on les stylise pour qu'ils soient facilement identifiables et agréables à lire */
-.order-status-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    border: 1px solid #ddd;
-    background: #f7f7f7;
-}
-
-/* les statuts de commande acceptée ont un fond bleu très pâle et une bordure bleue plus foncée pour indiquer clairement que la commande est acceptée */
-.order-status-accepted {
-    background: #e8f1ff;
-    border-color: #bcd4ff;
-    color: #1d4ed8;
-}
-
-/* les status de commande en préparation ont un fond orange très pâle et une bordure orange plus foncée pour indiquer clairement que la commande est en préparation */
-.order-status-preparing {
-    background: #fff4e5;
-    border-color: #ffd59a;
-    color: #b45309;
-}
-
-/* les statuts de commande en cours de livraison ont un fond violet très pâle et une bordure violette plus foncée pour indiquer clairement que la commande est en cours de livraison */
-.order-status-delivering {
-    background: #f1ebff;
-    border-color: #ceb8ff;
-    color: #7c3aed;
-}
-
-/* les statuts de commande livrée ont un fond vert très pâle et une bordure verte plus foncée pour indiquer clairement que la commande est livrée */
-.order-status-delivered {
-    background: #e9f7ef;
-    border-color: #b8e0c6;
-    color: #15803d;
-}
-
-/* les statuts de commande terminée ont un fond vert pâle et une bordure verte plus foncée pour indiquer clairement que la commande est terminée */
-.order-status-done {
-    background: #e7f8ea;
-    border-color: #a9d9b2;
-    color: #166534;
-}
-
-/* les statuts d'annulation ont un fond rouge pâle et une bordure rouge plus foncée pour indiquer clairement que la commande a été annulée */
-.order-status-cancelled {
-    background: #fdeaea;
-    border-color: #f3b2b2;
-    color: #b91c1c;
-}
-
-.order-footer {
+.dashboard-item-card,
+.order-card,
+.admin-menu-card,
+.employee-menu-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    min-height: 170px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-top: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
+    overflow-wrap: anywhere;
 }
 
-.order-footer .btn {
-    margin-left: auto;
+.dashboard-item-card h3,
+.order-card h3,
+.admin-menu-card h3,
+.employee-menu-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.dashboard-item-card p,
+.order-card p,
+.admin-menu-card p,
+.employee-menu-card p {
+    margin: 0;
+    font-size: 0.82rem;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.card-actions .btn,
+.card-actions button {
+    min-height: 24px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+}
+
+/* =====================================================================================================================
+   CARTES DASHBOARD — commandes / menus
+   ===================================================================================================================== */
+
+.employee-cards-grid,
+.admin-cards-grid,
+#tab-menus #menusGrid,
+#tab-orders #ordersGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+.dashboard-item-card,
+.order-card,
+.admin-menu-card,
+.employee-menu-card,
+.employee-mini-card {
+    background: var(--vg-card);
+    border: 1px solid var(--vg-terracotta);
+    border-radius: 5px;
+    padding: 16px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.dashboard-item-card:hover,
+.order-card:hover,
+.admin-menu-card:hover,
+.employee-menu-card:hover,
+.employee-mini-card:hover {
+    box-shadow: 4px 6px 12px rgba(31, 19, 14, 0.18);
+    transform: translateY(-1px);
+}
+
+.dashboard-item-card h3,
+.order-card h3,
+.admin-menu-card h3,
+.employee-menu-card h3,
+.employee-mini-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.dashboard-item-card p,
+.order-card p,
+.admin-menu-card p,
+.employee-menu-card p,
+.employee-mini-card p {
+    margin: 0;
+    font-size: 0.82rem;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.card-actions .btn,
+.card-actions button {
+    min-height: 24px;
+    padding: 4px 12px;
+    font-size: 0.72rem;
+}
+
+@media (max-width: 980px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus #menusGrid,
+    #tab-orders #ordersGrid {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 680px) {
+
+    .employee-cards-grid,
+    .admin-cards-grid,
+    #tab-menus #menusGrid,
+    #tab-orders #ordersGrid {
+        grid-template-columns: 1fr;
+    }
 }

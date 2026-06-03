@@ -732,14 +732,20 @@ function renderOrdersCards(list) {
         return;
     }
 
-    /* rend une liste de commandes sous forme de cartes, avec les infos de base (id, client, menu, nombre de personnes, statut) */
     ordersGrid.innerHTML = list.map(order => `
-        <article class="employee-mini-card" data-type="order" data-id="${escapeHtml(order.id)}">
+        <article class="employee-mini-card dashboard-item-card order-card" data-type="order" data-id="${escapeHtml(order.id)}">
             <h3>Commande #${escapeHtml(order.id)}</h3>
-            <p><strong>${escapeHtml(order.customerEmail ?? "Client inconnu")}</strong></p>
-            <p>${escapeHtml(order.menu?.title ?? "Menu inconnu")}</p>
-            <p>${escapeHtml(order.persons)} pers.</p>
-            <p>${escapeHtml(order.status)}</p>
+
+            <p><strong>Client :</strong> ${escapeHtml(order.customerEmail ?? "Client inconnu")}</p>
+            <p><strong>Menu :</strong> ${escapeHtml(order.menu?.title ?? "Menu inconnu")}</p>
+            <p><strong>Personnes :</strong> ${escapeHtml(order.persons ?? "—")} pers.</p>
+            <p><strong>Statut :</strong> ${escapeHtml(order.status ?? "—")}</p>
+
+            <div class="card-actions">
+                <button class="btn" type="button" data-type="order" data-id="${escapeHtml(order.id)}">
+                    Voir / traiter
+                </button>
+            </div>
         </article>
     `).join("");
 }
@@ -754,14 +760,21 @@ function renderMenusCards(list) {
         menusGrid.innerHTML = `<div class="muted">Aucun menu.</div>`;
         return;
     }
-    /* rend une liste de menus sous forme de cartes, avec les infos de base (titre, thème, régime, stock) */
+
     menusGrid.innerHTML = list.map(menu => `
-        <article class="employee-mini-card" data-type="menu" data-id="${escapeHtml(menu.id)}">
-            <h3>${escapeHtml(menu.title)}</h3>
-            <p>${escapeHtml(menu.theme)}</p>
-            <p>${escapeHtml(menu.regime)}</p>
-            <p>Stock : ${escapeHtml(menu.stock)}</p>
-            <p>${escapeHtml(menu.isActive ? "Actif" : "Inactif")}</p>
+        <article class="employee-mini-card dashboard-item-card employee-menu-card" data-type="menu" data-id="${escapeHtml(menu.id)}">
+            <h3>${escapeHtml(menu.title ?? "Menu sans nom")}</h3>
+
+            <p><strong>Thème :</strong> ${escapeHtml(menu.theme ?? "—")}</p>
+            <p><strong>Régime :</strong> ${escapeHtml(menu.regime ?? "—")}</p>
+            <p><strong>Stock :</strong> ${escapeHtml(menu.stock ?? "—")}</p>
+            <p><strong>Statut :</strong> ${escapeHtml(menu.isActive ? "Actif" : "Inactif")}</p>
+
+            <div class="card-actions">
+                <button class="btn" type="button" data-type="menu" data-id="${escapeHtml(menu.id)}">
+                    Voir
+                </button>
+            </div>
         </article>
     `).join("");
 }

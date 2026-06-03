@@ -11,6 +11,10 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_EMPLOYEE
+        ROLE_EMPLOYEE: ROLE_USER
 
     firewalls:
         dev:

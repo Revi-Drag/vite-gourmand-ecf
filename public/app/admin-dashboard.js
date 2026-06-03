@@ -322,7 +322,7 @@ createEmployeeForm?.addEventListener("submit", async (e) => {
 ================================= */
 
 async function loadAdminOrders() {
-    const res = await fetch('/api/admin/orders', {
+    const res = await fetch('/api/employee/orders', {
         credentials: 'include'
     });
 
@@ -338,7 +338,7 @@ async function loadAdminOrders() {
     }
 
     if (!isJson) {
-        throw new Error("La route /api/admin/orders ne renvoie pas du JSON.");
+        throw new Error("La route /api/employee/orders ne renvoie pas du JSON.");
     }
 
     if (Array.isArray(result)) {
@@ -364,19 +364,22 @@ function renderAdminOrdersCards(list) {
         return;
     }
 
-    ordersGrid.innerHTML = `
-        <div class="employees-grid">
-            ${list.map(order => `
-                <article class="employee-mini-card" data-type="admin-order" data-id="${escapeHtml(order.id)}">
-                    <h3>Commande #${escapeHtml(order.id)}</h3>
-                    <p><strong>${escapeHtml(order.customerEmail ?? "Client inconnu")}</strong></p>
-                    <p>${escapeHtml(order.menu?.title ?? "Menu inconnu")}</p>
-                    <p>${escapeHtml(order.persons ?? "—")} pers.</p>
-                    <p>${escapeHtml(getStatusLabel(order.status ?? "—"))}</p>
-                </article>
-            `).join("")}
-        </div>
-    `;
+    ordersGrid.innerHTML = list.map(order => `
+        <article class="employee-mini-card dashboard-item-card order-card" data-type="admin-order" data-id="${escapeHtml(order.id)}">
+            <h3>Commande #${escapeHtml(order.id)}</h3>
+
+            <p><strong>Client :</strong> ${escapeHtml(order.customerEmail ?? "Client inconnu")}</p>
+            <p><strong>Menu :</strong> ${escapeHtml(order.menu?.title ?? "Menu inconnu")}</p>
+            <p><strong>Personnes :</strong> ${escapeHtml(order.persons ?? "—")} pers.</p>
+            <p><strong>Statut :</strong> ${escapeHtml(getStatusLabel(order.status ?? "—"))}</p>
+
+            <div class="card-actions">
+                <button class="btn" type="button" data-type="admin-order" data-id="${escapeHtml(order.id)}">
+                    Voir / traiter
+                </button>
+            </div>
+        </article>
+    `).join("");
 }
 
 function renderAdminOrderDetail(order) {
@@ -584,25 +587,36 @@ function renderAdminMenusCards(list) {
     if (!menusGrid) return;
 
     if (!list.length) {
-        menusGrid.innerHTML = `
-            <div class="muted">Aucun menu.</div>
-        `;
+        menusGrid.innerHTML = `<div class="muted">Aucun menu.</div>`;
         return;
     }
 
-    menusGrid.innerHTML = `
-        <div class="employees-grid">
-            ${list.map(menu => `
-                <article class="employee-mini-card" data-type="admin-menu" data-id="${escapeHtml(menu.id)}">
-                    <h3>${escapeHtml(menu.title ?? "Menu sans nom")}</h3>
-                    <p>${escapeHtml(menu.theme ?? "")}</p>
-                    <p>${escapeHtml(menu.regime ?? "")}</p>
-                    <p>Stock : ${escapeHtml(menu.stock ?? "—")}</p>
-                    <p>${escapeHtml(menu.isActive ? "Actif" : "Inactif")}</p>
-                </article>
-            `).join("")}
-        </div>
-    `;
+    menusGrid.innerHTML = list.map(menu => `
+        <article class="employee-mini-card dashboard-item-card admin-menu-card" data-type="admin-menu" data-id="${escapeHtml(menu.id)}">
+            <h3>${escapeHtml(menu.title ?? "Menu sans nom")}</h3>
+
+            <p><strong>Thème :</strong> ${escapeHtml(menu.theme ?? "—")}</p>
+            <p><strong>Régime :</strong> ${escapeHtml(menu.regime ?? "—")}</p>
+            <p><strong>Stock :</strong> ${escapeHtml(menu.stock ?? "—")}</p>
+            <p><strong>Prix :</strong> ${escapeHtml(menu.price ?? menu.basePrice ?? "—")} €</p>
+            <p><strong>Statut :</strong> ${escapeHtml(menu.isActive ? "Actif" : "Inactif")}</p>
+
+            <div class="card-actions">
+                <button class="btn" type="button" data-type="admin-menu" data-id="${escapeHtml(menu.id)}">
+                    Voir
+                </button>
+                <button class="btn secondary" type="button" data-menu-action="edit" data-id="${escapeHtml(menu.id)}">
+                    Modifier
+                </button>
+                <button class="btn secondary" type="button" data-menu-action="toggle-active" data-id="${escapeHtml(menu.id)}">
+                    ${menu.isActive ? "Désactiver" : "Réactiver"}
+                </button>
+                <button class="btn secondary" type="button" data-menu-action="delete" data-id="${escapeHtml(menu.id)}">
+                    Supprimer
+                </button>
+            </div>
+        </article>
+    `).join("");
 }
 
 function renderAdminMenuDetail(menu) {
